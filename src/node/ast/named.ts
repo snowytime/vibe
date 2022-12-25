@@ -12,7 +12,7 @@ export const extractNamedExports = (
 ) => {
 	const named: StoryData[] = [];
 	const namedExports = ast.filter((e) => e.type === "ExportDeclaration");
-	namedExports.forEach((declaration) => {
+	namedExports.forEach(async (declaration) => {
 		const componentName = getComponentName(declaration);
 		const fileName = path.split("/").at(-1)?.split(".")[0].toLowerCase();
 		const resolvedPathName = family.title
@@ -21,7 +21,7 @@ export const extractNamedExports = (
 		named.push({
 			url: resolvedPathName,
 			path,
-			id: generateId(),
+			id: await generateId(),
 			componentName
 		});
 	});

@@ -4,7 +4,6 @@
 	"description": "",
 	"keywords": [],
 	"author": "snowytime",
-	"type": "module",
 	"license": "ISC",
 	"engines": {
 		"node": ">=16.0.0"

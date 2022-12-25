@@ -1,7 +1,7 @@
 // [NOTE] This service is what we use for logging things to the console (present in production)
 
 import pico from "picocolors";
-import json from "../../package.json";
+import json from "../../package.json" assert { type: "json" };
 
 interface MainLoggerProps {
 	local: string;
