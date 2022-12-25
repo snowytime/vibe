@@ -19,5 +19,5 @@ export const getVibeData = async () => {
 	const stories = await findStories(config);
 	const storyData = await getStoryData(stories);
 	const json = getJson(storyData, config);
-	return { json, stories, configPath, config };
+	return { json, stories, configPath, config, storyData };
 };

@@ -18,14 +18,10 @@ export interface BuildReturn {
 	duration: number;
 	destination: string;
 }
-interface AddonData {
-	stories: StoryData[];
-	config: Config;
-}
 export interface Addon {
-	dev: (data: AddonData) => Promise<ServerReturn>;
-	build: (data: AddonData) => Promise<BuildReturn>;
-	start: (data: AddonData) => Promise<ServerReturn>;
+	dev: () => Promise<ServerReturn>;
+	build: () => Promise<BuildReturn>;
+	start: () => Promise<ServerReturn>;
 	create?: () => Promise<null>;
 }
 export interface Config {

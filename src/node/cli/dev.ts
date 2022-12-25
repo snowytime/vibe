@@ -1,15 +1,13 @@
-import { getVibeData } from "../index.js";
+import { main_logger } from "@logs/index.js";
+import { findFolder, getConfig } from "../index.js";
 
 export const dev = async () => {
 	try {
-		// const data = await getInitialData();
-		// const { local, network } = await data.config.addon.dev(data);
-		// log.dev(local, network);
-		const data = await getVibeData();
-		console.log(data);
+		const [folder] = await findFolder();
+		const config = await getConfig(folder);
+		const { local, network } = await config.addon.dev();
+		main_logger({ local, network });
 	} catch (e) {
 		console.log(e);
-		// handles error from the addon
-		// log.error(e)
 	}
 };

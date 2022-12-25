@@ -5,7 +5,7 @@ import json from "../../package.json";
 
 interface MainLoggerProps {
 	local: string;
-	network: string | null;
+	network?: string;
 }
 export const main_logger = ({ local, network }: MainLoggerProps) => {
 	console.clear();
