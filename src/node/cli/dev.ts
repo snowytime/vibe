@@ -10,6 +10,7 @@ export const dev = async () => {
 		// const { local, network } = await config.addon.dev();
 		// main_logger({ local, network });
 	} catch (e) {
+		console.log(e);
 		throw new GenericError({ message: "Unable to parse for stories" });
 	}
 };
