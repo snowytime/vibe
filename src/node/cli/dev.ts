@@ -1,13 +1,20 @@
 import { GenericError } from "@errors/index.js";
-import { findFolder, findStories, getConfig, getVibeData } from "../index.js";
+import {
+	findFolder,
+	findStories,
+	getConfig,
+	getStoryData,
+	getVibeData
+} from "../index.js";
 
 export const dev = async () => {
 	try {
 		const [folder] = await findFolder();
 		const config = await getConfig(folder);
 		const stories = await findStories(config);
+		const storyData = await getStoryData(stories);
 		// const data = await getVibeData();
-		console.log({ config, stories });
+		console.log({ config, stories, storyData });
 		// const [folder] = await findFolder();
 		// const config = await getConfig(folder);
 		// const { local, network } = await config.addon.dev();
