@@ -10,13 +10,13 @@ export const extractStorynameMeta = (
 	);
 	assignments.forEach((assignment) => {
 		// we need to find the component name
-		if (assignment?.expression?.left.property?.value === "storyname") {
+		if (assignment?.expression?.left.property?.value === "storyName") {
 			const component = namedData.find(
 				(entry) =>
 					entry.componentName ===
 					assignment.expression.left.object.value
 			);
-			component["storyname"] = assignment.expression.right.value;
+			component["storyName"] = assignment.expression.right.value;
 		}
 		// possible meta
 		if (assignment?.expression?.left?.property?.value === "meta") {

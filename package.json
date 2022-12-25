@@ -5,6 +5,7 @@
 	"keywords": [],
 	"author": "snowytime",
 	"license": "ISC",
+	"type": "module",
 	"engines": {
 		"node": ">=16.0.0"
 	},
