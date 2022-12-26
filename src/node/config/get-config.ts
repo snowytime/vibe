@@ -11,7 +11,7 @@ export const getConfig = async (folderPath: string): Promise<Config> => {
 	}
 	try {
 		// const { default: config } = await import(configPath);
-		const config = await extractor(configPath);
+		const { default: config } = await extractor(configPath);
 		return resolveConfigs(config);
 	} catch (e) {
 		if (e instanceof Error) {
