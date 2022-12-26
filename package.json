@@ -18,15 +18,17 @@
 	],
 	"main": "dist/index.js",
 	"module": "dist/index.js",
-	"types": "types/index.d.ts",
+	"types": "dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
-			"require": "./dist/index.js"
+			"require": "./dist/index.js",
+			"types": "./dist/index.d.ts"
 		},
 		"./client": {
 			"import": "./dist/client/index.js",
-			"require": "./dist/client/index.js"
+			"require": "./dist/client/index.js",
+			"types": "./dist/index.d.ts"
 		}
 	},
 	"devDependencies": {
@@ -52,7 +54,7 @@
 		"picocolors": "^1.0.0"
 	},
 	"scripts": {
-		"build": "rm -rf dist && tsc -p ./tsconfig.build.json",
+		"build": "rm -rf dist && swc src -d dist && tsc -p ./tsconfig.build.json",
 		"start": "node dist/index.js",
 		"demo": "npm run build && node dist/node/cli/main.js",
 		"release:patch": "npm run build && git add . && git commit -m '🥳 auto patch' && git push origin master && npm version patch && npm publish"

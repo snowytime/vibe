@@ -7,8 +7,14 @@
 		"jsx": "react"
 	},
 	"include": ["./src/**/*"],
-	"skipLibCheck": true,
-	"ts-node": {
-		"esm": true
+	"paths": {
+		"@errors/*": ["./src/errors/*"],
+		"@debug/*": ["./src/debug/*"],
+		"@logs/*": ["./src/logs/*"],
+		"@finders/*": ["./src/node/finders/*"],
+		"@config/*": ["./src/node/config/*"],
+		"@helpers/*": ["./src/node/helpers/*"],
+		"@parsers/*": ["./src/node/ast/*"],
+		"@type/*": ["./src/types/*"]
 	}
 }
