@@ -1,7 +1,7 @@
-import { FinderError } from "@errors/index.js";
 import glob from "glob";
 import { join } from "node:path";
-import { finder_debugger } from "@debug/index.js";
+import { finder_debugger } from "../../debug/index.js";
+import { FinderError } from "../../errors/index.js";
 
 export const finder = async (
 	pattern: string | string[],

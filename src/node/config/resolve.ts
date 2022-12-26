@@ -1,4 +1,4 @@
-import { Config } from "@type/globals.js";
+import { Config } from "../../index.js";
 import { baseConfig } from "./base.js";
 
 export const resolveConfigs = (config: Config): Config => {

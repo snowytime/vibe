@@ -1,5 +1,5 @@
-import { GenericError } from "@errors/index.js";
-import { main_logger } from "@logs/index.js";
+import { GenericError } from "../../errors/index.js";
+import { main_logger } from "../../logs/index.js";
 import { findFolder, getConfig } from "../index.js";
 
 export const dev = async () => {

@@ -1,5 +1,5 @@
 import { ModuleItem } from "@swc/core";
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "../../index.js";
 import { generateId } from "../index.js";
 import { VisbyDefaultExport } from "./default.js";
 

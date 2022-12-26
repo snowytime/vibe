@@ -1,6 +1,6 @@
-import { GenericError } from "@errors/index.js";
-import { findConfig } from "@finders/index.js";
-import { Config } from "@type/globals.js";
+import { GenericError } from "../../errors/index.js";
+import { Config } from "../../index.js";
+import { findConfig } from "../index.js";
 import { resolveConfigs } from "./resolve.js";
 
 export const getConfig = async (folderPath: string): Promise<Config> => {

@@ -1,7 +1,7 @@
-import { GenericError } from "@errors/index.js";
-import { isEsm } from "@helpers/is-esm.js";
 import swc from "@swc/core";
 import fs from "node:fs";
+import { GenericError } from "../../errors/index.js";
+import { isEsm } from "../index.js";
 
 enum Syntax {
 	TS = "typescript",

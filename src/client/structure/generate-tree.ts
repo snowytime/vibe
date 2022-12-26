@@ -1,4 +1,4 @@
-import type { StoryData } from "@type/globals.js";
+import { StoryData } from "../../index.js";
 
 export interface Category {
 	name: string;

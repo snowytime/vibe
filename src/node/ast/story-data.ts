@@ -1,4 +1,4 @@
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "../../index.js";
 import { generator } from "./generator.js";
 
 // this function returns the story entry data that becomes used for the construction of

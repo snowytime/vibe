@@ -1,10 +1,10 @@
 {
-	"include": ["dist/**/*"],
-	"exclude": ["dist/types/**/*.js"],
+	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"allowJs": true,
+		"outDir": "dist",
 		"declaration": true,
-		"emitDeclarationOnly": true,
-		"declarationMap": true
-	}
+		"declarationMap": true,
+		"skipLibCheck": true
+	},
+	"include": ["src/**/*"]
 }

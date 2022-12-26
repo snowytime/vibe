@@ -1,6 +1,6 @@
 {
 	"name": "@snowytime/vibe",
-	"version": "0.0.21",
+	"version": "0.0.20",
 	"description": "The Vibe base engine",
 	"keywords": [],
 	"author": "snowytime",
@@ -51,7 +51,7 @@
 		"picocolors": "^1.0.0"
 	},
 	"scripts": {
-		"build": "rm -rf dist && swc src -d dist && tsc -p ./tsconfig.build.json",
+		"build": "tsc -p ./tsconfig.build.json",
 		"start": "node dist/index.js",
 		"demo": "npm run build && node dist/node/cli/main.js",
 		"release:patch": "npm run build && git add . && git commit -m '🥳 auto patch' && git push origin master && npm version patch && npm publish"

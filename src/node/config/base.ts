@@ -1,6 +1,6 @@
 // note that these properties will ONLY be used if their corresponding property in
 
-import { Config } from "@type/globals.js";
+import { Config } from "../../index.js";
 
 // the user defined config is not present.
 export const baseConfig: Omit<Config, "addon"> = {

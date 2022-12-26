@@ -1,4 +1,4 @@
-import { Config, JsonStructure, StoryData } from "@type/globals.js";
+import { Config, JsonStructure, StoryData } from "../../index.js";
 
 export const getJson = (
 	entryData: StoryData[],

@@ -1,5 +1,5 @@
-import { finder_debugger } from "@debug/index.js";
-import { Config } from "@type/globals.js";
+import { finder_debugger } from "../../debug/index.js";
+import { Config } from "../../index.js";
 import { finder } from "./finder.js";
 
 export const findStories = async (config: Config) => {

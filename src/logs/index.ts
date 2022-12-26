@@ -1,7 +1,6 @@
 // [NOTE] This service is what we use for logging things to the console (present in production)
 
 import pico from "picocolors";
-import json from "../../package.json" assert { type: "json" };
 
 interface MainLoggerProps {
 	local: string;
@@ -10,7 +9,7 @@ interface MainLoggerProps {
 export const main_logger = ({ local, network }: MainLoggerProps) => {
 	console.clear();
 	console.log(`
-${pico.green(`Lets Vibe 🔥 v.${json.version}\n`)}
+${pico.green(`Lets Vibe 🔥`)}
 ${pico.green("➜")} local:    ${pico.cyan(local)}
 ${pico.dim(pico.green("➜"))} ${pico.dim("network:")}  ${
 		network
