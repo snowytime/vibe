@@ -5,5 +5,5 @@ import { customAlphabet } from "nanoid";
  */
 export const generateId = () => {
 	const hash = customAlphabet("abcdefghijklmnopqrstuvwxyz1234567890", 10)();
-	return `Vibe-${hash}`;
+	return `Vibe_${hash}`;
 };
