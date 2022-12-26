@@ -24,9 +24,9 @@
 			"@config/*": ["./src/node/config/*"],
 			"@helpers/*": ["./src/node/helpers/*"],
 			"@parsers/*": ["./src/node/ast/*"],
-			"@type/*": ["./src/types/*"]
+			"@type/*": ["types/*"]
 		}
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "types"],
 	"exclude": ["node_modules"]
 }

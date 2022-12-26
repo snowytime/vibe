@@ -1,6 +1,6 @@
 {
 	"name": "@snowytime/vibe",
-	"version": "0.0.18",
+	"version": "0.0.17",
 	"description": "The Vibe base engine",
 	"keywords": [],
 	"author": "snowytime",
@@ -17,16 +17,15 @@
 	],
 	"main": "dist/index.js",
 	"module": "dist/index.js",
+	"types": "types/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/index.js",
-			"require": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"require": "./dist/index.js"
 		},
 		"./client": {
 			"import": "./dist/client/index.js",
-			"require": "./dist/client/index.js",
-			"types": "./dist/client/index.d.ts"
+			"require": "./dist/client/index.js"
 		}
 	},
 	"devDependencies": {
