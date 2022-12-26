@@ -13,7 +13,8 @@
 		"vibe": "./dist/node/cli/main.js"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"types"
 	],
 	"main": "dist/index.js",
 	"module": "dist/index.js",
