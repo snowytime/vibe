@@ -15,6 +15,7 @@
 			"@finders/*": ["./src/finders/*"],
 			"@config/*": ["./src/config/*"],
 			"@helpers/*": ["./src/helpers/*"],
+			"@structures/*": ["./src/structures/*"],
 			"@parsers/*": ["./src/ast/*"]
 		},
 		"baseUrl": "."
