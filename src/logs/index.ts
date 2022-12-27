@@ -6,10 +6,10 @@ interface MainLoggerProps {
 	local: string;
 	network?: string;
 }
-export const main_logger = ({ local, network }: MainLoggerProps) => {
+export const dev_logger = ({ local, network }: MainLoggerProps) => {
 	console.clear();
 	console.log(`
-${pico.green(`Lets Vibe 🔥`)}
+${pico.green(`Lets Vibe 🔥 -- ${pico.yellow("dev")}`)}
 ${pico.green("➜")} local:    ${pico.cyan(local)}
 ${pico.dim(pico.green("➜"))} ${pico.dim("network:")}  ${
 		network

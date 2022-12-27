@@ -12,10 +12,10 @@
 			"@debug/*": ["./src/debug/*"],
 			"@logs/*": ["./src/logs/*"],
 			"@type/*": ["./src/types/*"],
-			"@finders/*": ["./src/node/finders/*"],
-			"@config/*": ["./src/node/config/*"],
-			"@helpers/*": ["./src/node/helpers/*"],
-			"@parsers/*": ["./src/node/ast/*"]
+			"@finders/*": ["./src/finders/*"],
+			"@config/*": ["./src/config/*"],
+			"@helpers/*": ["./src/helpers/*"],
+			"@parsers/*": ["./src/ast/*"]
 		},
 		"baseUrl": "."
 	},

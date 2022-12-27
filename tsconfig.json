@@ -4,18 +4,20 @@
 		"moduleResolution": "NodeNext",
 		"target": "ES2020",
 		"sourceMap": true,
-		"jsx": "react"
+		"jsx": "react",
+		"baseUrl": ".",
+		"paths": {
+			"@errors/*": ["./src/errors/*"],
+			"@debug/*": ["./src/debug/*"],
+			"@logs/*": ["./src/logs/*"],
+			"@finders/*": ["./src/finders/*"],
+			"@config/*": ["./src/config/*"],
+			"@helpers/*": ["./src/helpers/*"],
+			"@structures/*": ["./src/structures/*"],
+			"@parsers/*": ["./src/ast/*"],
+			"@type/*": ["./src/types/*"]
+		}
 	},
 	"include": ["./src/**/*"],
-	"exclude": ["node_modules"],
-	"paths": {
-		"@errors/*": ["./src/errors/*"],
-		"@debug/*": ["./src/debug/*"],
-		"@logs/*": ["./src/logs/*"],
-		"@finders/*": ["./src/node/finders/*"],
-		"@config/*": ["./src/node/config/*"],
-		"@helpers/*": ["./src/node/helpers/*"],
-		"@parsers/*": ["./src/node/ast/*"],
-		"@type/*": ["./src/types/*"]
-	}
+	"exclude": ["node_modules"]
 }

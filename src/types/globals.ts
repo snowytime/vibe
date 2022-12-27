@@ -24,6 +24,13 @@ export interface Addon {
 	start: () => Promise<ServerReturn>;
 	create?: () => Promise<null>;
 }
+export type AddonDeclaration = (args?: unknown) => {
+	dev: () => Promise<ServerReturn>;
+	build: () => Promise<BuildReturn>;
+	start: () => Promise<ServerReturn>;
+	create?: () => Promise<null>;
+};
+
 export interface Config {
 	port: number | number[];
 	preview: number | number[];
