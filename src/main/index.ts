@@ -17,7 +17,7 @@ export const getVibeData = async () => {
 	const json = getJson(storyData, config);
 	return {
 		config,
-		stories,
+		stories: storyData,
 		json,
 		storyTree,
 		subscribers: [...stories, configPath]
