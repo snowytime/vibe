@@ -10,7 +10,7 @@
 		"node": ">=16.0.0"
 	},
 	"bin": {
-		"vibe": "./dist/node/cli/main.js"
+		"vibe": "./dist/cli/main.js"
 	},
 	"files": [
 		"dist",
