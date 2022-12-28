@@ -12,9 +12,10 @@ export interface StoryData {
 export interface ServerReturn {
 	local: string;
 	network?: string;
+	duration: number;
 }
 export interface BuildReturn {
-	status: string;
+	stories: number;
 	duration: number;
 	destination: string;
 }
