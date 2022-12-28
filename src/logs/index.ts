@@ -12,7 +12,7 @@ export const dev_logger = ({
 	console.clear();
 	console.log(`
 ${pico.yellow("[dev]")} ${pico.cyan(pico.bold("Time to Vibe"))} ⚡️${pico.green(
-		`ready in ${duration} ms`
+		`ready in ${duration.toFixed(0)} ms`
 	)}\n
 ${pico.dim("local:     ")}${pico.magenta(local)}
 ${pico.dim("network:   ")}${
@@ -37,7 +37,7 @@ export const build_logger = ({
 	console.log(`
 ${pico.yellow("[build]")} ${pico.cyan(
 		pico.bold("Vibe build successful")
-	)} ⚡️${pico.green(`completed in ${duration} ms`)}\n
+	)} ⚡️${pico.green(`completed in ${duration.toFixed(0)} ms`)}\n
 ${`run ${pico.bgCyan(" npx vibe start ")} to run the build`}\n
 ${`✅ compiled ${pico.green(`${stories} stories`)} successfully`}
 ${`✅ saved in ${pico.cyan(destination)}`}
@@ -58,7 +58,7 @@ export const start_logger = ({
 	console.log(`
 ${pico.green("[start]")} ${pico.cyan(
 		pico.bold("Time to Vibe")
-	)} ⚡️${pico.green(`ready in ${duration} ms`)}\n
+	)} ⚡️${pico.green(`ready in ${duration.toFixed(0)} ms`)}\n
 ${pico.dim("local:     ")}${pico.magenta(local)}
 ${pico.dim("network:   ")}${
 		network
