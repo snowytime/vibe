@@ -3,16 +3,18 @@ import pico from "picocolors";
 export const dev_logger = ({
 	local,
 	network,
-	duration
+	duration,
+	stories
 }: {
 	local: string;
 	network?: string | null;
 	duration: number;
+	stories: number;
 }) => {
 	console.clear();
 	console.log(`
 ${pico.yellow("[dev]")} ${pico.cyan(pico.bold("Time to Vibe"))} ⚡️${pico.green(
-		`ready in ${duration.toFixed(0)} ms`
+		`${stories} stories ready in ${duration.toFixed(0)} ms`
 	)}\n
 ${pico.dim("local:     ")}${pico.magenta(local)}
 ${pico.dim("network:   ")}${
@@ -48,17 +50,21 @@ ${`✅ saved in ${pico.cyan(destination)}`}
 export const start_logger = ({
 	local,
 	network,
-	duration
+	duration,
+	stories
 }: {
 	local: string;
 	network?: string | null;
 	duration: number;
+	stories: number;
 }) => {
 	console.clear();
 	console.log(`
 ${pico.green("[start]")} ${pico.cyan(
 		pico.bold("Time to Vibe")
-	)} ⚡️${pico.green(`ready in ${duration.toFixed(0)} ms`)}\n
+	)} ⚡️${pico.green(
+		`${stories} stories ready in ${duration.toFixed(0)} ms`
+	)}\n
 ${pico.dim("local:     ")}${pico.magenta(local)}
 ${pico.dim("network:   ")}${
 		network

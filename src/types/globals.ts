@@ -13,6 +13,7 @@ export interface ServerReturn {
 	local: string;
 	network?: string;
 	duration: number;
+	stories: number;
 }
 export interface BuildReturn {
 	stories: number;
