@@ -48,15 +48,19 @@ ${`✅ saved in ${pico.cyan(destination)}`}
 
 export const create_logger = ({
 	duration,
-	destination
+	destination,
+	exists
 }: {
 	duration: number;
 	destination: string;
+	exists: boolean;
 }) => {
 	console.clear();
 	console.log(`
 ${pico.yellow("[create]")} ${pico.cyan(
-		pico.bold("Vibe stuff created")
+		exists
+			? pico.bold("Vibe already exists -- aborting")
+			: pico.bold("Vibe stuff created")
 	)} ⚡️${pico.green(`completed in ${duration.toFixed(0)} ms`)}\n
 ${`✅ setup in ${pico.cyan(destination)}`}
 ${`👋 Hint: Before you run ${pico.bgCyan(

@@ -18,11 +18,10 @@ async function writeFile(filePath: string, data: string) {
 	try {
 		const dirname = path.dirname(filePath);
 		const exist = await isExists(dirname);
-		if (!exist) {
-			await fs.promises.mkdir(dirname, { recursive: true });
-		}
-
+		if (exist) return true;
+		await fs.promises.mkdir(dirname, { recursive: true });
 		await fs.promises.writeFile(filePath, data, "utf8");
+		return false;
 	} catch (err) {
 		throw new Error(err);
 	}
@@ -34,20 +33,15 @@ export const create = async () => {
 		const destination = process.cwd();
 
 		// we wanna set up the correct files
-		try {
-			await writeFile(
-				path.join(destination, ".vibe/vibe.config.mjs"),
-				"export default {};"
-			);
-		} catch (e) {
-			console.log(e);
-			throw e;
-		}
+		const exists = await writeFile(
+			path.join(destination, ".vibe/vibe.config.mjs"),
+			"export default {};"
+		);
 
 		// stop the timer
 		const stopTime = performance.now();
 		const duration = stopTime - startTime;
-		create_logger({ duration, destination });
+		create_logger({ duration, destination, exists });
 	} catch (e) {
 		if (e instanceof Error) throw new GenericError(e);
 		throw e;
