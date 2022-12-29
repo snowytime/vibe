@@ -59,7 +59,7 @@ export const create_logger = ({
 	console.log(`
 ${pico.yellow("[create]")} ${pico.cyan(
 		exists
-			? pico.bold("Vibe already exists -- aborting")
+			? pico.yellow(pico.bold("Vibe already exists -- aborting"))
 			: pico.bold("Vibe stuff created")
 	)} ⚡️${pico.green(`completed in ${duration.toFixed(0)} ms`)}\n
 ${`✅ setup in ${pico.cyan(destination)}`}
