@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/87044139/209898638-7b44738b-0ed9-4cfd-9d02-f7bca4a9ac9a.png" alt="Vibe" width="60"/>
+
 # Vibe.js
 
 `core`
