@@ -20,11 +20,15 @@ export interface BuildReturn {
 	duration: number;
 	destination: string;
 }
+export interface CreateReturn {
+	duration: number;
+	destination: string;
+}
 export interface Addon {
 	dev: () => Promise<ServerReturn>;
 	build: () => Promise<BuildReturn>;
 	start: () => Promise<ServerReturn>;
-	create?: () => Promise<null>;
+	create?: () => Promise<CreateReturn>;
 }
 export type AddonDeclaration = (args?: unknown) => {
 	dev: () => Promise<ServerReturn>;

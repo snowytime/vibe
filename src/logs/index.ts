@@ -46,6 +46,25 @@ ${`✅ saved in ${pico.cyan(destination)}`}
 `);
 };
 
+export const create_logger = ({
+	duration,
+	destination
+}: {
+	duration: number;
+	destination: string;
+}) => {
+	console.clear();
+	console.log(`
+${pico.yellow("[create]")} ${pico.cyan(
+		pico.bold("Vibe stuff created")
+	)} ⚡️${pico.green(`completed in ${duration.toFixed(0)} ms`)}\n
+${`✅ setup in ${pico.cyan(destination)}`}
+${`👋 Hint: Before you run ${pico.bgCyan(
+	" npx vibe dev "
+)} remember to install your framework addon and put into the config !!!`}
+`);
+};
+
 // start
 export const start_logger = ({
 	local,
