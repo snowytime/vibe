@@ -37,11 +37,7 @@ export const create = async () => {
 		try {
 			await writeFile(
 				path.join(destination, ".vibe/vibe.config.mjs"),
-				`
-export default = {
-	addon: /* addon() */
-}
-`
+				"export default {};"
 			);
 		} catch (e) {
 			console.log(e);
