@@ -62,9 +62,6 @@ framework.
 import customAddon from "custom-vibe-addon";
 export default {
 	// .. some other config things
-	// you can pass arguments into the addon and vibe will
-	// trickle them down to your addon declaration where
-	// you can do with them as you'd like (ui, etc.)
-	addons: [customAddon()]
+	addon: customAddon()
 };
 ```
