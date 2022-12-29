@@ -20,7 +20,7 @@ program.command("start").action(async () => {
 });
 
 // create operation
-program.command("start").action(async () => {
+program.command("create").action(async () => {
 	await create();
 });
 
