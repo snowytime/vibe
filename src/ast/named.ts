@@ -21,7 +21,7 @@ export const extractNamedExports = (
 		named.push({
 			url: resolvedPathName,
 			path,
-			id: generateId(),
+			id: generateId(resolvedPathName),
 			componentName
 		});
 	});
