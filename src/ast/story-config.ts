@@ -31,7 +31,7 @@ const getConfig = (entry, assignments) => {
 			property.key.value === "path"
 		) {
 			// just toss it on the object
-			entry["url"] = property.value.value;
+			entry["url"] = `${property.value.value}/${entry.componentName}`;
 			return;
 		}
 		// bare primitives (string, number, boolean)
