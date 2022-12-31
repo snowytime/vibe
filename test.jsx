@@ -6,7 +6,13 @@ Component.config = {
     age: 10,
     open: false,
     tags: ['pre', 2, false],
-    path: 'atoms/avatar'
+    path: 'atoms/avatar',
+    decorators: [
+        ({ Component }) => <Component />
+    ],
+    arguments: {
+        name: 'Snaer'
+    }
 };
 
 export const Component2 = () => <button>hello</button>;

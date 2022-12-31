@@ -1,4 +1,4 @@
-import { getTree } from "./dist/ast/_/get-tree.js";
+import { getTree } from "./dist/ast/get-tree.js";
 
 const main = async () => {
 	const startTime = performance.now();

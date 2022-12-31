@@ -36,16 +36,6 @@ const getConfig = (entry, assignments) => {
 		}
 		// bare primitives (string, number, boolean)
 		extractProperty(property, entry);
-		if (
-			property.type === "KeyValueProperty" &&
-			["StringLiteral", "BooleanLiteral", "NumberLiteral"].includes(
-				property.value.type
-			) &&
-			!restricted.includes(property.value.type)
-		) {
-			// just toss it on the object
-			entry[property.key.value] = property.value.value;
-		}
 	});
 };
 
@@ -62,14 +52,14 @@ const getBareLiteral = (property) => {
 	return [property.key.value, property.value.value];
 };
 const extractProperty = (property, entry) => {
-	const restricted = ["id", "componentName", "path", "url"];
+	const restricted = ["id", "componentName", "path", "url", "decorators"];
 	// raw literals
 	if (
 		property.type === "KeyValueProperty" &&
 		["StringLiteral", "BooleanLiteral", "NumberLiteral"].includes(
 			property.value.type
 		) &&
-		!restricted.includes(property.value.type)
+		!restricted.includes(property.key.value)
 	) {
 		// just toss it on the object
 		const [key, value] = getBareLiteral(property);
@@ -77,7 +67,8 @@ const extractProperty = (property, entry) => {
 	}
 	if (
 		property.type === "KeyValueProperty" &&
-		property.value.type === "ArrayExpression"
+		property.value.type === "ArrayExpression" &&
+		!restricted.includes(property.key.value)
 	) {
 		// just toss it on the object
 		const elements = [];
