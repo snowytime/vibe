@@ -21,7 +21,8 @@ const getConfig = (entry, assignments) => {
 		isConfigDeclaration(item, entry.componentName)
 	);
 	// we need to parse this result to get the properties
-	const value = assignment.expression.right;
+	const value = assignment?.expression?.right;
+	if (!value) return;
 	value.properties.forEach((property) => {
 		// get the path (only restricted key)
 		if (
@@ -51,8 +52,16 @@ const getBareLiteral = (property) => {
 	return [property.key.value, property.value.value];
 };
 const extractProperty = (property, entry) => {
-	const restricted = ["id", "componentName", "path", "url", "decorators"];
+	const restricted = [
+		"id",
+		"componentName",
+		"path",
+		"url",
+		"decorators",
+		"arguments"
+	];
 	// raw literals
+	if (restricted.includes(property.key.value)) return;
 	if (
 		property.type === "KeyValueProperty" &&
 		["StringLiteral", "BooleanLiteral", "NumberLiteral"].includes(

@@ -17,7 +17,7 @@ Base.config = {
     name: 'Adam West'
   },
   decorators: [
-    ({ Component }: any) => <Component />
+    ({ Component }) => <Component />
   ]
 }
 
