@@ -23,7 +23,6 @@ const getConfig = (entry, assignments) => {
 	// we need to parse this result to get the properties
 	const value = assignment.expression.right;
 	value.properties.forEach((property) => {
-		const restricted = ["id", "componentName", "path", "url"];
 		// get the path (only restricted key)
 		if (
 			property.type === "KeyValueProperty" &&
