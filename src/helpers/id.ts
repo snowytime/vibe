@@ -1,3 +1,3 @@
 export const generateId = (seed: string) => {
-	return `Vibe_${seed.replace(/\//g, "_")}`;
+	return "Vibe_" + Buffer.from(seed).toString("hex");
 };

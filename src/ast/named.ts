@@ -1,28 +1,19 @@
+import { generateId } from "@helpers/id.js";
 import { ModuleItem } from "@swc/core";
-import { generateId } from "../index.js";
-import { VisbyDefaultExport } from "./default.js";
-import { StoryData } from "@type/index.js";
+import { StoryData } from "@type/globals.js";
 
-// other properties (i.e. decorator) is extracted later
-
-export const extractNamedExports = (
-	ast: ModuleItem[],
-	family: VisbyDefaultExport,
-	path: string
-) => {
+export const named = async (ast: ModuleItem[], path: string) => {
 	const named: StoryData[] = [];
 	const namedExports = ast.filter((e) => e.type === "ExportDeclaration");
 	namedExports.forEach((declaration) => {
 		const componentName = getComponentName(declaration);
 		const fileName = path.split("/").at(-1)?.split(".")[0].toLowerCase();
-		const resolvedPathName = family.title
-			? `${family.title}/${componentName.toLowerCase()}`
-			: `todo/${fileName}/${componentName.toLowerCase()}`;
 		named.push({
-			url: resolvedPathName,
 			path,
-			id: generateId(resolvedPathName),
-			componentName
+			id: generateId(`${path}${componentName}`),
+			componentName,
+			// the url will be changed if we find a `name` property in the story config
+			url: `todo/${fileName}/${componentName}`
 		});
 	});
 	return named;
