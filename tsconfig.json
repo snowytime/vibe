@@ -6,7 +6,6 @@
 		"sourceMap": true,
 		"jsx": "react",
 		"baseUrl": ".",
-		"rootDir": "./",
 		"paths": {
 			"@errors/*": ["./src/errors/*"],
 			"@debug/*": ["./src/debug/*"],
@@ -21,8 +20,5 @@
 		}
 	},
 	"include": ["./src/**/*", "./app/**/*"],
-	"exclude": ["node_modules"],
-	"ts-node": {
-		"esm": true
-	}
+	"exclude": ["node_modules"]
 }
