@@ -4,8 +4,8 @@ import { devServer } from "../server/dev.js";
 
 export const dev = async () => {
 	try {
-		await devServer();
-		// dev_logger({ local, network, duration, stories });
+		const { local, network, duration, stories } = await devServer();
+		dev_logger({ local, network, duration, stories });
 	} catch (e) {
 		if (e instanceof Error) throw new GenericError(e);
 		throw e;
