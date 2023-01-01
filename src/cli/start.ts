@@ -1,6 +1,6 @@
 import { GenericError } from "@errors/index.js";
 import { start_logger } from "@logs/index.js";
-import { startProduction } from "src/server/start.js";
+import { startProduction } from "../server/start.js";
 
 export const start = async () => {
 	try {
