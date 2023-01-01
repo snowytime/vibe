@@ -59,6 +59,7 @@
 		"glob": "^8.0.3",
 		"nanoid": "^4.0.0",
 		"picocolors": "^1.0.0",
+		"react-router-dom": "^6.6.1",
 		"vite": "^4.0.3",
 		"vite-tsconfig-paths": "^4.0.3"
 	},

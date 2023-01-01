@@ -4,7 +4,7 @@ import { findHead } from "@finders/find-head.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getVibeData } from "src/index.js";
+import { getVibeData } from "../main/index.js";
 import { allImports } from "./all.js";
 
 function cleanupWindowsPath(path: string) {
