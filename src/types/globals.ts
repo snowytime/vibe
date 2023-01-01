@@ -20,16 +20,6 @@ export interface BuildReturn {
 	duration: number;
 	destination: string;
 }
-export interface Addon {
-	dev: () => Promise<ServerReturn>;
-	build: () => Promise<BuildReturn>;
-	start: () => Promise<ServerReturn>;
-}
-export type AddonDeclaration = (args?: unknown) => {
-	dev: () => Promise<ServerReturn>;
-	build: () => Promise<BuildReturn>;
-	start: () => Promise<ServerReturn>;
-};
 
 export interface Config {
 	port: number | number[];
@@ -42,7 +32,6 @@ export interface Config {
 	website: string;
 	repo: string;
 	version: string;
-	addon: Addon;
 }
 
 export interface JsonStructure {

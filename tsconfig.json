@@ -15,10 +15,11 @@
 			"@helpers/*": ["./src/helpers/*"],
 			"@structures/*": ["./src/structures/*"],
 			"@parsers/*": ["./src/ast/*"],
-			"@type/*": ["./src/types/*"]
+			"@type/*": ["./src/types/*"],
+			"virtual:vibe": ["./app/src/app.d.ts"]
 		}
 	},
-	"include": ["./src/**/*"],
+	"include": ["./src/**/*", "./app/**/*"],
 	"exclude": ["node_modules"],
 	"ts-node": {
 		"esm": true
