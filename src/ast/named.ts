@@ -33,7 +33,6 @@ const resolveUrl = (
 	fileName: string,
 	familyPath: string | undefined
 ) => {
-	console.log(familyPath);
 	if (familyPath) {
 		return `${familyPath}${
 			familyPath.at(-1) === "/" ? "" : "/"
