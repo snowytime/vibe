@@ -10,6 +10,8 @@ import { findVite } from "@finders/find-vite.js";
 import { findStories } from "@finders/find-stories.js";
 import { getStoryData } from "@parsers/together.js";
 import { json } from "../main/json.js";
+import { globby } from "globby";
+import { join } from "node:path";
 
 export const devServer = async (
 	config: Config
@@ -54,8 +56,11 @@ export const devServer = async (
 		app.head("*", async (_, res) => res.sendStatus(200));
 		app.get("/meta.json", async (_, res) => {
 			// always send the latest json data
-			const stories = await findStories(config);
-			const storyData = await getStoryData(stories);
+			const stories = await globby(config.stories);
+			const fixedStories = stories.map((story) =>
+				join(process.cwd(), story)
+			);
+			const storyData = await getStoryData(fixedStories);
 			const jsonData = json(config, storyData);
 			res.send(jsonData);
 		});
@@ -83,8 +88,11 @@ export const devServer = async (
 		let checkSum = "";
 		const getChecksum = async () => {
 			try {
-				const stories = await findStories(config);
-				const storyData = await getStoryData(stories);
+				const stories = await globby(config.stories);
+				const fixedStories = stories.map((story) =>
+					join(process.cwd(), story)
+				);
+				const storyData = await getStoryData(fixedStories);
 				const jsonData = json(config, storyData);
 				return jsonData;
 			} catch (e) {

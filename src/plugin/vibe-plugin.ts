@@ -105,10 +105,11 @@ export default function vibePlugin(config) {
 			if (id === resolvedVirtualModuleId) {
 				try {
 					// dynamic returns all the component lazy imports and related things
-					const stories = await globby(
-						join(process.cwd(), config.stories)
+					const stories = await globby(config.stories);
+					const fixedStories = stories.map((story) =>
+						join(process.cwd(), story)
 					);
-					const storyData = await getStoryData(stories);
+					const storyData = await getStoryData(fixedStories);
 					const storyTree = generateTree(storyData);
 					const imports = await allImports(
 						storyData,
