@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { getConfig } from "@config/get-config.js";
 import { Command } from "commander";
 import { build, create, dev, start } from "./index.js";
 
@@ -6,17 +7,20 @@ const program = new Command("vibe");
 
 // dev operation
 program.command("dev").action(async () => {
-	await dev();
+	const config = await getConfig();
+	await dev(config);
 });
 
 // build operation
 program.command("build").action(async () => {
-	await build();
+	const config = await getConfig();
+	await build(config);
 });
 
 // start operation
 program.command("start").action(async () => {
-	await start();
+	const config = await getConfig();
+	await start(config);
 });
 
 // create operation

@@ -2,12 +2,13 @@ import { performance } from "node:perf_hooks";
 import { getBase } from "./base.js";
 import { build } from "vite";
 import { join } from "node:path";
-import { getVibeData } from "../main/index.js";
+import { Config } from "@type/globals.js";
+import { findVite } from "@finders/find-vite.js";
 
-export const buildProduction = async () => {
+export const buildProduction = async (config: Config) => {
 	const startTime = performance.now();
-	const { subscribers, config, vitePath } = await getVibeData();
 	const destination = join(process.cwd(), config.out);
+	const [vitePath] = await findVite();
 	try {
 		const viteConfig = await getBase(
 			{
@@ -27,7 +28,6 @@ export const buildProduction = async () => {
 	const stopTime = performance.now();
 	const duration = stopTime - startTime;
 	return {
-		stories: subscribers.length - 1,
 		destination,
 		duration
 	};

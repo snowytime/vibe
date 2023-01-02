@@ -1,10 +1,12 @@
+import { getConfig } from "@config/get-config.js";
 import { findBody } from "@finders/find-body.js";
-import { findFolder } from "@finders/find-folder.js";
 import { findHead } from "@finders/find-head.js";
+import { findStories } from "@finders/find-stories.js";
+import { getStoryData } from "@parsers/together.js";
+import { generateTree } from "@structures/generate-tree.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getVibeData } from "../main/index.js";
 import { allImports } from "./all.js";
 
 function cleanupWindowsPath(path: string) {
@@ -27,13 +29,12 @@ export default function vibePlugin() {
 		transformIndexHtml: {
 			async transform(html: string, ctx: any) {
 				if (ctx.path === "/index.html") {
-					const [folder] = await findFolder();
-					const [headHtmlPath] = await findHead(folder);
+					const [headHtmlPath] = await findHead();
 					if (headHtmlPath) {
 						const headHtml = fs.readFileSync(headHtmlPath, "utf8");
 						html = html.replace("</head>", `${headHtml}</head>`);
 					}
-					const body = await findBody(folder);
+					const body = await findBody();
 					if (body.length > 0) {
 						// can either be before, or after
 						body.forEach((entry: any) => {
@@ -103,9 +104,12 @@ export default function vibePlugin() {
 			if (id === resolvedVirtualModuleId) {
 				try {
 					// dynamic returns all the component lazy imports and related things
-					const { stories, storyTree, config } = await getVibeData();
+					const config = await getConfig();
+					const stories = await findStories(config);
+					const storyData = await getStoryData(stories);
+					const storyTree = generateTree(storyData);
 					const imports = await allImports(
-						stories,
+						storyData,
 						config,
 						storyTree
 					);

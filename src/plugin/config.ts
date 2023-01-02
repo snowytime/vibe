@@ -1,9 +1,6 @@
-import { getConfig } from "@config/get-config.js";
-import { findFolder } from "@finders/find-folder.js";
+import { Config } from "@type/globals.js";
 
-export const generateConfigImport = async () => {
-	const [folder] = await findFolder();
-	const config = await getConfig(folder);
+export const generateConfigImport = async (config?: Config) => {
 	let configCode = `export let config = {};\n`;
 	if (config) {
 		configCode += `config = ${JSON.stringify(config)}`;

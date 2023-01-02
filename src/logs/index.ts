@@ -3,19 +3,15 @@ import pico from "picocolors";
 export const dev_logger = ({
 	local,
 	network,
-	duration,
-	stories
+	duration
 }: {
 	local: string;
 	network?: string | null;
 	duration: number;
-	stories: number;
 }) => {
 	console.clear();
 	console.log(`
-${pico.yellow("[dev]")} ${pico.cyan(pico.bold("Time to Vibe"))} ⚡️${pico.green(
-		`${stories} stories ready in ${duration.toFixed(0)} ms`
-	)}\n
+${pico.yellow("[dev]")} ${pico.cyan(pico.bold("Time to Vibe"))} ⚡️\n
 ${pico.dim("local:     ")}${pico.magenta(local)}
 ${pico.dim("network:   ")}${
 		network

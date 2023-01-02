@@ -5,16 +5,21 @@ import { getBase } from "./base.js";
 import chokidar from "chokidar";
 import os from "node:os";
 import { performance } from "node:perf_hooks";
-import { getVibeData } from "../main/index.js";
+import { Config } from "@type/globals.js";
+import { findVite } from "@finders/find-vite.js";
+import { findStories } from "@finders/find-stories.js";
+import { getStoryData } from "@parsers/together.js";
+import { json } from "../main/json.js";
 
-export const devServer = async (): Promise<{
+export const devServer = async (
+	config: Config
+): Promise<{
 	local: string;
 	network?: string;
 	duration: number;
-	stories: number;
 }> => {
 	const startTime = performance.now();
-	const { subscribers, config, vitePath } = await getVibeData();
+	const [vitePath] = await findVite();
 	const app = express();
 	const configPorts = Array.isArray(config.port)
 		? config.port
@@ -49,8 +54,10 @@ export const devServer = async (): Promise<{
 		app.head("*", async (_, res) => res.sendStatus(200));
 		app.get("/meta.json", async (_, res) => {
 			// always send the latest json data
-			const { json } = await getVibeData();
-			res.json(json);
+			const stories = await findStories(config);
+			const storyData = await getStoryData(stories);
+			const jsonData = json(config, storyData);
+			res.send(jsonData);
 		});
 		const { base } = viteConfig;
 		if (base && base !== "/" && base !== "./") {
@@ -69,15 +76,17 @@ export const devServer = async (): Promise<{
 			: null;
 		app.listen(port);
 		// hmr updating
-		const watcher = chokidar.watch(subscribers, {
+		const watcher = chokidar.watch(config.stories, {
 			persistent: true,
 			ignoreInitial: true
 		});
 		let checkSum = "";
 		const getChecksum = async () => {
 			try {
-				const { json } = await getVibeData();
-				return JSON.stringify(json);
+				const stories = await findStories(config);
+				const storyData = await getStoryData(stories);
+				const jsonData = json(config, storyData);
+				return jsonData;
 			} catch (e) {
 				return checkSum;
 			}
@@ -108,8 +117,7 @@ export const devServer = async (): Promise<{
 		return {
 			local: localUrl,
 			network: networkUrl,
-			duration,
-			stories: subscribers.length - 1
+			duration
 		};
 	} catch (e) {
 		throw e;

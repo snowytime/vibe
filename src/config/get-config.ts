@@ -4,8 +4,8 @@ import { resolveConfigs } from "./resolve.js";
 import { Config } from "@type/index.js";
 import { GenericError } from "@errors/index.js";
 
-export const getConfig = async (folderPath: string): Promise<Config> => {
-	const [configPath] = await findConfig(folderPath);
+export const getConfig = async (): Promise<Config> => {
+	const [configPath] = await findConfig();
 	if (!configPath) {
 		throw "Cannot get config without the .vibe folder";
 	}

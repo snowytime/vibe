@@ -1,5 +1,4 @@
 export * from "./finder.js";
-export * from "./find-folder.js";
 export * from "./find-config.js";
 export * from "./find-body.js";
 export * from "./find-entry.js";

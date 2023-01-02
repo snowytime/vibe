@@ -2,17 +2,17 @@ import getPort from "get-port";
 import os from "node:os";
 import { join } from "node:path";
 import { performance } from "node:perf_hooks";
-import { getVibeData } from "../main/index.js";
 import { preview } from "vite";
 import { getBase } from "./base.js";
+import { Config } from "@type/globals.js";
+import { findVite } from "@finders/find-vite.js";
 
 // note that this server does not respond to local changes
-export const startProduction = async () => {
+export const startProduction = async (config: Config) => {
 	// start with the initial setup
 	const startTime = performance.now();
-	const { subscribers, config, vitePath } = await getVibeData();
 	const destination = join(process.cwd(), config.out);
-
+	const [vitePath] = await findVite();
 	const configPorts = Array.isArray(config.preview)
 		? config.preview
 		: [config.preview];
@@ -54,8 +54,7 @@ export const startProduction = async () => {
 		return {
 			local: localUrl,
 			network: networkUrl,
-			duration,
-			stories: subscribers.length - 1
+			duration
 		};
 	} catch (e) {
 		console.log(e);

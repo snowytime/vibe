@@ -11,7 +11,7 @@ export const allImports = async (
 	config: Config,
 	storyTree: Tree
 ) => {
-	const configImport = await generateConfigImport();
+	const configImport = await generateConfigImport(config);
 	// dynamic returns all the component lazy imports and related things
 	const dynamic = generateDynamicImports(entryData);
 	// this is the story list that references the components defined above

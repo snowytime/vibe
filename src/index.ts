@@ -5,5 +5,4 @@ export * from "./config/index.js";
 export * from "./extractors/index.js";
 export * from "./finders/index.js";
 export * from "./helpers/index.js";
-export * from "./main/index.js";
 export * from "./structures/index.js";

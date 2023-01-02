@@ -1,7 +1,9 @@
 import { finder_debugger } from "@debug/index.js";
+import { join } from "node:path";
 import { finder } from "./finder.js";
 
-export const findBody = async (folderPath: string) => {
+export const findBody = async () => {
+	const folderPath = join(process.cwd(), ".vibe");
 	const results = await finder(["before.html", "after.html"], folderPath);
 	if (results.length) {
 		results.forEach((result) => {
