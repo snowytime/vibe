@@ -33,11 +33,12 @@ const resolveUrl = (
 	fileName: string,
 	familyPath: string | undefined
 ) => {
+	console.log(familyPath);
 	if (familyPath) {
 		return `${familyPath}${
 			familyPath.at(-1) === "/" ? "" : "/"
 		}${componentName}`;
 	} else {
-		`todo/${fileName}/${componentName}`;
+		return `todo/${fileName}/${componentName}`;
 	}
 };

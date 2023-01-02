@@ -1,22 +1,22 @@
-export default {
-    path: 'atoms/avatars',
-    name: 'snaer',
-    age: 24,
-    active: false,
-    tags: [1, true, 'nee', null, { name: 'Noi' }],
-    decorator: ({ Component }) => (
-        <>
-            <h6>Family Decorator</h6>
-            <Component />
-        </>
-    ),
-    meta: {
-        name: 'Snaer',
-        details: {
-            age: 25
-        }
-    }
-}
+// export default {
+//     path: 'atoms/avatars',
+//     name: 'snaer',
+//     age: 24,
+//     active: false,
+//     tags: [1, true, 'nee', null, { name: 'Noi' }],
+//     decorator: ({ Component }) => (
+//         <>
+//             <h6>Family Decorator</h6>
+//             <Component />
+//         </>
+//     ),
+//     meta: {
+//         name: 'Snaer',
+//         details: {
+//             age: 25
+//         }
+//     }
+// }
 
 // story
 export const First = () => {
