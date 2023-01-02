@@ -51,7 +51,7 @@ export const getBase = async (
 				tsconfigPaths({
 					root: process.cwd()
 				}),
-			vibePlugin(),
+			vibePlugin(userConfig),
 			// @ts-ignore
 			!hasReact && reactPlugin()
 		]

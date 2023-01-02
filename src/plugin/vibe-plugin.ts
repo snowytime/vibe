@@ -4,8 +4,9 @@ import { findHead } from "@finders/find-head.js";
 import { findStories } from "@finders/find-stories.js";
 import { getStoryData } from "@parsers/together.js";
 import { generateTree } from "@structures/generate-tree.js";
+import { globby } from "globby";
 import fs from "node:fs";
-import path from "node:path";
+import path, { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { allImports } from "./all.js";
 
@@ -15,7 +16,7 @@ function cleanupWindowsPath(path: string) {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default function vibePlugin() {
+export default function vibePlugin(config) {
 	const virtualModuleId = "virtual:vibe";
 	const resolvedVirtualModuleId = "\0" + virtualModuleId;
 	return {
@@ -104,8 +105,9 @@ export default function vibePlugin() {
 			if (id === resolvedVirtualModuleId) {
 				try {
 					// dynamic returns all the component lazy imports and related things
-					const config = await getConfig();
-					const stories = await findStories(config);
+					const stories = await globby(
+						join(process.cwd(), config.stories)
+					);
 					const storyData = await getStoryData(stories);
 					const storyTree = generateTree(storyData);
 					const imports = await allImports(
