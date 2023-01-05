@@ -1,15 +1,9 @@
-import path from "node:path";
-import { getStoryData } from "../dist/ast/together.js";
-
+import { createHash } from "node:crypto";
 const main = async () => {
-	const startTime = performance.now();
-	const data = await getStoryData([
-		path.join(process.cwd(), ".test/test.jsx")
-	]);
-	const stopTime = performance.now();
-	const duration = stopTime - startTime;
-	console.log(`:: Processed in ${duration.toFixed(2)}ms`);
-	console.log(data);
+	const hash = createHash("sha256")
+		.update("super long string that is annoying")
+		.digest("hex");
+	console.log(hash);
 };
 
 main();
