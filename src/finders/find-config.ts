@@ -1,13 +1,16 @@
-import { finder_debugger } from "@debug/index.js";
+import { finderDebugger } from "@debug/index.js";
+import { globby } from "globby";
 import { join } from "node:path";
-import { finder } from "./finder.js";
 
 export const findConfig = async () => {
-	const folderPath = join(process.cwd(), ".vibe");
-	const vibePattern = "vibe.config.mjs";
-	const results = await finder(vibePattern, folderPath);
-	if (results.length) {
-		finder_debugger("Vibe config found");
-	}
-	return results;
+    const folderPath = join(process.cwd(), ".vibe");
+    const pattern = "vibe.config.mjs";
+    const results = await globby(pattern, {
+        cwd: folderPath,
+    });
+    if (results.length) {
+        finderDebugger("Vibe config found");
+        return join(folderPath, results[0]);
+    }
+    return null;
 };

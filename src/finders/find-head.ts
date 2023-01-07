@@ -1,12 +1,16 @@
-import { finder_debugger } from "@debug/index.js";
+import { finderDebugger } from "@debug/index.js";
+import { globby } from "globby";
 import { join } from "node:path";
-import { finder } from "./finder.js";
 
 export const findHead = async () => {
-	const folderPath = join(process.cwd(), ".vibe");
-	const results = await finder("head.html", folderPath);
-	if (results.length) {
-		finder_debugger("Custom head.html found");
-	}
-	return results;
+    const folderPath = join(process.cwd(), ".vibe");
+    const pattern = "head.html";
+    const results = await globby(pattern, {
+        cwd: folderPath,
+    });
+    if (results.length) {
+        finderDebugger("Head html found");
+        return join(folderPath, results[0]);
+    }
+    return null;
 };
