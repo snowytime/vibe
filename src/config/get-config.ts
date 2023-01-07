@@ -5,18 +5,18 @@ import { Config } from "@type/index.js";
 import { GenericError } from "@errors/index.js";
 
 export const getConfig = async (): Promise<Config> => {
-	const [configPath] = await findConfig();
-	if (!configPath) {
-		throw "Cannot get config without the .vibe folder";
-	}
-	try {
-		// const { default: config } = await import(configPath);
-		const { default: config } = await extractor(configPath);
-		return resolveConfigs(config);
-	} catch (e) {
-		if (e instanceof Error) {
-			throw new GenericError(e);
-		}
-		throw e;
-	}
+    const configPath = await findConfig();
+    if (!configPath) {
+        throw "Cannot get config without the .vibe folder";
+    }
+    try {
+        // const { default: config } = await import(configPath);
+        const { default: config } = await extractor(configPath);
+        return resolveConfigs(config);
+    } catch (e) {
+        if (e instanceof Error) {
+            throw new GenericError(e);
+        }
+        throw e;
+    }
 };
