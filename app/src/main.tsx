@@ -1,13 +1,14 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-
 import { stories, storyTree, config, Entry, Context } from "virtual:vibe";
+
 export { Context };
 
 const Main = () => {
+    const args = React.useMemo(() => ({ stories, storyTree, config }), []);
     return (
         <BrowserRouter>
-            <Context.Provider value={{ stories, storyTree, config }}>
+            <Context.Provider value={args}>
                 <Routes>
                     <Route
                         path='/'
