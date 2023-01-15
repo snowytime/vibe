@@ -1,8 +1,11 @@
 {
     "name": "@snowytime/vibe",
-    "version": "0.0.68",
+    "version": "0.0.69",
     "description": "The Vibe base engine",
-    "keywords": ["vibe", "react"],
+    "keywords": [
+        "vibe",
+        "react"
+    ],
     "author": "snowytime",
     "license": "ISC",
     "type": "module",
