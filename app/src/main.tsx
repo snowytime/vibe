@@ -1,11 +1,11 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { stories, storyTree, storyPaths, config, Entry, Context } from "virtual:vibe";
+import { stories, storyTree, storyUrls, config, Entry, Context } from "virtual:vibe";
 
 export { Context };
 
 const Main = () => {
-    const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyPaths }), []);
+    const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
         <BrowserRouter>
             <Context.Provider value={storyPoints}>

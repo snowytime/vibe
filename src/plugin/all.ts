@@ -1,12 +1,11 @@
 import { findStories } from "@finders/find-stories.js";
 import { getStoryData } from "@parsers/together.js";
-import { generateTree } from "@structures/generate-tree.js";
 import { Config } from "@type/globals.js";
 import { generateConfigImport } from "./config.js";
 import { generateDynamicImports } from "./dynamic.js";
 import { generateEntryImport } from "./entry.js";
 import { generateStoryList } from "./story-list.js";
-import { generateStoryPaths } from "./story-paths.js";
+import { generateStoryUrls } from "./story-urls.js";
 import { generateStoryTree } from "./tree.js";
 
 export const allImports = async (config: Config) => {
@@ -16,7 +15,7 @@ export const allImports = async (config: Config) => {
     const storyData = await getStoryData(stories);
     // start generating
     const storyTreeStr = generateStoryTree(storyData);
-    const storyPathsStr = generateStoryPaths(storyData);
+    const storyUrlsStr = generateStoryUrls(storyData);
     const dynamic = generateDynamicImports(storyData);
     const storyList = generateStoryList(storyData);
     const entry = await generateEntryImport(config);
@@ -26,7 +25,7 @@ export const allImports = async (config: Config) => {
     str += `\n${dynamic}`;
     str += `\n${storyList}`;
     str += `\n${storyTreeStr}`;
-    str += `\n${storyPathsStr}`;
+    str += `\n${storyUrlsStr}`;
     str += `\n${entry}`;
     return str;
 };

@@ -29,7 +29,7 @@ interface Config {
 interface VibeContext {
     config: Config;
     storyTree: Category[];
-    storyPaths: string[];
+    storyUrls: string[];
     stories: Story[];
 }
 declare module "virtual:vibe" {
@@ -38,6 +38,6 @@ declare module "virtual:vibe" {
     const config: Config;
     const Entry: React.ElementType;
     const Context: React.Context<VibeContext>;
-    const storyPaths: string[];
-    export { stories, storyTree, storyPaths, config, Entry, Context };
+    const storyUrls: string[];
+    export { stories, storyTree, storyUrls, config, Entry, Context };
 }
