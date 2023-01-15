@@ -23,9 +23,9 @@ export const allImports = async (config: Config) => {
     let str = "";
     str += `\n${configImport}`;
     str += `\n${dynamic}`;
+    str += `\n${entry}`;
     str += `\n${storyList}`;
     str += `\n${storyTreeStr}`;
     str += `\n${storyUrlsStr}`;
-    str += `\n${entry}`;
     return str;
 };
