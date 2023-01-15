@@ -1,16 +1,16 @@
+import { GenericError } from "@errors/index.js";
+import { Config } from "@type/index.js";
+
 import { extractor } from "../extractors/extractor.js";
 import { findConfig } from "../index.js";
 import { resolveConfigs } from "./resolve.js";
-import { Config } from "@type/index.js";
-import { GenericError } from "@errors/index.js";
 
 export const getConfig = async (): Promise<Config> => {
     const configPath = await findConfig();
     if (!configPath) {
-        throw "Cannot get config without the .vibe folder";
+        return resolveConfigs({} as Config);
     }
     try {
-        // const { default: config } = await import(configPath);
         const { default: config } = await extractor(configPath);
         return resolveConfigs(config);
     } catch (e) {
