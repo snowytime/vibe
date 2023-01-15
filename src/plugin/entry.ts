@@ -7,5 +7,5 @@ export const generateEntryImport = async (config: Config) => {
     if (!entryPath) {
         return defaultEntry;
     }
-    return `import CustomEntry from '${entryPath}';\nexport const Entry = CustomEntry;\n`;
+    return `import { Entry as CustomEntry } from '${entryPath}';\nexport const Entry = CustomEntry;\n`;
 };
