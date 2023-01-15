@@ -36,6 +36,7 @@ const Main = () => {
                             />
                         );
                     })}
+                    <Route path='*' element={<Navigate to='/' replace />} />
                 </Routes>
             </Context.Provider>
         </BrowserRouter>
