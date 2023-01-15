@@ -9,47 +9,49 @@ const Main = () => {
     return (
         <BrowserRouter>
             <Context.Provider value={storyPoints}>
-                <Routes>
-                    <Route
-                        path='/'
-                        element={
-                            <Navigate
-                                replace
-                                to={
-                                    config.defaultStory
-                                        ? config.defaultStory
-                                        : Object.values(stories)[0].url
-                                }
-                            />
-                        }
-                    />
-                    {Object.values(stories).map((story) => {
-                        return (
-                            <Route
-                                key={story.id}
-                                path={story.url}
-                                element={
-                                    <React.Suspense>
-                                        <Entry>{React.createElement(story.component)}</Entry>
-                                    </React.Suspense>
-                                }
-                            />
-                        );
-                    })}
-                    <Route
-                        path='*'
-                        element={
-                            <Navigate
-                                replace
-                                to={
-                                    config.defaultStory
-                                        ? config.defaultStory
-                                        : Object.values(stories)[0].url
-                                }
-                            />
-                        }
-                    />
-                </Routes>
+                <Entry>
+                    <Routes>
+                        <Route
+                            path='/'
+                            element={
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
+                            }
+                        />
+                        {Object.values(stories).map((story) => {
+                            return (
+                                <Route
+                                    key={story.id}
+                                    path={story.url}
+                                    element={
+                                        <React.Suspense>
+                                            {React.createElement(story.component)}
+                                        </React.Suspense>
+                                    }
+                                />
+                            );
+                        })}
+                        <Route
+                            path='*'
+                            element={
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
+                            }
+                        />
+                    </Routes>
+                </Entry>
             </Context.Provider>
         </BrowserRouter>
     );
