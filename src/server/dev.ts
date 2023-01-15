@@ -1,7 +1,6 @@
 import { createServer } from "vite";
 import express from "express";
 import getPort from "get-port";
-import { getBase } from "./base.js";
 import chokidar from "chokidar";
 import os from "node:os";
 import { performance } from "node:perf_hooks";
@@ -10,6 +9,7 @@ import { findVite } from "@finders/find-vite.js";
 import { getStoryData } from "@parsers/together.js";
 import { globby } from "globby";
 import { getJson } from "@structures/meta-json.js";
+import { getBase } from "./base.js";
 
 export const devServer = async (
     config: Config,
@@ -68,7 +68,7 @@ export const devServer = async (
         }`;
         const networkUrl = config.expose
             ? `${vite.config.server.https ? "https" : "http"}://${
-                  os.networkInterfaces()["en0"][1].address
+                  os.networkInterfaces().en0[1].address
               }:${port}${vite.config.base || ""}`
             : null;
         app.listen(port);
@@ -78,6 +78,7 @@ export const devServer = async (
             ignoreInitial: true,
         });
         let checkSum = "";
+        let first = true;
         const getChecksum = async () => {
             try {
                 const stories = await globby(config.stories);
@@ -91,8 +92,9 @@ export const devServer = async (
         checkSum = await getChecksum();
         const invalidate = async () => {
             const newChecksum = await getChecksum();
-            if (checkSum === newChecksum) return;
+            if (checkSum === newChecksum || !first) return;
             checkSum = newChecksum;
+            first = false;
             const module = moduleGraph.getModuleById("\0virtual:vibe");
             if (module) {
                 moduleGraph.invalidateModule(module);
@@ -114,7 +116,6 @@ export const devServer = async (
             duration,
         };
     } catch (e) {
-        console.log(e);
-        throw e;
+        throw new Error(e);
     }
 };

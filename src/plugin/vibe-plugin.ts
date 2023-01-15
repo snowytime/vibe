@@ -1,23 +1,20 @@
 import { findBody } from "@finders/find-body.js";
 import { findHead } from "@finders/find-head.js";
-import { findStories } from "@finders/find-stories.js";
-import { getStoryData } from "@parsers/together.js";
-import { generateTree } from "@structures/generate-tree.js";
 import { Config } from "@type/globals.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { allImports } from "./all.js";
 
-function cleanupWindowsPath(path: string) {
-    return path.replace(/\\/g, "/");
+function cleanupWindowsPath(pathValue: string) {
+    return pathValue.replace(/\\/g, "/");
 }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default function vibePlugin(config: Config) {
     const virtualModuleId = "virtual:vibe";
-    const resolvedVirtualModuleId = "\0" + virtualModuleId;
+    const resolvedVirtualModuleId = `\0${virtualModuleId}`;
     return {
         name: "vibe-plugin",
         resolveId(id: string) {
@@ -28,30 +25,29 @@ export default function vibePlugin(config: Config) {
         },
         transformIndexHtml: {
             async transform(html: string, ctx: any) {
+                let updatedHtml = html;
                 if (ctx.path === "/index.html") {
                     const headHtmlPath = await findHead();
                     if (headHtmlPath) {
                         const headHtml = fs.readFileSync(headHtmlPath, "utf8");
-                        html = html.replace("</head>", `${headHtml}</head>`);
+                        updatedHtml = html.replace("</head>", `${headHtml}</head>`);
                     }
                     const body = await findBody();
                     if (body) {
                         // can either be before, or after
-                        body.forEach((entry: any) => {
-                            // @ts-ignore
+                        body.forEach((entry: string) => {
                             if (entry.split("/").at(-1).includes("before")) {
                                 const beforeCode = fs.readFileSync(entry, "utf8");
-                                html = html.replace("<body>", `<body>${beforeCode}`);
+                                updatedHtml = html.replace("<body>", `<body>${beforeCode}`);
                             }
-                            // @ts-ignore
                             if (entry.split("/").at(-1).includes("after")) {
                                 const afterCode = fs.readFileSync(entry, "utf8");
-                                html = html.replace("</body>", `${afterCode}</body>`);
+                                updatedHtml = html.replace("</body>", `${afterCode}</body>`);
                             }
                         });
                     }
                 }
-                return html;
+                return updatedHtml;
             },
         },
         async transform(code: string, id: string) {
@@ -90,14 +86,11 @@ export default function vibePlugin(config: Config) {
             if (id === resolvedVirtualModuleId) {
                 try {
                     // dynamic returns all the component lazy imports and related things
-                    const stories = await findStories(config);
-                    const storyData = await getStoryData(stories);
-                    const storyTree = generateTree(storyData);
-                    const imports = await allImports(storyData, config, storyTree);
+                    const imports = await allImports(config);
                     // return the compiled imports
                     return imports;
                 } catch (e) {
-                    console.log(e);
+                    throw new Error(e);
                 }
             }
         },

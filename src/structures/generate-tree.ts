@@ -1,5 +1,17 @@
 import { Category, StoryData, Tree } from "@type/index.js";
 
+function findWhere(array: Tree, key: keyof Category, value: string | Category) {
+    let t = 0;
+    while (t < array.length && array[t][key] !== value) {
+        t++;
+    }
+    if (t < array.length) {
+        return array[t];
+    } else {
+        return false;
+    }
+}
+
 export const generateTree = (stories: StoryData[]) => {
     const paths = stories.map((story) => ({
         ...story,
@@ -27,7 +39,7 @@ export const generateTree = (stories: StoryData[]) => {
                 if (j === path.length - 1) {
                     // last item
                     newPart.name = originalObject.storyName || originalObject.componentName;
-                    newPart.path = "/" + path.join("/");
+                    newPart.path = `/${path.join("/")}`;
                     newPart.type = "file";
                 } else {
                     newPart.type = "folder";
@@ -39,15 +51,3 @@ export const generateTree = (stories: StoryData[]) => {
     }
     return tree;
 };
-
-function findWhere(array: Tree, key: keyof Category, value: string | Category) {
-    let t = 0;
-    while (t < array.length && array[t][key] !== value) {
-        t++;
-    }
-    if (t < array.length) {
-        return array[t];
-    } else {
-        return false;
-    }
-}

@@ -37,6 +37,9 @@
         "consistent-return": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",
-        "arrow-body-style": "off"
+        "arrow-body-style": "off",
+        "no-plusplus": "off",
+        "no-else-return": "off",
+        "no-underscore-dangle": "off"
     }
 }

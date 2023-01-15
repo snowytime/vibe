@@ -1,6 +1,6 @@
-import { createHash } from "node:crypto";
-const main = async () => {
-    const matches = globby();
+const main = (html) => {
+    html = html.replace("m", "meep");
+    return html;
 };
-
-main();
+const val = main("m allo");
+console.log(val);

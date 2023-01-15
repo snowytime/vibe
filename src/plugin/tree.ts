@@ -1,8 +1,10 @@
-import { Tree } from "@type/globals.js";
+import { generateTree } from "@structures/generate-tree.js";
+import { StoryData } from "@type/globals.js";
 
-export const generateStoryTree = (storyTree: Tree) => {
+export const generateStoryTree = (storyData: StoryData[]) => {
     let treeBase = `export let storyTree = [];\n`;
-    if (storyTree) {
+    if (storyData) {
+        const storyTree = generateTree(storyData);
         treeBase += `storyTree = ${JSON.stringify(storyTree)}`;
     }
     return `${treeBase}`;

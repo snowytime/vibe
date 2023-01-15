@@ -1,14 +1,14 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { stories, storyTree, config, Entry, Context } from "virtual:vibe";
+import { stories, storyTree, storyPaths, config, Entry, Context } from "virtual:vibe";
 
 export { Context };
 
 const Main = () => {
-    const args = React.useMemo(() => ({ stories, storyTree, config }), []);
+    const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyPaths }), []);
     return (
         <BrowserRouter>
-            <Context.Provider value={args}>
+            <Context.Provider value={storyPoints}>
                 <Routes>
                     <Route
                         path='/'
@@ -36,7 +36,19 @@ const Main = () => {
                             />
                         );
                     })}
-                    <Route path='*' element={<Navigate to='/' replace />} />
+                    <Route
+                        path='*'
+                        element={
+                            <Navigate
+                                replace
+                                to={
+                                    config.defaultStory
+                                        ? config.defaultStory
+                                        : Object.values(stories)[0].url
+                                }
+                            />
+                        }
+                    />
                 </Routes>
             </Context.Provider>
         </BrowserRouter>
