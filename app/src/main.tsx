@@ -1,8 +1,8 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { stories, storyTree, storyUrls, config, Entry, Context } from "virtual:vibe";
+import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
-export { Context };
+export const Context = React.createContext(undefined);
 
 const Main = () => {
     const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
