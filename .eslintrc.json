@@ -40,6 +40,11 @@
         "arrow-body-style": "off",
         "no-plusplus": "off",
         "no-else-return": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "import/order": "off",
+        "no-use-before-define": "off",
+        "guard-for-in": "off",
+        "no-restricted-syntax": "off",
+        "no-continue": "off"
     }
 }

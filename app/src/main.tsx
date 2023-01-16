@@ -2,13 +2,15 @@ import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
-import { Context } from "./context.js";
+import { GenericContext } from "@snowytime/react-hooks";
+
+export { GenericContext };
 
 const Main = () => {
     const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
         <BrowserRouter>
-            <Context.Provider value={storyPoints}>
+            <GenericContext.Provider value={storyPoints}>
                 <Entry>
                     <Routes>
                         <Route
@@ -52,7 +54,7 @@ const Main = () => {
                         />
                     </Routes>
                 </Entry>
-            </Context.Provider>
+            </GenericContext.Provider>
         </BrowserRouter>
     );
 };

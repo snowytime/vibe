@@ -2,7 +2,6 @@ import { StoryData } from "@type/globals.js";
 
 export const generateDynamicImports = (entryData: StoryData[]) => {
     let storyImports = `import React, { lazy, createElement, Fragment } from "react";\n`;
-    // storyImports += `export const Context = React.createContext(undefined);`;
     storyImports += `import { composer } from "/src/composer";\n`;
 
     entryData.forEach((story) => {

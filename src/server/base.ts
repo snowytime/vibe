@@ -42,6 +42,7 @@ export const getBase = async (
                 "react-dom",
                 "react-dom/client",
                 "@snowytime/vibe",
+                "@snowytime/react-hooks",
                 "react-router-dom",
             ],
             exclude: ["@swc/wasm", "@swc/core", "fsevents", "virtual:vibe"],
@@ -61,6 +62,7 @@ export const getBase = async (
 };
 
 const getUserVite = async ({
+    // eslint-disable-next-line no-shadow
     path,
     command,
     mode,
