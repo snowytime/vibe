@@ -5,10 +5,10 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 import { Context } from "./context.js";
 
 const Main = () => {
-    const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
         <BrowserRouter>
-            <Context.Provider value={storyPoints}>
+            {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+            <Context.Provider value={{ stories, storyTree, config, storyUrls }}>
                 <Entry>
                     <Routes>
                         <Route
