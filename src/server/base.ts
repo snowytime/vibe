@@ -42,7 +42,7 @@ export const getBase = async (
                 "react-dom",
                 "react-dom/client",
                 "@snowytime/vibe",
-                "@snowytime/react-hooks",
+                // "@snowytime/react-hooks",
                 "@ladle/react-context",
                 "react-router-dom",
             ],
