@@ -5,10 +5,10 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 import { Context } from "./context.js";
 
 const Main = () => {
+    const memoized = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
         <BrowserRouter>
-            {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-            <Context.Provider value={{ stories, storyTree, config, storyUrls }}>
+            <Context.Provider value={memoized}>
                 <Entry>
                     <Routes>
                         <Route
@@ -30,7 +30,7 @@ const Main = () => {
                                     key={story.id}
                                     path={story.url}
                                     element={
-                                        <React.Suspense>
+                                        <React.Suspense fallback={<>loading...</>}>
                                             {React.createElement(story.component)}
                                         </React.Suspense>
                                     }
