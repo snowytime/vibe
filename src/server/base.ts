@@ -43,6 +43,7 @@ export const getBase = async (
                 "react-dom/client",
                 "@snowytime/vibe",
                 "@snowytime/react-hooks",
+                "@ladle/react-context",
                 "react-router-dom",
             ],
             exclude: ["@swc/wasm", "@swc/core", "fsevents", "virtual:vibe"],

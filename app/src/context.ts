@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import { GenericContext } from "@snowytime/react-hooks";
+// import { GenericContext } from "@snowytime/react-hooks";
+import GenericContext from "@ladle/react-context";
 
 export const Context = GenericContext;
 
