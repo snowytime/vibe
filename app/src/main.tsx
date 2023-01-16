@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
-export const Context = React.createContext(undefined);
+import { Context } from "./context.js";
 
 const Main = () => {
     const storyPoints = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
