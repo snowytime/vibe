@@ -1,13 +1,15 @@
 {
-    "extends": "@snowytime/standards/configs/tsconfig-nodenext.json",
     "compilerOptions": {
-        "declarationDir": "dist",
-        "emitDeclarationOnly": true,
-        "rootDir": ".",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2020",
+        "sourceMap": true,
+        "jsx": "react",
         "baseUrl": ".",
         "paths": {
             "virtual:vibe": ["app/src/main.d.ts"]
         }
     },
     "include": ["./src/**/*", "./app/**/*"],
+    "exclude": ["node_modules"]
 }
