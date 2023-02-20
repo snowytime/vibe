@@ -2,8 +2,8 @@ import { performance } from "node:perf_hooks";
 import { getBase } from "./base.js";
 import { build } from "vite";
 import { join } from "node:path";
-import { Config } from "@type/globals.js";
-import { findVite } from "@finders/find-vite.js";
+import { Config } from "#type/globals.js";
+import { findVite } from "#finders/find-vite.js";
 
 export const buildProduction = async (config: Config) => {
     const startTime = performance.now();

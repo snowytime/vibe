@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { getConfig } from "@config/get-config.js";
+import { getConfig } from "#config/get-config.js";
 import { Command } from "commander";
 import { build, create, dev, start } from "./index.js";
 

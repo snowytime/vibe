@@ -1,6 +1,6 @@
-import { generateId } from "@helpers/id.js";
+import { generateId } from "#helpers/id.js";
 import { ModuleItem } from "@swc/core";
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "#type/globals.js";
 
 export const getNamed = (ast: ModuleItem[], path: string, family: any) => {
 	// we want the named exports now

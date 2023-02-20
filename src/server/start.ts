@@ -3,9 +3,9 @@ import os from "node:os";
 import { join } from "node:path";
 import { performance } from "node:perf_hooks";
 import { preview } from "vite";
+import { Config } from "#type/globals.js";
+import { findVite } from "#finders/find-vite.js";
 import { getBase } from "./base.js";
-import { Config } from "@type/globals.js";
-import { findVite } from "@finders/find-vite.js";
 
 // note that this server does not respond to local changes
 export const startProduction = async (config: Config) => {

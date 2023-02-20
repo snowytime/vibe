@@ -1,5 +1,5 @@
-import { getStoryUrls } from "@structures/get-urls.js";
-import { StoryData } from "@type/globals.js";
+import { getStoryUrls } from "#structures/get-urls.js";
+import { StoryData } from "#type/globals.js";
 
 export const generateStoryUrls = (storyData: StoryData[]) => {
     let urlBase = `export let storyUrls = [];\n`;

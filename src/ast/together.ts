@@ -1,4 +1,4 @@
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "#type/globals.js";
 import { getFamily } from "./family.js";
 import { astConverter } from "./initial.js";
 import { getNamed } from "./named.js";

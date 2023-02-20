@@ -1,14 +1,14 @@
 import { createServer } from "vite";
 import express from "express";
+import { globby } from "globby";
 import getPort from "get-port";
 import chokidar from "chokidar";
 import os from "node:os";
 import { performance } from "node:perf_hooks";
-import { Config } from "@type/globals.js";
-import { findVite } from "@finders/find-vite.js";
-import { getStoryData } from "@parsers/together.js";
-import { globby } from "globby";
-import { getJson } from "@structures/meta-json.js";
+import { Config } from "#type/globals.js";
+import { findVite } from "#finders/find-vite.js";
+import { getStoryData } from "#parsers/together.js";
+import { getJson } from "#structures/meta-json.js";
 import { getBase } from "./base.js";
 
 export const devServer = async (

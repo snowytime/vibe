@@ -1,4 +1,4 @@
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "#type/globals.js";
 
 // we just wanna get the paths themselves for premature routing
 export const getStoryUrls = (storyData: StoryData[]) => {

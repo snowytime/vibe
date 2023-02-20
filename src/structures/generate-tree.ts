@@ -1,4 +1,4 @@
-import { Category, StoryData, Tree } from "@type/index.js";
+import { Category, StoryData, Tree } from "#type/index.js";
 
 function findWhere(array: Tree, key: keyof Category, value: string | Category) {
     let t = 0;
@@ -7,9 +7,8 @@ function findWhere(array: Tree, key: keyof Category, value: string | Category) {
     }
     if (t < array.length) {
         return array[t];
-    } else {
-        return false;
     }
+    return false;
 }
 
 export const generateTree = (stories: StoryData[]) => {

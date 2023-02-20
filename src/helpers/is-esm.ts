@@ -1,4 +1,4 @@
-import { GenericError } from "@errors/index.js";
+import { GenericError } from "#errors/index.js";
 import { lookupFile } from "./file-lookup.js";
 
 export const isEsm = (path: string) => {

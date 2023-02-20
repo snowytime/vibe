@@ -1,6 +1,6 @@
-import { GenericError } from "@errors/index.js";
-import { devLogger } from "@logs/index.js";
-import { Config } from "@type/globals.js";
+import { GenericError } from "#errors/index.js";
+import { devLogger } from "#logs/index.js";
+import { Config } from "#type/globals.js";
 import { devServer } from "../server/dev.js";
 
 export const dev = async (config: Config) => {

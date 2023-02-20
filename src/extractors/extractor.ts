@@ -2,7 +2,7 @@ import { pathToFileURL } from "node:url";
 import { bundler } from "./bundler.js";
 import fs from "node:fs";
 import { extname } from "node:path";
-import { dynamicImport, dynamicRequire, isEsm } from "@helpers/index.js";
+import { dynamicImport, dynamicRequire, isEsm } from "#helpers/index.js";
 
 export const extractor = async (filepath: string): Promise<any> => {
 	const esm = isEsm(filepath);

@@ -1,6 +1,6 @@
-import { GenericError } from "@errors/index.js";
-import { startLogger } from "@logs/index.js";
-import { Config } from "@type/globals.js";
+import { GenericError } from "#errors/index.js";
+import { startLogger } from "#logs/index.js";
+import { Config } from "#type/globals.js";
 import { startProduction } from "../server/start.js";
 
 export const start = async (config: Config) => {

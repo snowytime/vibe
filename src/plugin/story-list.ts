@@ -1,4 +1,4 @@
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "#type/globals.js";
 
 export const generateStoryList = (entryData: StoryData[]) => {
     let storyStart = `export let stories = [\n`;

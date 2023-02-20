@@ -1,6 +1,6 @@
-import { findBody } from "@finders/find-body.js";
-import { findHead } from "@finders/find-head.js";
-import { Config } from "@type/globals.js";
+import { findBody } from "#finders/find-body.js";
+import { findHead } from "#finders/find-head.js";
+import { Config } from "#type/globals.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

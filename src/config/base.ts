@@ -1,4 +1,4 @@
-import { Config } from "@type/index.js";
+import { Config } from "#type/index.js";
 
 export const baseConfig: Omit<Config, "addon"> = {
 	port: [5173, 5174, 5175, 5176, 5177, 5178],

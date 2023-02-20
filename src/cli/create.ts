@@ -1,5 +1,5 @@
-import { GenericError } from "@errors/index.js";
-import { createLogger } from "@logs/index.js";
+import { GenericError } from "#errors/index.js";
+import { createLogger } from "#logs/index.js";
 
 import { performance } from "node:perf_hooks";
 import fs from "node:fs";

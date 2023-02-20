@@ -1,5 +1,5 @@
-import { findEntry } from "@finders/find-entry.js";
-import { Config } from "@type/globals.js";
+import { findEntry } from "#finders/find-entry.js";
+import { Config } from "#type/globals.js";
 
 function cleanupWindowsPath(pathValue: string) {
     return pathValue.replace(/\\/g, "/");

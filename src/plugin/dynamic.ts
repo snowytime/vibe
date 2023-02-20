@@ -1,4 +1,4 @@
-import { StoryData } from "@type/globals.js";
+import { StoryData } from "#type/globals.js";
 
 export const generateDynamicImports = (entryData: StoryData[]) => {
     let storyImports = `import React, { lazy, createElement, Fragment } from "react";\n`;

@@ -1,24 +1,13 @@
 {
+    "extends": "@snowytime/standards/configs/tsconfig-nodenext.json",
     "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "target": "ES2020",
-        "sourceMap": true,
-        "jsx": "react",
+        "declarationDir": "dist",
+        "emitDeclarationOnly": true,
+        "rootDir": ".",
         "baseUrl": ".",
         "paths": {
-            "@errors/*": ["./src/errors/*"],
-            "@debug/*": ["./src/debug/*"],
-            "@logs/*": ["./src/logs/*"],
-            "@finders/*": ["./src/finders/*"],
-            "@config/*": ["./src/config/*"],
-            "@helpers/*": ["./src/helpers/*"],
-            "@structures/*": ["./src/structures/*"],
-            "@parsers/*": ["./src/ast/*"],
-            "@type/*": ["./src/types/*"],
             "virtual:vibe": ["app/src/main.d.ts"]
         }
     },
     "include": ["./src/**/*", "./app/**/*"],
-    "exclude": ["node_modules"]
 }

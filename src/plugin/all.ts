@@ -1,6 +1,6 @@
-import { findStories } from "@finders/find-stories.js";
-import { getStoryData } from "@parsers/together.js";
-import { Config } from "@type/globals.js";
+import { findStories } from "#finders/find-stories.js";
+import { getStoryData } from "#parsers/together.js";
+import { Config } from "#type/globals.js";
 import { generateConfigImport } from "./config.js";
 import { generateDynamicImports } from "./dynamic.js";
 import { generateEntryImport } from "./entry.js";

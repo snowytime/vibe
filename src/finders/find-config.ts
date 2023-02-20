@@ -1,4 +1,4 @@
-import { finderDebugger } from "@debug/index.js";
+import { finderDebugger } from "#debug/index.js";
 import { globby } from "globby";
 import { join } from "node:path";
 

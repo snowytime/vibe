@@ -1,5 +1,5 @@
-import { GenericError } from "@errors/index.js";
-import { Config } from "@type/index.js";
+import { GenericError } from "#errors/index.js";
+import { Config } from "#type/index.js";
 
 import { extractor } from "../extractors/extractor.js";
 import { findConfig } from "../index.js";

@@ -4,7 +4,7 @@ import reactPlugin from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import vibePlugin from "../plugin/vibe-plugin.js";
 import { loadConfigFromFile } from "vite";
-import { Config } from "@type/globals.js";
+import { Config } from "#type/globals.js";
 
 const __filename = fileURLToPath(import.meta.url);
 

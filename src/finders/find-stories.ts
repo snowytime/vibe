@@ -1,5 +1,5 @@
-import { finderDebugger } from "@debug/index.js";
-import { Config } from "@type/index.js";
+import { finderDebugger } from "#debug/index.js";
+import { Config } from "#type/index.js";
 import { globby } from "globby";
 import { join } from "node:path";
 
