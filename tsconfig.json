@@ -7,9 +7,16 @@
         "jsx": "react",
         "baseUrl": ".",
         "paths": {
-            "virtual:vibe": ["app/src/main.d.ts"]
-        }
+            "virtual:vibe": ["src/app/src/main.d.ts"]
+        },
+        "rootDir": "src",
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "declarationMap": true,
+        "skipLibCheck": true
     },
-    "include": ["./src/**/*", "./app/**/*"],
+    "include": ["./src/**/*"],
     "exclude": ["node_modules"]
 }

@@ -19,7 +19,7 @@
     "types": "dist/index.d.ts",
     "exports": {
         ".": "./dist/index.js",
-        "./client": "./app/src/exports"
+        "./client": "./dist/app/src/exports"
     },
     "typesVersions": {
         "*": {
@@ -61,7 +61,7 @@
         "react-dom": ">=16.14.0"
     },
     "scripts": {
-        "build": "rm -rf dist && swc src --config-file build.json -d dist && tsc -p ./tsconfig.build.json",
+        "build": "rm -rf dist && swc src --config-file build.json -d dist && tsc",
         "start": "node dist/index.js",
         "demo": "npm run build && node .test/index.js",
         "release:patch": "npm run build && git add . && git commit -m '⚡️ auto patch' && git push origin master && npm version patch && npm publish"
