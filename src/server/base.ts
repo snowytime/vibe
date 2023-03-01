@@ -30,7 +30,7 @@ export const getBase = async (
         configFile: false,
         publicDir: join(process.cwd(), "public"),
         cacheDir: join(process.cwd(), "node_modules/.vite"),
-        root: join(__dirname, "../app/"),
+        root: join(process.cwd(), "dist/app"),
         css: {
             postcss: process.cwd(),
         },
