@@ -30,7 +30,7 @@ export const getBase = async (
         configFile: false,
         publicDir: join(process.cwd(), "public"),
         cacheDir: join(process.cwd(), "node_modules/.vite"),
-        root: join(process.cwd(), "dist/app"),
+        root: join(__dirname, "../../dist/app/"),
         css: {
             postcss: process.cwd(),
         },
@@ -81,6 +81,13 @@ const getUserVite = async ({
         return { hasTs: false, hasReact: false, userViteConfig: {} };
     }
     const { config } = userViteConfig;
+    // start resolving the content of the custom vite config
+    if (config.publicDir) {
+        config.publicDir = getPublicDir(config.publicDir);
+    }
+    if (config.cacheDir) {
+        config.cacheDir = getCacheDir(config.cacheDir);
+    }
     const hasReact = config.plugins
         ? config.plugins.some((plugin) => {
               return Array.isArray(plugin)
@@ -115,6 +122,26 @@ const getUserVite = async ({
 
     // return the results of our gathering
     return { userViteConfig: config, hasTs, hasReact };
+};
+
+const getPublicDir = (publicDir: string) => {
+    if (!publicDir) {
+        return false;
+    }
+    if (isAbsolute(publicDir)) {
+        return publicDir;
+    }
+    return join(process.cwd(), publicDir || "public");
+};
+
+const getCacheDir = (cacheDir: string) => {
+    if (!cacheDir) {
+        return join(process.cwd(), "node_modules/.vite");
+    }
+    if (isAbsolute(cacheDir)) {
+        return cacheDir;
+    }
+    return join(process.cwd(), cacheDir);
 };
 
 // vite merger
