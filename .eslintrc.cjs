@@ -12,5 +12,8 @@ module.exports = {
         "import/no-extraneous-dependencies": "off",
         "no-continue": "off",
         "no-nested-ternary": "off",
+        "max-classes-per-file": "off",
+        "no-shadow": "off",
+        "lines-between-class-members": "off",
     },
 };

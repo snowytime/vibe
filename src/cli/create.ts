@@ -1,13 +1,13 @@
-import { GenericError } from "#errors/index.js";
-import { createLogger } from "#logs/index.js";
-
 import { performance } from "node:perf_hooks";
 import fs from "node:fs";
 import path from "node:path";
 
-async function isExists(path: string) {
+import { GenericError } from "#errors/index.js";
+import { createLogger } from "#logs/index.js";
+
+async function isExists(filePath: string) {
     try {
-        await fs.promises.access(path);
+        await fs.promises.access(filePath);
         return true;
     } catch {
         return false;

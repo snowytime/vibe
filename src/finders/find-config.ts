@@ -1,6 +1,6 @@
-import { finderDebugger } from "#debug/index.js";
 import { globby } from "globby";
 import { join } from "node:path";
+import { finderDebugger } from "#debug/index.js";
 
 export const findConfig = async () => {
     const folderPath = join(process.cwd(), ".vibe");
