@@ -76,6 +76,7 @@ export const devServer = async (
         const watcher = chokidar.watch(config.stories, {
             persistent: true,
             ignoreInitial: true,
+            ignored: [/node_modules/, /dist/, /build/, /out/],
         });
         let checkSum = "";
         let first = true;
