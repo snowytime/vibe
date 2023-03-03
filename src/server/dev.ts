@@ -82,7 +82,9 @@ export const devServer = async (
         let first = true;
         const getChecksum = async () => {
             try {
-                const stories = await globby(config.stories);
+                const stories = await globby(config.stories, {
+                    dot: true,
+                });
                 const storyData = await getStoryData(stories);
                 const jsonData = getJson(storyData, config);
                 return JSON.stringify(jsonData);
