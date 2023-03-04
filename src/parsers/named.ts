@@ -49,18 +49,25 @@ export const parseNamedExports = (ast: ModuleItem[] | undefined) => {
 
     // now we can use the parseObject to get the named exports, deleting any path parameter
     const namedResults = [];
-    for (const expression of expressions) {
-        const result = parseObject(
-            (expression.expression as AssignmentExpression).right as ObjectExpression,
+    for (const componentName of validStories) {
+        const matchedStoryData = expressions.find(
+            (expression) =>
+                (
+                    ((expression.expression as AssignmentExpression).left as MemberExpression)
+                        .object as Identifier
+                ).value === componentName,
         );
-        const componentName = (
-            ((expression.expression as AssignmentExpression).left as MemberExpression)
-                .object as Identifier
-        ).value;
+        const result = matchedStoryData
+            ? {
+                  ...parseObject((matchedStoryData.expression as any).right),
+              }
+            : {
+                  name: componentName,
+              };
         const name = result.name || componentName;
         // resolve the path
         if (result.hasOwnProperty("path")) {
-            delete result.path;
+            delete (result as any).path;
         }
         // we wanna add a couple of things to the result
         namedResults.push({
