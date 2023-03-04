@@ -3,7 +3,7 @@
         "module": "NodeNext",
         "target": "ESNext",
         "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
-        "moduleResolution": "NodeNext",
+        "moduleResolution": "node16",
         "esModuleInterop": true,
         "emitDeclarationOnly": true,
         "declaration": true,
@@ -12,14 +12,13 @@
         "resolveJsonModule": true,
         "jsx": "react",
         "skipLibCheck": true,
-        "baseUrl": ".",
+        "baseUrl": "src",
         "paths": {
-            "#helpers/*": ["./src/helpers/*"]
+            "virtual-vibe": ["app/src/main.d.ts"]
         },
         "rootDir": "src"
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules/**/*", "src/app/**/*"],
+    "include": ["src/**/*", "*.d.ts"],
     "ts-node": {
         "esm": true,
         "files": true,

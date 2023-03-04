@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
