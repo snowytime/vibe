@@ -1,5 +1,5 @@
 import { findStories } from "#finders/find-stories.js";
-import { getStoryData } from "#parsers/together.js";
+import { exportResolve } from "#parsers/export-resolve.js";
 import { Config } from "#type/globals.js";
 import { generateConfigImport } from "./config.js";
 import { generateDynamicImports } from "./dynamic.js";
@@ -12,7 +12,7 @@ export const allImports = async (config: Config) => {
     const configImport = await generateConfigImport(config);
     // we just do all the data sources directly here
     const stories = await findStories(config);
-    const storyData = await getStoryData(stories);
+    const storyData = await exportResolve(stories);
     // start generating
     const storyTreeStr = generateStoryTree(storyData);
     const storyUrlsStr = generateStoryUrls(storyData);

@@ -4,7 +4,6 @@ import { join } from "node:path";
 import { performance } from "node:perf_hooks";
 import { preview } from "vite";
 import { Config } from "#type/globals.js";
-import { findVite } from "#finders/find-vite.js";
 import { getBase } from "./base.js";
 
 // note that this server does not respond to local changes
@@ -12,7 +11,6 @@ export const startProduction = async (config: Config) => {
     // start with the initial setup
     const startTime = performance.now();
     const destination = join(process.cwd(), config.out);
-    const vitePath = await findVite();
     const configPorts = Array.isArray(config.preview) ? config.preview : [config.preview];
     const port = await getPort({
         port: [configPorts, 61001, 62002, 62003, 62004, 62005].flat(),
@@ -31,7 +29,6 @@ export const startProduction = async (config: Config) => {
                     port,
                 },
             },
-            vitePath,
             config,
         );
 
@@ -43,7 +40,7 @@ export const startProduction = async (config: Config) => {
         }`;
         const networkUrl = config.expose
             ? `${vite.config.preview.https ? "https" : "http"}://${
-                  os.networkInterfaces()["en0"][1].address
+                  os.networkInterfaces().en0[1].address
               }:${port}${vite.config.base || ""}`
             : null;
 

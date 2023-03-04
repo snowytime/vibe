@@ -6,7 +6,7 @@ export const generateDynamicImports = (entryData: StoryData[]) => {
 
     entryData.forEach((story) => {
         storyImports += `\n${`
-	const ${story.id} = lazy(() => import('${story.path}').then((module) => {
+	const ${story.id} = lazy(() => import('${story.filePath}').then((module) => {
 	        return { default: composer(module, '${story.componentName}', ${JSON.stringify(story)}) };
 	    })
 	);

@@ -37,7 +37,7 @@ export const generateTree = (stories: StoryData[]) => {
                 } as Category;
                 if (j === path.length - 1) {
                     // last item
-                    newPart.name = originalObject.storyName || originalObject.componentName;
+                    newPart.name = originalObject.name || originalObject.componentName;
                     newPart.path = `/${path.join("/")}`;
                     newPart.type = "file";
                 } else {

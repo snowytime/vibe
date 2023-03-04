@@ -15,5 +15,9 @@ module.exports = {
         "max-classes-per-file": "off",
         "no-shadow": "off",
         "lines-between-class-members": "off",
+        "no-use-before-define": "off",
+        "no-prototype-builtins": "off",
+        "no-restricted-syntax": "off",
+        "no-await-in-loop": "off",
     },
 };

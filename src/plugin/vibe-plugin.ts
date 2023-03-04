@@ -10,6 +10,7 @@ function cleanupWindowsPath(pathValue: string) {
     return pathValue.replace(/\\/g, "/");
 }
 
+// eslint-disable-next-line no-underscore-dangle
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default function vibePlugin(config: Config) {

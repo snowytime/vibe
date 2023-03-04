@@ -6,8 +6,7 @@ import chokidar from "chokidar";
 import os from "node:os";
 import { performance } from "node:perf_hooks";
 import { Config } from "#type/globals.js";
-import { findVite } from "#finders/find-vite.js";
-import { getStoryData } from "#parsers/together.js";
+import { exportResolve } from "#parsers/export-resolve.js";
 import { getJson } from "#structures/meta-json.js";
 import { getBase } from "./base.js";
 
@@ -19,7 +18,6 @@ export const devServer = async (
     duration: number;
 }> => {
     const startTime = performance.now();
-    const vitePath = await findVite();
     const app = express();
     const configPorts = Array.isArray(config.port) ? config.port : [config.port];
     const port = await getPort({
@@ -44,15 +42,16 @@ export const devServer = async (
                     middlewareMode: true,
                 },
             },
-            vitePath,
             config,
         );
         const vite = await createServer(viteConfig);
         const { moduleGraph, ws } = vite;
         app.head("*", async (_, res) => res.sendStatus(200));
         app.get("/meta.json", async (_, res) => {
-            const stories = await globby(config.stories);
-            const storyData = await getStoryData(stories);
+            const stories = await globby(config.stories, {
+                dot: true,
+            });
+            const storyData = await exportResolve(stories);
             const jsonData = getJson(storyData, config);
             res.send(JSON.stringify(jsonData));
         });
@@ -85,7 +84,7 @@ export const devServer = async (
                 const stories = await globby(config.stories, {
                     dot: true,
                 });
-                const storyData = await getStoryData(stories);
+                const storyData = await exportResolve(stories);
                 const jsonData = getJson(storyData, config);
                 return JSON.stringify(jsonData);
             } catch (e) {

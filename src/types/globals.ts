@@ -1,12 +1,11 @@
 export interface StoryData {
     url: string;
-    path: string;
-    id: string;
+    filePath: string;
     componentName: string;
-    storyName?: string;
-    meta?: {
-        [key: string]: string | { [key: string]: string };
-    };
+    id: string;
+    name: string;
+    familyName: string;
+    [key: string]: string | { [key: string]: string };
 }
 
 export interface ServerReturn {

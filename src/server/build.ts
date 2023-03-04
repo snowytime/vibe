@@ -3,12 +3,10 @@ import { build } from "vite";
 import { join } from "node:path";
 import { getBase } from "./base.js";
 import { Config } from "#type/globals.js";
-import { findVite } from "#finders/find-vite.js";
 
 export const buildProduction = async (config: Config) => {
     const startTime = performance.now();
     const destination = join(process.cwd(), config.out);
-    const vitePath = await findVite();
     try {
         const viteConfig = await getBase(
             {
@@ -18,7 +16,6 @@ export const buildProduction = async (config: Config) => {
                     emptyOutDir: true,
                 },
             },
-            vitePath,
             config,
         );
         await build(viteConfig);
