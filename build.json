@@ -1,6 +1,6 @@
 {
     "exclude": "^*.test.*$",
-    "minify": true,
+    "minify": false,
     "jsc": {
         "parser": {
             "syntax": "typescript",
