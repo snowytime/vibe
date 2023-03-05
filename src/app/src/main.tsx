@@ -3,6 +3,8 @@ import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
+import { Ui } from "../src/ui/index.js";
+
 import { Context } from "./context.js";
 
 const Main = () => {
@@ -32,6 +34,9 @@ const Main = () => {
                                     path={story.url}
                                     element={
                                         <React.Suspense fallback={<>loading...</>}>
+                                            <Ui title='css-stuff' tree={storyTree}>
+                                                {children}
+                                            </Ui>
                                             {React.createElement(story.component)}
                                         </React.Suspense>
                                     }
