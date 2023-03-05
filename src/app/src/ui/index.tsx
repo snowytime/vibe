@@ -1,8 +1,7 @@
 import React from "react";
 import { CloseIcon, MenuIcon, MoonIcon, SunCirclesIcon } from "@snowytime/iconly-react/ui";
 
-import { Category } from "#types/index.js";
-import "./index.scss";
+import { Category } from "#type/index.js";
 import { Tree } from "./tree/index.js";
 
 export const useTheme = () => {

@@ -9,8 +9,6 @@ import {
     PlusSquareIcon,
 } from "@snowytime/iconly-react/ui";
 
-import "./index.scss";
-
 const Nest = ({ category }: { category: Category }) => {
     const { useNavigate, useLocation } = useVibeContext();
     const navigate = useNavigate();

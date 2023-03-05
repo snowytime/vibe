@@ -5,6 +5,8 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 import { Ui } from "./ui/index.js";
 import { Context } from "./context.js";
 
+import "../vibe.scss";
+
 const Main = () => {
     const memoized = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
