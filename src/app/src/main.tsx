@@ -5,6 +5,8 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
 import { Ui } from "../src/ui/index.js";
 
+import "../vibe.scss";
+
 import { Context } from "./context.js";
 
 const Main = () => {
