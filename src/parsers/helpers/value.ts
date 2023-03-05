@@ -8,6 +8,8 @@ export const parseValue = (valueNode: Node) => {
             case "StringLiteral":
             case "BooleanLiteral":
             case "NumericLiteral":
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 return valueNode.value;
             default: {
                 return undefined;

@@ -8,17 +8,17 @@
         "emitDeclarationOnly": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "dist",
+        "outDir": "dist",
         "resolveJsonModule": true,
         "jsx": "react",
         "skipLibCheck": true,
-        "baseUrl": "src",
+        "baseUrl": ".",
         "paths": {
-            "virtual-vibe": ["app/src/main.d.ts"]
+            "virtual:vibe": ["app/src/main.d.ts"]
         },
-        "rootDir": "src"
+        "rootDir": "."
     },
-    "include": ["src/**/*", "*.d.ts"],
+    "include": ["./src/**/*", "./app/**/*"],
     "ts-node": {
         "esm": true,
         "files": true,

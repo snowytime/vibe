@@ -1,6 +1,5 @@
 import React from "react";
 import { Category } from "@snowytime/vibe";
-import { useVibeContext } from "@snowytime/vibe/client";
 import {
     BookIcon,
     BookmarkIcon,
@@ -8,6 +7,9 @@ import {
     MinusSquareIcon,
     PlusSquareIcon,
 } from "@snowytime/iconly-react/ui";
+import { useVibeContext } from "../../exports.js";
+
+import "./index.scss";
 
 const Nest = ({ category }: { category: Category }) => {
     const { useNavigate, useLocation } = useVibeContext();

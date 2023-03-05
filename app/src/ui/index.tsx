@@ -4,6 +4,8 @@ import { CloseIcon, MenuIcon, MoonIcon, SunCirclesIcon } from "@snowytime/iconly
 import { Category } from "#type/index.js";
 import { Tree } from "./tree/index.js";
 
+import "./index.scss";
+
 export const useTheme = () => {
     const [theme, setTheme] = React.useState("light");
     const toggleTheme = React.useCallback(() => {
