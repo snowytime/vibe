@@ -37,11 +37,11 @@ const Main = () => {
                                 element={
                                     <Ui title='css-stuff' tree={storyTree}>
                                         <Entry>
-                                            <React.Suspense fallback={<>loading...</>}>
-                                                <Story>
+                                            <Story active={!!story}>
+                                                <React.Suspense fallback={<>loading...</>}>
                                                     {React.createElement(story.component)}
-                                                </Story>
-                                            </React.Suspense>
+                                                </React.Suspense>
+                                            </Story>
                                         </Entry>
                                     </Ui>
                                 }
