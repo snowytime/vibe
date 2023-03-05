@@ -37,7 +37,7 @@ const Main = () => {
                                     element={
                                         <React.Suspense fallback={<>loading...</>}>
                                             <Ui title='css-stuff' tree={storyTree}>
-                                                {children}
+                                                {React.createElement(story.component)}
                                             </Ui>
                                             {React.createElement(story.component)}
                                         </React.Suspense>
