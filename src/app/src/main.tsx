@@ -33,18 +33,17 @@ const Main = () => {
                         />
                         {Object.values(stories).map((story) => {
                             return (
-                                <Ui key={story.id} title='css-stuff' tree={storyTree}>
-                                    <Route
-                                        path={story.url}
-                                        element={
+                                <Route
+                                    key={story.id}
+                                    path={story.url}
+                                    element={
+                                        <Ui title='css-stuff' tree={storyTree}>
                                             <React.Suspense fallback={<>loading...</>}>
                                                 {React.createElement(story.component)}
-
-                                                {React.createElement(story.component)}
                                             </React.Suspense>
-                                        }
-                                    />
-                                </Ui>
+                                        </Ui>
+                                    }
+                                />
                             );
                         })}
                         <Route
