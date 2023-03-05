@@ -8,57 +8,60 @@ import "@snowytime/css/fonts/visby/all.css";
 import "@snowytime/css/presets/visby.css";
 
 import { Context } from "./context.js";
+import { Story } from "./story/story.js";
 
 const Main = () => {
     const memoized = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
         <BrowserRouter>
             <Context.Provider value={memoized}>
-                <Entry>
-                    <Routes>
-                        <Route
-                            path='/'
-                            element={
-                                <Navigate
-                                    replace
-                                    to={
-                                        config.defaultStory
-                                            ? config.defaultStory
-                                            : Object.values(stories)[0].url
-                                    }
-                                />
-                            }
-                        />
-                        {Object.values(stories).map((story) => {
-                            return (
-                                <Route
-                                    key={story.id}
-                                    path={story.url}
-                                    element={
-                                        <Ui title='css-stuff' tree={storyTree}>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={
+                            <Navigate
+                                replace
+                                to={
+                                    config.defaultStory
+                                        ? config.defaultStory
+                                        : Object.values(stories)[0].url
+                                }
+                            />
+                        }
+                    />
+                    {Object.values(stories).map((story) => {
+                        return (
+                            <Route
+                                key={story.id}
+                                path={story.url}
+                                element={
+                                    <Ui title='css-stuff' tree={storyTree}>
+                                        <Entry>
                                             <React.Suspense fallback={<>loading...</>}>
-                                                {React.createElement(story.component)}
+                                                <Story>
+                                                    {React.createElement(story.component)}
+                                                </Story>
                                             </React.Suspense>
-                                        </Ui>
-                                    }
-                                />
-                            );
-                        })}
-                        <Route
-                            path='*'
-                            element={
-                                <Navigate
-                                    replace
-                                    to={
-                                        config.defaultStory
-                                            ? config.defaultStory
-                                            : Object.values(stories)[0].url
-                                    }
-                                />
-                            }
-                        />
-                    </Routes>
-                </Entry>
+                                        </Entry>
+                                    </Ui>
+                                }
+                            />
+                        );
+                    })}
+                    <Route
+                        path='*'
+                        element={
+                            <Navigate
+                                replace
+                                to={
+                                    config.defaultStory
+                                        ? config.defaultStory
+                                        : Object.values(stories)[0].url
+                                }
+                            />
+                        }
+                    />
+                </Routes>
             </Context.Provider>
         </BrowserRouter>
     );
