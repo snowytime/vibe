@@ -1,5 +1,4 @@
 import React from "react";
-import { Category } from "@snowytime/vibe";
 import {
     BookIcon,
     BookmarkIcon,
@@ -8,6 +7,7 @@ import {
     PlusSquareIcon,
 } from "@snowytime/iconly-react/ui";
 import { useVibeContext } from "../../exports.js";
+import { Category } from "#type/index.js";
 
 import "./index.scss";
 

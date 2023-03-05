@@ -3,7 +3,7 @@
         "module": "NodeNext",
         "target": "ESNext",
         "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
-        "moduleResolution": "node16",
+        "moduleResolution": "Node",
         "esModuleInterop": true,
         "emitDeclarationOnly": true,
         "declaration": true,
@@ -14,7 +14,16 @@
         "skipLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "virtual:vibe": ["app/src/main.d.ts"]
+            "virtual:vibe": ["app/src/main.d.ts"],
+            "#errors/*": ["./src/errors/*"],
+            "#debug/*": ["./src/debug/*"],
+            "#logs/*": ["./src/logs/*"],
+            "#type/*": ["./src/types/*"],
+            "#finders/*": ["./src/finders/*"],
+            "#config/*": ["./src/config/*"],
+            "#helpers/*": ["./src/helpers/*"],
+            "#structures/*": ["./src/structures/*"],
+            "#parsers/*": ["./src/parsers/*"]
         },
         "rootDir": "."
     },

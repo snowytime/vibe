@@ -7,6 +7,8 @@ import { Config } from "#type/globals.js";
 
 export const getBase = async (configUpdate: any, userConfig: Config) => {
     // get the user configuration.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const __filename = fileURLToPath(import.meta.url);
 
     const __dirname = dirname(__filename);
