@@ -31,7 +31,7 @@ export const getBase = async (configUpdate: any, userConfig: Config) => {
                 "react-dom/client",
                 // "@snowytime/vibe",
                 "@snowytime/react-hooks",
-                "@snowytime/iconly-react",
+                "@snowytime/iconly-react/ui",
                 "sass",
                 "react-router-dom",
             ],
