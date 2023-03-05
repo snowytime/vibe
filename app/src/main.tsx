@@ -4,7 +4,6 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
 import { Ui } from "../src/ui/index.js";
 
-import "../vibe.scss";
 import "@snowytime/css/fonts/visby/all.css";
 import "@snowytime/css/presets/visby.css";
 
