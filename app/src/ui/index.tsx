@@ -1,6 +1,7 @@
 import React from "react";
-import { Category } from "@snowytime/vibe";
 import { CloseIcon, MenuIcon, MoonIcon, SunCirclesIcon } from "@snowytime/iconly-react/ui";
+
+import { Category } from "#types/index.js";
 import "./index.scss";
 import { Tree } from "./tree/index.js";
 
