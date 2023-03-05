@@ -2,10 +2,8 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
-import { Ui } from "./ui/index.js";
-import { Context } from "./context.js";
 
-import "../vibe.scss";
+import { Context } from "./context.js";
 
 const Main = () => {
     const memoized = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
@@ -34,9 +32,7 @@ const Main = () => {
                                     path={story.url}
                                     element={
                                         <React.Suspense fallback={<>loading...</>}>
-                                            <Ui title='css-stuff' tree={storyTree}>
-                                                {React.createElement(story.component)}
-                                            </Ui>
+                                            {React.createElement(story.component)}
                                         </React.Suspense>
                                     }
                                 />
