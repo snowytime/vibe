@@ -14,28 +14,27 @@ import { Context } from "./context.js";
 const Main = () => {
     const memoized = React.useMemo(() => ({ stories, storyTree, config, storyUrls }), []);
     return (
-        <Ui title='css-stuff' tree={storyTree}>
-            <BrowserRouter>
-                <Context.Provider value={memoized}>
-                    <Entry>
-                        <Routes>
-                            <Route
-                                path='/'
-                                element={
-                                    <Navigate
-                                        replace
-                                        to={
-                                            config.defaultStory
-                                                ? config.defaultStory
-                                                : Object.values(stories)[0].url
-                                        }
-                                    />
-                                }
-                            />
-                            {Object.values(stories).map((story) => {
-                                return (
+        <BrowserRouter>
+            <Context.Provider value={memoized}>
+                <Entry>
+                    <Routes>
+                        <Route
+                            path='/'
+                            element={
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
+                            }
+                        />
+                        {Object.values(stories).map((story) => {
+                            return (
+                                <Ui key={story.id} title='css-stuff' tree={storyTree}>
                                     <Route
-                                        key={story.id}
                                         path={story.url}
                                         element={
                                             <React.Suspense fallback={<>loading...</>}>
@@ -45,26 +44,26 @@ const Main = () => {
                                             </React.Suspense>
                                         }
                                     />
-                                );
-                            })}
-                            <Route
-                                path='*'
-                                element={
-                                    <Navigate
-                                        replace
-                                        to={
-                                            config.defaultStory
-                                                ? config.defaultStory
-                                                : Object.values(stories)[0].url
-                                        }
-                                    />
-                                }
-                            />
-                        </Routes>
-                    </Entry>
-                </Context.Provider>
-            </BrowserRouter>
-        </Ui>
+                                </Ui>
+                            );
+                        })}
+                        <Route
+                            path='*'
+                            element={
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
+                            }
+                        />
+                    </Routes>
+                </Entry>
+            </Context.Provider>
+        </BrowserRouter>
     );
 };
 
