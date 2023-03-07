@@ -31,6 +31,7 @@ export interface Config {
     website: string;
     repo: string;
     version: string;
+    mode: "development" | "production";
 }
 
 export interface JsonStructure {

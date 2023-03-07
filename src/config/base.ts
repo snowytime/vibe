@@ -11,4 +11,5 @@ export const baseConfig: Omit<Config, "addon"> = {
     website: "snowy.sh/visby",
     repo: "https://github.com/snowytime/visby",
     version: "1",
+    mode: "development",
 };

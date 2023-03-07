@@ -8,19 +8,19 @@ const program = new Command("vibe");
 // dev operation
 program.command("dev").action(async () => {
     const config = await getConfig();
-    await dev(config);
+    await dev({ mode: "development", ...config });
 });
 
 // build operation
 program.command("build").action(async () => {
     const config = await getConfig();
-    await build(config);
+    await build({ mode: "production", ...config });
 });
 
 // start operation
 program.command("start").action(async () => {
     const config = await getConfig();
-    await start(config);
+    await start({ mode: "production", ...config });
 });
 
 // create operation

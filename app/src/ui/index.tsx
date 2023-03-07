@@ -26,10 +26,12 @@ export const Ui = ({
     children,
     title,
     tree,
+    sidebar = true,
 }: {
     children: React.ReactNode;
     title: string;
     tree: Category[];
+    sidebar: boolean;
 }) => {
     const [open, setOpen] = React.useState(true);
     const { theme, toggleTheme } = useTheme();
@@ -37,9 +39,13 @@ export const Ui = ({
         <main className='vibe-wrapper'>
             <nav className='vibe-nav'>
                 <div className='vibe-toolbar'>
-                    <div className='sidebar-btn' onClick={() => setOpen((s) => !s)}>
-                        {open ? <CloseIcon height='40%' /> : <MenuIcon height='50%' />}
-                    </div>
+                    {sidebar ? (
+                        <div className='sidebar-btn' onClick={() => setOpen((s) => !s)}>
+                            {open ? <CloseIcon height='40%' /> : <MenuIcon height='50%' />}
+                        </div>
+                    ) : (
+                        ""
+                    )}
                     <div className='sidebar-btn' onClick={toggleTheme}>
                         {theme === "light" ? (
                             <SunCirclesIcon height='55%' />
@@ -51,16 +57,20 @@ export const Ui = ({
                 <div className='vibe-title'>{title}</div>
             </nav>
             <section className='vibe-content'>
-                <div
-                    style={{
-                        width: open ? "" : "0",
-                        transition: "width 0.2s ease-in-out",
-                        border: open ? "" : "none",
-                    }}
-                    className='vibe-content-sidebar'
-                >
-                    <Tree data={tree} />
-                </div>
+                {sidebar ? (
+                    <div
+                        style={{
+                            width: open ? "" : "0",
+                            transition: "width 0.2s ease-in-out",
+                            border: open ? "" : "none",
+                        }}
+                        className='vibe-content-sidebar'
+                    >
+                        <Tree data={tree} />
+                    </div>
+                ) : (
+                    ""
+                )}
                 <div className='vibe-content-window'>{children}</div>
             </section>
         </main>

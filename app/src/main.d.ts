@@ -25,6 +25,7 @@ interface Config {
     website: string;
     repo: string;
     version: string;
+    mode: "development" | "production";
 }
 interface VibeContext {
     config: Config;

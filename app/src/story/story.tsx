@@ -2,8 +2,8 @@ import React from "react";
 import Frame from "react-frame-component";
 import { SynchronizeHead } from "./head";
 
-export const Story = ({ children, active }: { children: React.ReactNode; active: boolean }) => {
-    if (!active) return <>{children}</>;
+export const Story = ({ children, framed }: { children: React.ReactNode; framed: boolean }) => {
+    if (!framed) return <>{children}</>;
     return (
         <Frame
             initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0"><div id="root"></div></body></html>`}
@@ -18,7 +18,7 @@ export const Story = ({ children, active }: { children: React.ReactNode; active:
                 boxShadow: "none",
             }}
         >
-            <SynchronizeHead active={active}>{children}</SynchronizeHead>
+            <SynchronizeHead active={framed}>{children}</SynchronizeHead>
         </Frame>
     );
 };
