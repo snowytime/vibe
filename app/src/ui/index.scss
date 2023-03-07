@@ -66,18 +66,15 @@
 }
 
 .vibe-repo {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background: hsl(var(--accent-100));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     svg {
         fill: hsl(var(--foreground));
         overflow: visible;
-        height: 70%;
+        height: 40px;
+    }
+    &:hover {
+        svg {
+            fill: hsl(var(--accent-700));
+        }
     }
 }
 

@@ -43,9 +43,10 @@ const Main = () => {
                                             tree={storyTree}
                                             sidebar
                                             repo={config.repo}
-                                            website={config.website}
+                                            web={config.website}
                                         >
                                             <Entry>
+                                                {config.website}
                                                 <Story
                                                     framed={
                                                         !!story && config.mode === "development"
@@ -81,7 +82,7 @@ const Main = () => {
                         tree={storyTree}
                         sidebar={false}
                         repo={config.repo}
-                        website={config.website}
+                        web={config.website}
                     >
                         <Entry>
                             <Story framed={false}>
