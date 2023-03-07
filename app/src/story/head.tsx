@@ -9,7 +9,14 @@ export const SynchronizeHead = ({
     children: React.ReactNode;
 }) => {
     const { window: storyWindow } = useFrame();
-    const syncHead = () => {
+    // theme sync
+    const syncTheme = React.useCallback(() => {
+        if (!storyWindow) return;
+        const themeAttribute = document.documentElement.getAttribute("data-theme");
+        storyWindow.document.documentElement.setAttribute("data-theme", themeAttribute || "");
+    }, [storyWindow]);
+    // headSync
+    const syncHead = React.useCallback(() => {
         if (!storyWindow) return;
         storyWindow.document.documentElement.setAttribute("dir", "ltr");
         [...(document.head.children as any)].forEach((child) => {
@@ -22,21 +29,24 @@ export const SynchronizeHead = ({
                 storyWindow.document.head.appendChild(child.cloneNode(true)) as HTMLStyleElement;
             }
         });
-    };
+    }, [storyWindow]);
+    // theme sync effect
     React.useEffect(() => {
-        if (active) {
-            syncHead();
-            const observer = new MutationObserver(() => syncHead());
-            document.documentElement.setAttribute("data-iframed", "");
-            observer.observe(document.head, {
-                subtree: true,
-                characterData: true,
-                childList: true,
-            });
-            return () => {
-                observer && observer.disconnect();
-            };
-        }
-    }, [active]);
+        // theme
+        if (!active) return;
+        syncHead();
+        const themeObserver = new MutationObserver(() => syncTheme());
+        themeObserver.observe(document.documentElement, { attributes: true });
+        const headObserver = new MutationObserver(() => syncHead());
+        headObserver.observe(document.head, {
+            subtree: true,
+            characterData: true,
+            childList: true,
+        });
+        return () => {
+            themeObserver.disconnect();
+            headObserver.disconnect();
+        };
+    }, [active, syncHead, syncTheme]);
     return <>{children}</>;
 };

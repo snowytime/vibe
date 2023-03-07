@@ -19,5 +19,6 @@ module.exports = {
         "no-prototype-builtins": "off",
         "no-restricted-syntax": "off",
         "no-await-in-loop": "off",
+        "react/jsx-no-useless-fragment": "off",
     },
 };

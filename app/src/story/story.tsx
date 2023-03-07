@@ -16,6 +16,7 @@ export const Story = ({ children, framed }: { children: React.ReactNode; framed:
                 marginBottom: 0,
                 border: 0,
                 boxShadow: "none",
+                backgroundColor: "none",
             }}
         >
             <SynchronizeHead active={framed}>{children}</SynchronizeHead>
