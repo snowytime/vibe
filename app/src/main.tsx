@@ -16,48 +16,29 @@ const Main = () => {
     return (
         <BrowserRouter>
             <Context.Provider value={memoized}>
-                <Routes>
-                    <Route
-                        path='/'
-                        element={
-                            <Navigate
-                                replace
-                                to={
-                                    Object.values(stories).length === 0
-                                        ? "/"
-                                        : config.defaultStory
-                                        ? config.defaultStory
-                                        : Object.values(stories)[0].url
-                                }
-                            />
-                        }
-                    />
-                    {/* no story case */}
-                    {Object.values(stories).length === 0 ? (
+                {Object.values(stories).length > 0 ? (
+                    <Routes>
                         <Route
                             path='/'
                             element={
-                                <Ui title='css-stuff' tree={storyTree} sidebar={false}>
-                                    <Entry>
-                                        <Story framed={false}>
-                                            <NoStory />
-                                        </Story>
-                                    </Entry>
-                                </Ui>
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
                             }
                         />
-                    ) : (
-                        Object.values(stories).map((story) => {
+                        {/* no story case */}
+                        {Object.values(stories).map((story) => {
                             return (
                                 <Route
                                     key={story.id}
                                     path={story.url}
                                     element={
-                                        <Ui
-                                            title='css-stuff'
-                                            tree={storyTree}
-                                            sidebar={Object.values(stories).length > 1}
-                                        >
+                                        <Ui title='css-stuff' tree={storyTree} sidebar>
                                             <Entry>
                                                 <Story
                                                     framed={
@@ -73,24 +54,30 @@ const Main = () => {
                                     }
                                 />
                             );
-                        })
-                    )}
-                    <Route
-                        path='*'
-                        element={
-                            <Navigate
-                                replace
-                                to={
-                                    Object.values(stories).length === 0
-                                        ? "/"
-                                        : config.defaultStory
-                                        ? config.defaultStory
-                                        : Object.values(stories)[0].url
-                                }
-                            />
-                        }
-                    />
-                </Routes>
+                        })}
+                        <Route
+                            path='*'
+                            element={
+                                <Navigate
+                                    replace
+                                    to={
+                                        config.defaultStory
+                                            ? config.defaultStory
+                                            : Object.values(stories)[0].url
+                                    }
+                                />
+                            }
+                        />
+                    </Routes>
+                ) : (
+                    <Ui title='css-stuff' tree={storyTree} sidebar={false}>
+                        <Entry>
+                            <Story framed={false}>
+                                <NoStory />
+                            </Story>
+                        </Entry>
+                    </Ui>
+                )}
             </Context.Provider>
         </BrowserRouter>
     );
