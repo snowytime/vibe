@@ -9,9 +9,7 @@ export const Story = ({ children, framed }: { children: React.ReactNode; framed:
             initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0"><div id="root"></div></body></html>`}
             mountTarget='#root'
             style={{
-                height: "100%",
                 width: "100%",
-                minHeight: "500px",
                 marginTop: 0,
                 marginBottom: 0,
                 border: 0,

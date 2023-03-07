@@ -32,6 +32,7 @@ export interface Config {
     repo: string;
     version: string;
     mode: "development" | "production";
+    project: string;
 }
 
 export interface JsonStructure {

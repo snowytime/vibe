@@ -38,7 +38,13 @@ const Main = () => {
                                     key={story.id}
                                     path={story.url}
                                     element={
-                                        <Ui title='css-stuff' tree={storyTree} sidebar>
+                                        <Ui
+                                            title={config.project}
+                                            tree={storyTree}
+                                            sidebar
+                                            repo={config.repo}
+                                            website={config.website}
+                                        >
                                             <Entry>
                                                 <Story
                                                     framed={
@@ -70,7 +76,13 @@ const Main = () => {
                         />
                     </Routes>
                 ) : (
-                    <Ui title='css-stuff' tree={storyTree} sidebar={false}>
+                    <Ui
+                        title={config.project}
+                        tree={storyTree}
+                        sidebar={false}
+                        repo={config.repo}
+                        website={config.website}
+                    >
                         <Entry>
                             <Story framed={false}>
                                 <NoStory />

@@ -57,11 +57,28 @@
     );
 
     border-radius: 4px;
+    text-decoration: none;
     color: hsl(0deg 0% 100%);
     font-size: 14px;
     font-weight: 400;
     margin: 0;
     padding: 4px 6px;
+}
+
+.vibe-repo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background: hsl(var(--accent-100));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        fill: hsl(var(--foreground));
+        overflow: visible;
+        height: 70%;
+    }
 }
 
 .vibe-content {

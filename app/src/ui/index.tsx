@@ -1,5 +1,6 @@
 import React from "react";
 import { CloseIcon, MenuIcon, MoonIcon, SunCirclesIcon } from "@snowytime/iconly-react/ui";
+import { GithubIcon } from "@snowytime/iconly-react/programming";
 
 import { Category } from "#type/index.js";
 import { Tree } from "./tree/index.js";
@@ -27,11 +28,15 @@ export const Ui = ({
     title,
     tree,
     sidebar = true,
+    repo,
+    website,
 }: {
     children: React.ReactNode;
     title: string;
     tree: Category[];
     sidebar: boolean;
+    repo: string;
+    website: string;
 }) => {
     const [open, setOpen] = React.useState(true);
     const { theme, toggleTheme } = useTheme();
@@ -54,7 +59,12 @@ export const Ui = ({
                         )}
                     </div>
                 </div>
-                <div className='vibe-title'>{title}</div>
+                <a href={website} target='_blank' rel='noreferrer' className='vibe-title'>
+                    {title}
+                </a>
+                <a href={repo} target='_blank' rel='noreferrer' className='vibe-repo'>
+                    <GithubIcon />
+                </a>
             </nav>
             <section className='vibe-content'>
                 {sidebar ? (

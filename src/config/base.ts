@@ -10,6 +10,7 @@ export const baseConfig: Omit<Config, "addon"> = {
     expose: false,
     website: "snowy.sh/visby",
     repo: "https://github.com/snowytime/visby",
+    project: "vibe",
     version: "1",
     mode: "development",
 };
