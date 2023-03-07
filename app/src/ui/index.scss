@@ -69,7 +69,7 @@
     text-decoration: none;
     color: hsl(var(--foreground));
     height: 24px;
-    svg {
+    & > svg {
         overflow: visible;
         transition: color 0.2s ease-in-out;
     }
