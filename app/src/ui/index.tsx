@@ -29,14 +29,14 @@ export const Ui = ({
     tree,
     sidebar = true,
     repo,
-    web,
+    website,
 }: {
     children: React.ReactNode;
     title: string;
     tree: Category[];
     sidebar: boolean;
     repo: string;
-    web: string;
+    website: string;
 }) => {
     const [open, setOpen] = React.useState(true);
     const { theme, toggleTheme } = useTheme();
@@ -59,7 +59,7 @@ export const Ui = ({
                         )}
                     </div>
                 </div>
-                <a href={web} target='_blank' rel='noreferrer' className='vibe-title'>
+                <a href={website} target='_blank' rel='noreferrer' className='vibe-title'>
                     {title}
                 </a>
                 <a href={repo} target='_blank' rel='noreferrer' className='vibe-repo'>

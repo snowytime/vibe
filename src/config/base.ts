@@ -8,7 +8,7 @@ export const baseConfig: Omit<Config, "addon"> = {
     out: "visby-build",
     entry: "Entry.{js,ts,tsx,jsx}",
     expose: false,
-    website: "snowy.sh/visby",
+    website: "https://snowy.sh/visby",
     repo: "https://github.com/snowytime/visby",
     project: "vibe",
     version: "1",
