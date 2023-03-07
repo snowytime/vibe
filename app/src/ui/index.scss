@@ -68,10 +68,10 @@
 .vibe-repo {
     text-decoration: none;
     color: hsl(var(--foreground));
-    transition: color 0.2s ease-in-out;
     svg {
         overflow: visible;
-        height: 30px;
+        height: 24px;
+        transition: color 0.2s ease-in-out;
     }
     &:hover {
         svg {
