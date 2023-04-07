@@ -1,0 +1,21 @@
+{
+    "name": "vibe",
+    "type": "module",
+    "workspaces": [
+        "packages/*"
+    ],
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "vibe:install": "npm i -w packages/vibe",
+        "vibe:build": "cd packages/vibe && npm run build",
+        "example:install": "npm i -w packages/example",
+        "example:dev": "cd packages/example && npm run dev",
+        "example:vibe:dev": "cd packages/example && vibe dev"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@snowytime/standards": "^2.0.0"
+    }
+}

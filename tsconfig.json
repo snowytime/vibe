@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "target": "ESNext",
+        "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "declaration": true,
+        "declarationMap": true,
+        "resolveJsonModule": true,
+        "noEmit": true
+    },
+    "ts-node": {
+        "esm": true,
+        "files": true,
+        "transpileOnly": true,
+        "experimentalSpecifierResolution": "explicit",
+        "experimentalResolver": true
+    }
+}

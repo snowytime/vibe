@@ -1,0 +1,32 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "jsx": "react",
+        "rootDir": ".",
+        "baseUrl": ".",
+        "paths": {
+            "virtual:vibe": ["app/src/main.d.ts"],
+            "#debug/*": ["./src/debug/*"],
+            "#log/*": ["./src/log/*"],
+            "#types/*": ["./src/types/*"],
+            "#finders/*": ["./src/finders/*"],
+            "#config/*": ["./src/config/*"],
+            "#helpers/*": ["./src/helpers/*"],
+            "#structures/*": ["./src/structures/*"],
+            "#parsers/*": ["./src/parsers/*"],
+            "#server/*": ["./src/server/*"],
+            "#plugin/*": ["./src/plugin/*"]
+        },
+        "module": "NodeNext",
+        "target": "ESNext",
+        "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "declaration": true,
+        "declarationMap": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "skipLibCheck": true
+    },
+    "include": ["./src/**/*", "./app/**/*"]
+}

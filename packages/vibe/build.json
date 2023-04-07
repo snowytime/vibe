@@ -1,0 +1,29 @@
+{
+    "exclude": "^*.test.*$",
+    "minify": false,
+    "jsc": {
+        "parser": {
+            "syntax": "typescript",
+            "tsx": true,
+            "decorators": true,
+            "dynamicImport": true
+        },
+        "target": "es2020",
+        "baseUrl": ".",
+        "paths": {
+            "#debug/*": ["./dist/debug/*"],
+            "#log/*": ["./dist/log/*"],
+            "#types/*": ["./dist/types/*"],
+            "#finders/*": ["./dist/finders/*"],
+            "#config/*": ["./dist/config/*"],
+            "#helpers/*": ["./dist/helpers/*"],
+            "#structures/*": ["./dist/structures/*"],
+            "#parsers/*": ["./dist/parsers/*"],
+            "#server/*": ["./dist/server/*"],
+            "#plugin/*": ["./dist/plugin/*"]
+        }
+    },
+    "module": {
+        "type": "nodenext"
+    }
+}

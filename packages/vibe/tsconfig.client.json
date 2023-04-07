@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "jsx": "react",
+        "rootDir": "app",
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "skipLibCheck": true,
+        "noEmit": false
+    },
+    "include": ["./app/**/*"]
+}

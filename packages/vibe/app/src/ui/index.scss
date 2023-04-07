@@ -1,0 +1,112 @@
+.vibe-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.vibe-toolbar {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.vibe-nav {
+    align-items: center;
+    border-bottom: 1px solid hsl(var(--accent-100));
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column-reverse;
+    }
+}
+
+.sidebar-btn {
+    align-items: center;
+    background-color: hsl(var(--accent-100));
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+
+    svg {
+        fill: hsl(var(--foreground));
+        overflow: visible;
+    }
+}
+
+.vibe-title {
+    background: hsl(29deg 99% 68%);
+    background: linear-gradient(
+        to right,
+        hsl(184deg 53% 54%),
+        hsl(294deg 48% 65%),
+        hsl(29deg 99% 68%)
+    );
+
+    background: linear-gradient(
+        to right,
+        hsl(184deg 53% 54%),
+        hsl(294deg 48% 65%),
+        hsl(29deg 99% 68%)
+    );
+
+    border-radius: 4px;
+    text-decoration: none;
+    color: hsl(0deg 0% 100%);
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0;
+    padding: 4px 6px;
+}
+
+.vibe-repo {
+    text-decoration: none;
+    color: hsl(var(--foreground));
+    height: 24px;
+    svg {
+        height: 100%;
+        overflow: visible;
+        transition: color 0.2s ease-in-out;
+    }
+    &:hover {
+        svg {
+            color: hsl(var(--accent-700));
+        }
+    }
+}
+
+.vibe-content {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.vibe-content-sidebar {
+    background: hsl(var(--background));
+    border-right: 1px solid hsl(var(--accent-100));
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    overflow: auto;
+    width: 300px;
+    @media (max-width: 768px) {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}
+
+.vibe-content-window {
+    flex-grow: 1;
+    overflow: auto;
+}
