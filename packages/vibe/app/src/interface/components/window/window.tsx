@@ -48,7 +48,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     </div>
                 </div>
             )}
-            <div className='vibe__panel' ref={setPanelRef}>
+            <div className={`vibe__panel ${addons.resize.enabled && "resize"}`} ref={setPanelRef}>
                 <div
                     className='vibe__content'
                     style={{ width: addons.resize.width, height: addons.resize.height }}

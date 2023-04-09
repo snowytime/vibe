@@ -63,13 +63,13 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
             dispatch({
                 type: Action.setWidth,
                 payload: {
-                    state: addons.resize.width || `${ref.getBoundingClientRect().width - 60}px`,
+                    state: addons.resize.width || `${ref.getBoundingClientRect().width}px`,
                 },
             });
             dispatch({
                 type: Action.setHeight,
                 payload: {
-                    state: addons.resize.height || `${ref.getBoundingClientRect().height - 60}px`,
+                    state: addons.resize.height || `${ref.getBoundingClientRect().height}px`,
                 },
             });
         }
