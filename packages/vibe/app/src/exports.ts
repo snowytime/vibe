@@ -1,3 +1,3 @@
-import { useVibeContext } from "./context.js";
+import { useVibe } from "./context.js";
 
-export { useVibeContext };
+export { useVibe };

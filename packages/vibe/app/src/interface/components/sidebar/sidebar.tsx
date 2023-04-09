@@ -4,15 +4,15 @@ import { Header } from "./header/index";
 import { Actions } from "./actions/index";
 import { Search } from "./search/index";
 import { Graph } from "./graph/index";
-import { useVibeContext } from "../../../context";
+import { useVibe } from "../../../context";
 
 import "./styles.scss";
 
 export const Sidebar = () => {
-    const { sidebarOpen } = useVibeContext();
+    const { sidebar } = useVibe();
     return (
         <Transition
-            show={sidebarOpen}
+            show={sidebar.open}
             enter='vibe__sidebar-transition'
             leave='vibe__sidebar-transition'
             enterFrom='vibe__sidebar-close'

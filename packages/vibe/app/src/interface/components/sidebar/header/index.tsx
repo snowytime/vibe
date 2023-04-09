@@ -1,5 +1,5 @@
 import React from "react";
-import { useVibeContext } from "../../../../context";
+import { useVibe, Action } from "../../../../context";
 
 import "./styles.scss";
 
@@ -39,9 +39,9 @@ const Close = ({ onClick }: { onClick: () => void }) => (
 );
 
 export const Header = () => {
-    const { dispatch, sidebarOpen } = useVibeContext();
+    const { dispatch, sidebar } = useVibe();
     const toggleSidebar = () => {
-        dispatch({ type: "setSidebarOpen", payload: !sidebarOpen });
+        dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
     };
     return (
         <div className='vibe__header'>

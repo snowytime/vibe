@@ -1,13 +1,20 @@
-import { useState, useEffect, useCallback, MouseEvent, useRef } from "react";
-import { useVibeContext } from "../../context";
+import { useState, useEffect, useCallback, MouseEvent } from "react";
+import { useVibe, Action } from "../../context";
 
-export function useResize(ref: HTMLDivElement) {
-    const { dispatch, resizeEnabled } = useVibeContext();
+export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
+    const { dispatch, addons } = useVibe();
     const [bounds, setBounds] = useState({ width: 0, height: 0 }); // the max size of the element
-    const [width, setWidth] = useState(""); // the current width of the element
-    const [height, setHeight] = useState(""); // the current height of the element
     const [dragging, setDragging] = useState(false);
     const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
+
+    // set the bound for the absolute max size of the element
+    useEffect(() => {
+        if (!panelRef) return;
+        setBounds({
+            width: panelRef.getBoundingClientRect().width - 60,
+            height: panelRef.getBoundingClientRect().height - 60,
+        });
+    }, [panelRef]);
 
     const updateRect = useCallback(() => {
         if (!ref) return;
@@ -18,19 +25,19 @@ export function useResize(ref: HTMLDivElement) {
     }, [ref]);
 
     const disableAll = useCallback(() => {
-        setWidth("");
-        setHeight("");
+        dispatch({ type: Action.setWidth, payload: { state: "" } });
+        dispatch({ type: Action.setHeight, payload: { state: "" } });
         setDragging(false);
         setInitialPos({ x: 0, y: 0 });
-        dispatch({ type: "setResizeEnabled", payload: false });
+        dispatch({ type: Action.setResizeEnabled, payload: { state: false } });
     }, [dispatch]);
 
     const disableOnResize = useCallback(() => {
         if (!ref) return;
-        if (resizeEnabled) {
+        if (addons.resize.enabled) {
             disableAll();
         }
-    }, [ref, resizeEnabled, disableAll]);
+    }, [ref, addons.resize.enabled, disableAll]);
 
     // register the resize handler
     useEffect(() => {
@@ -45,26 +52,37 @@ export function useResize(ref: HTMLDivElement) {
                 disableOnResize();
             });
         };
-    }, [ref, resizeEnabled, updateRect, disableOnResize]);
+    }, [ref, addons.resize.enabled, updateRect, disableOnResize]);
 
     // resize toggle
     useEffect(() => {
         if (!ref) return;
-        if (!resizeEnabled) {
+        if (!addons.resize.enabled) {
             disableAll();
         } else {
-            setWidth(() => {
-                const wbBound = `${ref.getBoundingClientRect().width - 60}px`;
-                setBounds((b) => ({ ...b, width: parseFloat(wbBound) }));
-                return wbBound;
+            dispatch({
+                type: Action.setWidth,
+                payload: {
+                    state: addons.resize.width || `${ref.getBoundingClientRect().width - 60}px`,
+                },
             });
-            setHeight(() => {
-                const hbBound = `${ref.getBoundingClientRect().height - 60}px`;
-                setBounds((b) => ({ ...b, height: parseFloat(hbBound) }));
-                return hbBound;
+            dispatch({
+                type: Action.setHeight,
+                payload: {
+                    state: addons.resize.height || `${ref.getBoundingClientRect().height - 60}px`,
+                },
             });
         }
-    }, [ref, resizeEnabled, disableAll]);
+    }, [
+        ref,
+        disableAll,
+        addons.resize.enabled,
+        dispatch,
+        bounds.width,
+        bounds.height,
+        addons.resize.width,
+        addons.resize.height,
+    ]);
 
     // dragger handlers
 
@@ -90,28 +108,50 @@ export function useResize(ref: HTMLDivElement) {
             const deltaX = e.clientX - initialPos.x;
             const deltaY = e.clientY - initialPos.y;
             if (direction === "right") {
-                const proposedValue = parseFloat(width) + deltaX * 2;
+                const proposedValue = parseFloat(addons.resize.width) + deltaX * 2;
                 if (proposedValue > bounds.width) return;
-                setWidth((w) => `${parseFloat(w) + deltaX * 2}px`);
+                dispatch({
+                    type: Action.setWidth,
+                    payload: { state: `${parseFloat(addons.resize.width) + deltaX * 2}px` },
+                });
             }
             if (direction === "bottom") {
-                const proposedValue = parseFloat(height) + deltaY * 2;
+                const proposedValue = parseFloat(addons.resize.height) + deltaY * 2;
                 if (proposedValue > bounds.height) return;
-                setHeight((h) => `${parseFloat(h) + deltaY * 2}px`);
+                dispatch({
+                    type: Action.setHeight,
+                    payload: { state: `${parseFloat(addons.resize.height) + deltaY * 2}px` },
+                });
             }
             if (direction === "left") {
-                const proposedValue = parseFloat(width) - deltaX * 2;
+                const proposedValue = parseFloat(addons.resize.width) - deltaX * 2;
                 if (proposedValue > bounds.width) return;
-                setWidth((w) => `${parseFloat(w) - deltaX * 2}px`);
+                dispatch({
+                    type: Action.setWidth,
+                    payload: { state: `${parseFloat(addons.resize.width) - deltaX * 2}px` },
+                });
             }
             if (direction === "top") {
-                const proposedValue = parseFloat(height) - deltaY * 2;
+                const proposedValue = parseFloat(addons.resize.height) - deltaY * 2;
                 if (proposedValue > bounds.height) return;
-                setHeight((h) => `${parseFloat(h) - deltaY * 2}px`);
+                dispatch({
+                    type: Action.setHeight,
+                    payload: { state: `${parseFloat(addons.resize.height) - deltaY * 2}px` },
+                });
             }
             setInitialPos({ x: e.clientX, y: e.clientY });
         },
-        [bounds.height, bounds.width, dragging, height, initialPos.x, initialPos.y, ref, width],
+        [
+            addons.resize.height,
+            addons.resize.width,
+            bounds.height,
+            bounds.width,
+            dispatch,
+            dragging,
+            initialPos.x,
+            initialPos.y,
+            ref,
+        ],
     );
 
     // passed onto the draggers individually
@@ -123,5 +163,5 @@ export function useResize(ref: HTMLDivElement) {
         tabIndex: 0,
     });
 
-    return { width, height, draggerProps };
+    return { draggerProps };
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFilter } from "../../../hooks/useFilter";
-import { useVibeContext } from "../../../../context";
+import { useVibe, Action } from "../../../../context";
 
 import "./styles.scss";
 
@@ -29,10 +29,10 @@ const SearchIcon = () => (
 );
 
 export const Search = () => {
-    const { search, dispatch } = useVibeContext();
+    const { search, dispatch } = useVibe();
 
     const setSearch = (value: string) => {
-        dispatch({ type: "setSearch", payload: value });
+        dispatch({ type: Action.setSearch, payload: { state: value } });
     };
 
     useFilter(search);

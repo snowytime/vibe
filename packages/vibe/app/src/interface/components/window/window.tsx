@@ -1,7 +1,7 @@
 import React from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 import { useResize } from "../../hooks/useResize";
-import { useVibeContext } from "../../../context";
+import { useVibe, Action } from "../../../context";
 
 import "./styles.scss";
 
@@ -15,17 +15,18 @@ const SidebarIcon = () => (
 );
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
-    const { sidebarOpen, dispatch, resizeEnabled } = useVibeContext();
+    const { sidebar, dispatch, addons } = useVibe();
     const [ref, setRef] = useDomRef<HTMLDivElement>();
+    const [panelRef, setPanelRef] = useDomRef<HTMLDivElement>();
     const toggleSidebar = () => {
-        dispatch({ type: "setSidebarOpen", payload: !sidebarOpen });
+        dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
     };
 
-    const { width, height, draggerProps } = useResize(ref);
+    const { draggerProps } = useResize(ref, panelRef);
 
     return (
-        <div className={`vibe__window ${resizeEnabled && "resize"}`}>
-            {!sidebarOpen ? (
+        <div className={`vibe__window ${addons.resize.enabled && "resize"}`}>
+            {!sidebar.open ? (
                 <div
                     onClick={toggleSidebar}
                     className='vibe__float-open'
@@ -35,26 +36,30 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     <SidebarIcon />
                 </div>
             ) : null}
-            {resizeEnabled && (
+            {addons.resize.enabled && (
                 <div className='vibe__resize-meta'>
                     <div className='vibe__size-box'>
                         width
-                        <div className='vibe__size'>{width}</div>
+                        <div className='vibe__size'>{addons.resize.width}</div>
                     </div>
                     <div className='vibe__size-box'>
                         height
-                        <div className='vibe__size'>{height}</div>
+                        <div className='vibe__size'>{addons.resize.height}</div>
                     </div>
                 </div>
             )}
-            <div className='vibe__panel'>
-                <div className='vibe__content' style={{ width, height }} ref={setRef}>
-                    {resizeEnabled ? (
+            <div className='vibe__panel' ref={setPanelRef}>
+                <div
+                    className='vibe__content'
+                    style={{ width: addons.resize.width, height: addons.resize.height }}
+                    ref={setRef}
+                >
+                    {addons.resize.enabled ? (
                         <div className='vibe__window-dragger right' {...draggerProps("right")}>
                             <div />
                         </div>
                     ) : null}
-                    {resizeEnabled ? (
+                    {addons.resize.enabled ? (
                         <div className='vibe__window-dragger top' {...draggerProps("top")}>
                             <div />
                         </div>
@@ -62,12 +67,12 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     <div>
                         <div>{children}</div>
                     </div>
-                    {resizeEnabled ? (
+                    {addons.resize.enabled ? (
                         <div className='vibe__window-dragger bottom' {...draggerProps("bottom")}>
                             <div />
                         </div>
                     ) : null}
-                    {resizeEnabled ? (
+                    {addons.resize.enabled ? (
                         <div className='vibe__window-dragger left' {...draggerProps("left")}>
                             <div />
                         </div>

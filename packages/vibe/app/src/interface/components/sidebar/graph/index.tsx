@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import { useVibeContext } from "../../../../context";
+import { useVibe } from "../../../../context";
 import { Category } from "../../../../types";
 
 import "./styles.scss";
@@ -37,8 +37,8 @@ const StoryIcon = () => (
 );
 
 export const Graph = () => {
-    const { filteredTree, useLocation, search } = useVibeContext();
-    const location = useLocation();
+    const { filteredTree, navigation, search } = useVibe();
+    const location = navigation.useLocation();
     const pathSegments = location.pathname.split("/");
     pathSegments.shift();
     const id = useId();
@@ -99,7 +99,9 @@ const Nest = ({
     path: string[];
     expand: boolean;
 }) => {
-    const { useNavigate, useLocation } = useVibeContext();
+    const {
+        navigation: { useNavigate, useLocation },
+    } = useVibe();
     const navigate = useNavigate();
     const location = useLocation();
     return category.type === "file" ? (

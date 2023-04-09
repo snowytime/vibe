@@ -1,6 +1,6 @@
 import React from "react";
 import { Story } from "@snowytime/vibe";
-// import { useVibeContext } from "@snowytime/vibe/client";
+// import { useVibe } from "@snowytime/vibe/client";
 
 type EntryProps = {
     children: React.ReactNode;
@@ -8,7 +8,7 @@ type EntryProps = {
 };
 
 export default function Entry({ children, stories }: EntryProps) {
-    // const { storyUrls } = useVibeContext();
+    // const { storyUrls } = useVibe();
     React.useEffect(() => {
         // console.log(stories[0]);
         // console.log(storyUrls);

@@ -1,118 +1,226 @@
-import * as React from "react";
+import React, { useReducer } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { GenericContext } from "@snowytime/react-magic/helpers";
-import { Category, Config, Stories, VibeContext } from "./types.js";
+import { Category, Config, Stories } from "./types.js";
 
-type Settings = {
-    theme: "light" | "dark";
-    sidebarOpen: boolean;
-    resizeEnabled: boolean;
-    ready: boolean;
-    search: string;
-};
-const vibeFromLocalStorage = JSON.parse(localStorage.getItem("vibe")) || {};
+export enum Theme {
+    light = "light",
+    dark = "dark",
+}
 
-const initialState: Settings = {
-    theme: vibeFromLocalStorage.theme || "light",
-    sidebarOpen: true,
-    ready: false,
-    resizeEnabled: false,
+const storageKey = "vibe-settings";
+const defaultSettings = {
+    theme: Theme.light,
+    sidebar: {
+        open: true,
+    },
+    addons: {
+        resize: {
+            enabled: false,
+            width: "",
+            height: "",
+        },
+    },
     search: "",
 };
 
-export const reducer = (state, action) => {
+// serializer
+const serializer = {
+    initialize: () => {
+        localStorage.setItem(storageKey, JSON.stringify(defaultSettings));
+    },
+    set: <T,>(key: string, value: T) => {
+        const state = serializer.get();
+
+        // split the key into individual keys
+        const keys = key.split(".");
+
+        // update the nested property
+        let nestedState = state;
+        for (let i = 0; i < keys.length - 1; i++) {
+            const nestedKey = keys[i];
+            if (!nestedState.hasOwnProperty(nestedKey)) {
+                nestedState[nestedKey] = {};
+            }
+            nestedState = nestedState[nestedKey];
+        }
+        nestedState[keys[keys.length - 1]] = value;
+
+        // save the state
+        localStorage.setItem(storageKey, JSON.stringify(state));
+    },
+    get: (): Settings => {
+        const state = localStorage.getItem(storageKey);
+        if (!state) {
+            localStorage.setItem(storageKey, JSON.stringify(defaultSettings));
+            return defaultSettings;
+        }
+        const decodedState = JSON.parse(state);
+        return { ...defaultSettings, ...decodedState };
+    },
+};
+
+type Settings = {
+    theme: Theme;
+    sidebar: {
+        open: boolean;
+    };
+    addons: {
+        resize: {
+            enabled: boolean;
+            width: string;
+            height: string;
+        };
+    };
+    search: string;
+};
+
+type VibePlugin = {
+    stories: Stories;
+    storyTree: Category[];
+    urlMap: string[];
+    config: Config;
+};
+
+type VibeProps = VibePlugin & {
+    children: React.ReactNode;
+};
+
+type VibeContextItems = Settings &
+    VibePlugin & {
+        filteredTree: Category[];
+        dispatch: React.Dispatch<Actions>;
+    };
+
+export enum Action {
+    init = "initialize",
+    setTheme = "setTheme",
+    setSidebar = "setSidebarVisibility",
+    setResizeEnabled = "enableResize",
+    setSearch = "setSearch",
+    setWidth = "setWidth",
+    setHeight = "setHeight",
+    setFilteredTree = "setFilteredTree",
+}
+
+export type Actions =
+    | { type: Action.init }
+    | { type: Action.setTheme; payload: { state: Theme } }
+    | { type: Action.setSidebar; payload: { state: boolean } }
+    | { type: Action.setResizeEnabled; payload: { state: boolean } }
+    | { type: Action.setSearch; payload: { state: string } }
+    | { type: Action.setWidth; payload: { state: string } }
+    | { type: Action.setHeight; payload: { state: string } }
+    | { type: Action.setFilteredTree; payload: { state: Category[] } };
+
+// handler for all actions
+const vibeReducer = (state: VibeContextItems, action: Actions): VibeContextItems => {
     switch (action.type) {
-        case "init": {
-            const stash = JSON.parse(localStorage.getItem("vibe")) || {};
-            if (stash.theme) {
-                document.documentElement.setAttribute("data-theme", stash.theme);
+        case Action.init: {
+            const savedSettings = serializer.get();
+            if (savedSettings.theme) {
+                document.documentElement.setAttribute("data-theme", savedSettings.theme);
                 document.documentElement.style.transition = "color 0.2s ease-in-out";
             }
-            return { ...state, ...stash, ready: true };
+            return { ...state, ...savedSettings };
         }
-        case "setTheme":
-            const { payload: theme } = action;
-            // Set the data-theme attribute and transition style
+        case Action.setTheme: {
+            const theme = action.payload.state;
+            // set the theme
             document.documentElement.setAttribute("data-theme", theme);
             document.documentElement.style.transition = "color 0.2s ease-in-out";
-            // Save the new theme to local storage
-            localStorage.setItem("vibe", JSON.stringify({ theme }));
+            // save the theme
+            serializer.set("theme", theme);
             return { ...state, theme };
-        case "setSidebarOpen":
-            const { payload: sidebarOpen } = action;
-            // Save the new sidebarOpen value to local storage
-            return { ...state, sidebarOpen };
-        case "setResizeEnabled":
-            const { payload: resizeEnabled } = action;
-            return { ...state, resizeEnabled };
-        case "setFilteredTree":
-            const { payload: filteredTree } = action;
-            return { ...state, filteredTree };
-        case "setSearch":
-            const { payload: search } = action;
+        }
+        case Action.setSidebar: {
+            const open = action.payload.state;
+            // save the state
+            serializer.set("sidebar.open", open);
+            return { ...state, sidebar: { ...state.sidebar, open } };
+        }
+        case Action.setResizeEnabled: {
+            const enabled = action.payload.state;
+            // save the state
+            serializer.set("addons.resize.enabled", enabled);
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    resize: { ...state.addons.resize, enabled },
+                },
+            };
+        }
+        case Action.setSearch: {
+            const search = action.payload.state;
+            // save the state
+            serializer.set("search", search);
             return { ...state, search };
+        }
+        case Action.setWidth: {
+            const width = action.payload.state;
+            // save the state
+            serializer.set("addons.resize.width", width);
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    resize: { ...state.addons.resize, width },
+                },
+            };
+        }
+        case Action.setHeight: {
+            const height = action.payload.state;
+            // save the state
+            serializer.set("addons.resize.height", height);
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    resize: { ...state.addons.resize, height },
+                },
+            };
+        }
+        case Action.setFilteredTree: {
+            const filteredTree = action.payload.state;
+            return { ...state, filteredTree };
+        }
         default:
             return state;
     }
 };
 
-type Props = {
-    stories: Stories;
-    config: Config;
-    urlMap: string[];
-    storyTree: Category[];
-    children: React.ReactNode;
-};
-export const ContextStore = ({ children, stories, config, urlMap, storyTree }: Props) => {
-    const [settings, dispatch] = React.useReducer(reducer, {
-        ...initialState,
+export const ContextStore = ({ children, stories, config, urlMap, storyTree }: VibeProps) => {
+    const initial: VibeContextItems = {
+        ...serializer.get(),
+        stories,
+        config,
+        urlMap,
+        storyTree,
         filteredTree: storyTree,
-    });
+        dispatch: () => {},
+    };
+    const [data, dispatch] = useReducer(vibeReducer, initial);
     // need to run the appropriate change on initial render to get theme
     React.useEffect(() => {
-        dispatch({ type: "init" });
+        dispatch({ type: Action.init });
     }, []);
-    const values = React.useMemo(
-        () => ({ stories, config, urlMap, storyTree }),
-        [stories, config, urlMap, storyTree],
-    );
-    return (
-        <GenericContext.Provider value={{ ...values, ...settings, dispatch }}>
-            {children}
-        </GenericContext.Provider>
-    );
+
+    const valueMemo = React.useMemo(() => ({ ...data, dispatch }), [data, dispatch]);
+    return <GenericContext.Provider value={valueMemo}>{children}</GenericContext.Provider>;
 };
 
-export const useVibeContext = () => {
+export const useVibe = () => {
     // stories is useful for seeing all stories, storyTree is useful to see the structured version of the stories
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const {
-        stories,
-        storyTree,
-        config,
-        storyUrls,
-        theme,
-        sidebarOpen,
-        dispatch,
-        ready,
-        resizeEnabled,
-        filteredTree,
-        search,
-    } = React.useContext(GenericContext as any) as VibeContext;
+    const { dispatch, ...data } = React.useContext(GenericContext as any) as VibeContextItems;
     return {
-        storyTree,
-        storyUrls,
-        stories,
-        Link,
-        useNavigate,
-        useLocation,
-        config,
-        theme,
-        sidebarOpen,
-        resizeEnabled,
+        navigation: {
+            Link,
+            useNavigate,
+            useLocation,
+        },
         dispatch,
-        ready,
-        filteredTree,
-        search,
+        ...data,
     };
 };

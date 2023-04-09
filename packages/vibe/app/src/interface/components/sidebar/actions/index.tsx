@@ -1,14 +1,14 @@
 import React from "react";
-import { useVibeContext } from "../../../../context";
+import { useVibe, Action, Theme as _Theme } from "../../../../context";
 
 import "./styles.scss";
 
 export const Theme = () => {
-    const { theme, dispatch } = useVibeContext();
+    const { theme, dispatch } = useVibe();
     const themeToggle = () =>
         dispatch({
-            type: "setTheme",
-            payload: theme === "light" ? "dark" : "light",
+            type: Action.setTheme,
+            payload: { state: theme === "light" ? _Theme.dark : _Theme.light },
         });
     return (
         <>
@@ -45,15 +45,15 @@ const Resize = ({ onClick, enabled }: { onClick: () => void; enabled: boolean })
 );
 
 export const Actions = () => {
-    const { resizeEnabled, dispatch } = useVibeContext();
+    const { addons, dispatch } = useVibe();
     const toggleResize = () => {
-        dispatch({ type: "setResizeEnabled", payload: !resizeEnabled });
+        dispatch({ type: Action.setResizeEnabled, payload: { state: !addons.resize.enabled } });
     };
     return (
         <div className='vibe__sidebar__actions'>
             <div className='vibe__sidebar-actions-bar'>
                 <Theme />
-                <Resize enabled={resizeEnabled} onClick={toggleResize} />
+                <Resize enabled={addons.resize.enabled} onClick={toggleResize} />
             </div>
         </div>
     );

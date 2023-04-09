@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { Tree } from "../../types";
-import { useVibeContext } from "../../context";
+import { Action, useVibe } from "../../context";
 
 function filterTree(initialTree: Tree, searchQuery: string): Tree {
     const tree = structuredClone(initialTree);
@@ -25,16 +25,16 @@ function filterTree(initialTree: Tree, searchQuery: string): Tree {
 }
 
 export const useFilter = (search: string) => {
-    const { storyTree, dispatch } = useVibeContext();
+    const { storyTree, dispatch } = useVibe();
 
     useEffect(() => {
         if (search === "") {
             // reset to original tree if search query is empty
-            dispatch({ type: "setFilteredTree", payload: storyTree });
+            dispatch({ type: Action.setFilteredTree, payload: { state: storyTree } });
         } else {
             // filter tree based on search query
             const filtered = filterTree(storyTree, search);
-            dispatch({ type: "setFilteredTree", payload: filtered });
+            dispatch({ type: Action.setFilteredTree, payload: { state: filtered } });
         }
     }, [storyTree, search, dispatch]);
 };
