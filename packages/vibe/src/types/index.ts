@@ -51,6 +51,7 @@ export interface Category {
     type: "file" | "folder";
     path?: string;
     children: Category[];
+    level: number;
 }
 
 export type Tree = Category[];

@@ -61,9 +61,9 @@ export const parseNamedExports = (ast: ModuleItem[] | undefined) => {
                   ...parseObject((matchedStoryData.expression as any).right),
               }
             : {
-                  name: componentName,
+                  name: componentName.toLowerCase(),
               };
-        const name = result.name || componentName;
+        const name = result.name || componentName.toLowerCase();
         // resolve the path
         if (result.hasOwnProperty("path")) {
             delete (result as any).path;

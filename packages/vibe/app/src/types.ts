@@ -31,6 +31,7 @@ export interface Category {
     type: "file" | "folder";
     path?: string;
     children: Category[];
+    level: number;
 }
 
 export type Tree = Category[];
@@ -40,4 +41,8 @@ export type VibeContext = {
     config: Config;
     storyTree: Tree;
     storyUrls: string[];
+    theme: "light" | "dark";
+    sidebarOpen: boolean;
+    ready: boolean;
+    dispatch: React.Dispatch<any>;
 };

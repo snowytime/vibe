@@ -34,6 +34,7 @@ export const generateTree = (stories: Story[]) => {
                     children: [],
                     path: "",
                     type: "folder",
+                    level: j,
                 } as Category;
                 if (j === path.length - 1) {
                     // last item
