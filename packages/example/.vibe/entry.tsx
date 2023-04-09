@@ -13,5 +13,5 @@ export default function Entry({ children, stories }: EntryProps) {
         // console.log(stories[0]);
         // console.log(storyUrls);
     }, []);
-    return <div>{children}</div>;
+    return <>{children}</>;
 }

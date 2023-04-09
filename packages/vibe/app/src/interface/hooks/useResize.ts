@@ -60,6 +60,8 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
         if (!addons.resize.enabled) {
             disableAll();
         } else {
+            // we need to get the intial size of the element from the cache
+            // if the sizing goes beyond the bounds, we set it to the default sizing
             dispatch({
                 type: Action.setWidth,
                 payload: {
@@ -93,7 +95,6 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
 
     const onMouseDown = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {
-            e.stopPropagation();
             setDragging(true);
             setInitialPos({ x: e.clientX, y: e.clientY });
             window.addEventListener("mouseup", onMouseUp);
@@ -156,8 +157,8 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
 
     // passed onto the draggers individually
     const draggerProps = (direction: "top" | "right" | "bottom" | "left") => ({
+        onMouseUp,
         onMouseDown,
-        onDragStart: () => false,
         onMouseMove: (e: MouseEvent<HTMLDivElement>) => onMouseMove(e, direction),
         role: "button",
         tabIndex: 0,

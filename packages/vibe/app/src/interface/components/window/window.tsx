@@ -64,9 +64,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                             <div />
                         </div>
                     ) : null}
-                    <div>
-                        <div>{children}</div>
-                    </div>
+                    {children}
                     {addons.resize.enabled ? (
                         <div className='vibe__window-dragger bottom' {...draggerProps("bottom")}>
                             <div />

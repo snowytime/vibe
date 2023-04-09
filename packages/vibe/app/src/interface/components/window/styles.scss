@@ -32,7 +32,7 @@
     flex-direction: row;
     flex-shrink: 0;
     gap: 10px;
-    height: 30px;
+    height: 50px;
     justify-content: center;
     width: 100%;
 }
@@ -61,6 +61,7 @@
 .vibe__window-dragger {
     border-radius: 200px;
     cursor: pointer;
+    overflow: hidden;
     position: absolute;
 
     &.bottom {
@@ -157,18 +158,6 @@
     height: 100%;
     position: relative;
     width: 100%;
-
-    div {
-        height: 100%;
-        overflow: hidden;
-        width: 100%;
-
-        div {
-            height: 100%;
-            overflow: auto;
-            width: 100%;
-        }
-    }
 }
 
 .vibe__float-open {
