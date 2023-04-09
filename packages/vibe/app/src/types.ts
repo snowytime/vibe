@@ -45,4 +45,7 @@ export type VibeContext = {
     sidebarOpen: boolean;
     ready: boolean;
     dispatch: React.Dispatch<any>;
+    resizeEnabled: boolean;
+    filteredTree: Tree;
+    search: string;
 };

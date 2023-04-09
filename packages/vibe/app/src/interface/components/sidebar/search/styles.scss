@@ -1,0 +1,34 @@
+.vibe__search {
+    align-items: center;
+    background: hsl(var(--accent-100));
+    border-radius: 200px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    height: 38px;
+    justify-content: flex-start;
+    margin: 0 20px;
+    padding: 0 14px;
+
+    > svg {
+        flex-shrink: 0;
+    }
+}
+
+.vibe__search-input {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    justify-content: flex-start;
+    overflow: hidden;
+
+    > input {
+        background: transparent;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        max-width: 100%;
+        outline: none;
+    }
+}

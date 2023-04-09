@@ -29,5 +29,7 @@ module.exports = {
         "react/no-array-index-key": "off",
         "no-param-reassign": "off",
         "jsx-a11y/click-events-have-key-events": "off",
+        "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-empty-function": "off",
     },
 };

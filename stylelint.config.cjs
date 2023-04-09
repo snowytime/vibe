@@ -3,5 +3,6 @@ module.exports = {
     rules: {
         "order/properties-order": [["height", "width"]],
         "max-nesting-depth": 4,
+        "selector-class-pattern": null,
     },
 };

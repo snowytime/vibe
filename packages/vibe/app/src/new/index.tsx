@@ -134,95 +134,10 @@ const Search = ({ search, setSearch }) => {
 };
 
 export const Ui = ({ children, stories }) => {
-    const [bounds, setBounds] = React.useState({ width: 0, height: null });
-    const [resize, setResize] = useState(false);
     const [ref, setRef] = useDomRef<HTMLDivElement>();
-
-    React.useEffect(() => {
-        if (!ref) return;
-        const handleResize = () => {
-            setBounds({
-                width: ref.getBoundingClientRect().width,
-                height: ref.getBoundingClientRect().height,
-            });
-        };
-        // set initial bounds on mount
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, [ref, resize]);
     const [search, setSearch] = React.useState("");
     const [sidebarOpen, setSidebarOpen] = React.useState(true);
-    const [width, setWidth] = useState("");
-    const [height, setHeight] = useState("");
-    const [dragging, setDragging] = useState(false);
-    const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
-    React.useEffect(() => {
-        // if window is resized disable the resize state
-        const handleResize = () => {
-            if (resize) {
-                setResize(false);
-                setWidth("");
-                setHeight("");
-            }
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, [resize]);
-    const handleMouseDown = (e: MouseEvent) => {
-        setDragging(true);
-        setInitialPos({ x: e.clientX, y: e.clientY });
-    };
-    const handleMouseUp = () => {
-        setDragging(false);
-    };
-    const toggleResize = React.useCallback(() => {
-        if (!ref) return;
-        setResize((r) => {
-            if (r) {
-                setWidth("");
-                setHeight("");
-            } else {
-                setWidth(`${ref.getBoundingClientRect().width - 60}px`);
-                setHeight(`${ref.getBoundingClientRect().height - 30 - 30 - 20 - 20}px`);
-            }
-            return !r;
-        });
-    }, [ref]);
-    const handleMouseMove = React.useCallback(
-        (e, direction) => {
-            if (!ref) return;
-            if (!dragging) return;
-            const deltaX = e.clientX - initialPos.x;
-            const deltaY = e.clientY - initialPos.y;
-            if (direction === "right") {
-                const proposedValue = parseFloat(width) + deltaX * 2;
-                if (proposedValue > bounds.width) return;
-                setWidth((w) => `${parseFloat(w) + deltaX * 2}px`);
-            }
-            if (direction === "bottom") {
-                const proposedValue = parseFloat(height) + deltaY * 2;
-                if (proposedValue > bounds.height) return;
-                setHeight((h) => `${parseFloat(h) + deltaY * 2}px`);
-            }
-            if (direction === "left") {
-                const proposedValue = parseFloat(width) - deltaX * 2;
-                if (proposedValue > bounds.width) return;
-                setWidth((w) => `${parseFloat(w) - deltaX * 2}px`);
-            }
-            if (direction === "top") {
-                const proposedValue = parseFloat(height) - deltaY * 2;
-                if (proposedValue > bounds.height) return;
-                setHeight((h) => `${parseFloat(h) - deltaY * 2}px`);
-            }
-            setInitialPos({ x: e.clientX, y: e.clientY });
-        },
-        [bounds.height, bounds.width, dragging, height, initialPos.x, initialPos.y, ref, width],
-    );
+    const { width, height, toggleResize, enabled, draggerProps } = useResize(ref);
     return (
         <main className='vibe-main'>
             <Transition
@@ -246,12 +161,12 @@ export const Ui = ({ children, stories }) => {
                     <div className='footer'>
                         <div className='feature-bar'>
                             <Theme />
-                            <Resize enabled={resize} onClick={toggleResize} />
+                            <Resize enabled={enabled} onClick={toggleResize} />
                         </div>
                     </div>
                 </div>
             </Transition>
-            <div className={`vibe-window ${resize && "resize"}`}>
+            <div className={`vibe-window ${enabled && "resize"}`}>
                 {!sidebarOpen ? (
                     <div
                         onClick={() => setSidebarOpen(true)}
@@ -262,7 +177,7 @@ export const Ui = ({ children, stories }) => {
                         <SidebarIcon />
                     </div>
                 ) : null}
-                {resize && (
+                {enabled && (
                     <div className='resize-meta'>
                         <div className='size-box'>
                             width
@@ -276,54 +191,26 @@ export const Ui = ({ children, stories }) => {
                 )}
                 <div className='panel'>
                     <div className='vibe-content' style={{ width, height }} ref={setRef}>
-                        {resize ? (
-                            <div
-                                className='window-dragger right'
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                onMouseMove={(e) => handleMouseMove(e, "right")}
-                                tabIndex={0}
-                                role='button'
-                            >
+                        {enabled ? (
+                            <div className='window-dragger right' {...draggerProps("right")}>
                                 <div />
                             </div>
                         ) : null}
-                        {resize ? (
-                            <div
-                                className='window-dragger top'
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                onMouseMove={(e) => handleMouseMove(e, "top")}
-                                tabIndex={0}
-                                role='button'
-                            >
+                        {enabled ? (
+                            <div className='window-dragger top' {...draggerProps("top")}>
                                 <div />
                             </div>
                         ) : null}
                         <div>
                             <div>{children}</div>
                         </div>
-                        {resize ? (
-                            <div
-                                className='window-dragger bottom'
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                onMouseMove={(e) => handleMouseMove(e, "bottom")}
-                                tabIndex={0}
-                                role='button'
-                            >
+                        {enabled ? (
+                            <div className='window-dragger bottom' {...draggerProps("bottom")}>
                                 <div />
                             </div>
                         ) : null}
-                        {resize ? (
-                            <div
-                                className='window-dragger left'
-                                onMouseDown={handleMouseDown}
-                                onMouseUp={handleMouseUp}
-                                onMouseMove={(e) => handleMouseMove(e, "left")}
-                                tabIndex={0}
-                                role='button'
-                            >
+                        {enabled ? (
+                            <div className='window-dragger left' {...draggerProps("left")}>
                                 <div />
                             </div>
                         ) : null}

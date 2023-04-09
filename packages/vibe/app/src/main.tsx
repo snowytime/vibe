@@ -2,14 +2,14 @@ import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
-import { Ui } from "./new/index.js";
+import { Vibe } from "./interface/index.js";
 
 import "@snowytime/css/fonts/visby/all.css";
 import "@snowytime/css/presets/visby.css";
 
 import { ContextStore } from "./context.js";
-import { Story } from "./story/story.js";
-import { NoStory } from "./story/no-story.js";
+import { Story } from "./interface/components/frame/story/index.js";
+import { NoStory } from "./interface/components/frame/no-story/index.js";
 
 const Main = () => {
     return (
@@ -44,7 +44,7 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Ui stories={storyTree}>
+                                            <Vibe>
                                                 <Entry
                                                     story={story}
                                                     stories={stories}
@@ -52,11 +52,17 @@ const Main = () => {
                                                     storyUrls={storyUrls}
                                                     config={config}
                                                 >
-                                                    <React.Suspense fallback={<>loading...</>}>
-                                                        {React.createElement(story.component)}
-                                                    </React.Suspense>
+                                                    <Story
+                                                        framed={
+                                                            !!story && config.mode === "development"
+                                                        }
+                                                    >
+                                                        <React.Suspense fallback={<>loading...</>}>
+                                                            {React.createElement(story.component)}
+                                                        </React.Suspense>
+                                                    </Story>
                                                 </Entry>
-                                            </Ui>
+                                            </Vibe>
                                         }
                                     />
                                 );
@@ -76,7 +82,9 @@ const Main = () => {
                             />
                         </Routes>
                     ) : (
-                        <Ui stories={storyTree}>Show no stories ui here</Ui>
+                        <Vibe>
+                            <NoStory />
+                        </Vibe>
                     )}
                 </ContextStore>
             </BrowserRouter>

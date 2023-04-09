@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, MouseEvent, useRef } from "react";
+import { useVibeContext } from "../../context";
 
 export function useResize(ref: HTMLDivElement) {
-    const [enabled, setEnabled] = useState(true); // whether or not the element is enabled
+    const { dispatch, resizeEnabled } = useVibeContext();
     const [bounds, setBounds] = useState({ width: 0, height: 0 }); // the max size of the element
     const [width, setWidth] = useState(""); // the current width of the element
     const [height, setHeight] = useState(""); // the current height of the element
@@ -16,19 +17,24 @@ export function useResize(ref: HTMLDivElement) {
         });
     }, [ref]);
 
+    const disableAll = useCallback(() => {
+        setWidth("");
+        setHeight("");
+        setDragging(false);
+        setInitialPos({ x: 0, y: 0 });
+        dispatch({ type: "setResizeEnabled", payload: false });
+    }, [dispatch]);
+
     const disableOnResize = useCallback(() => {
         if (!ref) return;
-        if (enabled) {
-            setEnabled(false);
-            setWidth("");
-            setHeight("");
+        if (resizeEnabled) {
+            disableAll();
         }
-    }, [ref, enabled]);
+    }, [ref, resizeEnabled, disableAll]);
 
     // register the resize handler
     useEffect(() => {
         if (!ref) return;
-        updateRect();
         window.addEventListener("resize", () => {
             updateRect();
             disableOnResize();
@@ -39,35 +45,46 @@ export function useResize(ref: HTMLDivElement) {
                 disableOnResize();
             });
         };
-    }, [ref, enabled, updateRect, disableOnResize]);
+    }, [ref, resizeEnabled, updateRect, disableOnResize]);
 
     // resize toggle
-    const toggleResize = useCallback(() => {
+    useEffect(() => {
         if (!ref) return;
-        setEnabled((r) => {
-            if (r) {
-                setWidth("");
-                setHeight("");
-            } else {
-                setWidth(`${ref.getBoundingClientRect().width - 60}px`);
-                setHeight(`${ref.getBoundingClientRect().height - 30 - 30 - 20 - 20}px`);
-            }
-            return !r;
-        });
-    }, [ref]);
+        if (!resizeEnabled) {
+            disableAll();
+        } else {
+            setWidth(() => {
+                const wbBound = `${ref.getBoundingClientRect().width - 60}px`;
+                setBounds((b) => ({ ...b, width: parseFloat(wbBound) }));
+                return wbBound;
+            });
+            setHeight(() => {
+                const hbBound = `${ref.getBoundingClientRect().height - 60}px`;
+                setBounds((b) => ({ ...b, height: parseFloat(hbBound) }));
+                return hbBound;
+            });
+        }
+    }, [ref, resizeEnabled, disableAll]);
 
     // dragger handlers
-    const onMouseDown = useCallback((e: MouseEvent) => {
-        setDragging(true);
-        setInitialPos({ x: e.clientX, y: e.clientY });
-    }, []);
 
     const onMouseUp = useCallback(() => {
         setDragging(false);
+        window.removeEventListener("mouseup", onMouseUp);
     }, []);
 
+    const onMouseDown = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            e.stopPropagation();
+            setDragging(true);
+            setInitialPos({ x: e.clientX, y: e.clientY });
+            window.addEventListener("mouseup", onMouseUp);
+        },
+        [onMouseUp],
+    );
+
     const onMouseMove = useCallback(
-        (e: MouseEvent, direction: "top" | "right" | "bottom" | "left") => {
+        (e: MouseEvent<HTMLDivElement>, direction: "top" | "right" | "bottom" | "left") => {
             if (!ref) return;
             if (!dragging) return;
             const deltaX = e.clientX - initialPos.x;
@@ -100,11 +117,11 @@ export function useResize(ref: HTMLDivElement) {
     // passed onto the draggers individually
     const draggerProps = (direction: "top" | "right" | "bottom" | "left") => ({
         onMouseDown,
-        onMouseUp,
-        onMouseMove: (e: MouseEvent) => onMouseMove(e, direction),
+        onDragStart: () => false,
+        onMouseMove: (e: MouseEvent<HTMLDivElement>) => onMouseMove(e, direction),
         role: "button",
         tabIndex: 0,
     });
 
-    return { width, height, enabled, setEnabled, toggleResize, draggerProps };
+    return { width, height, draggerProps };
 }
