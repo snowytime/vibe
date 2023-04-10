@@ -21,7 +21,6 @@ const Main = () => {
                     config={config}
                     urlMap={storyUrls}
                 >
-                    {/* <Ui stories={storyTree}>{React.createElement(stories[0].component)}</Ui> */}
                     {Object.values(stories).length > 0 ? (
                         <Routes>
                             <Route
@@ -45,23 +44,23 @@ const Main = () => {
                                         path={story.url}
                                         element={
                                             <Vibe>
-                                                <Entry
-                                                    story={story}
-                                                    stories={stories}
-                                                    storyTree={storyTree}
-                                                    storyUrls={storyUrls}
-                                                    config={config}
+                                                <Story
+                                                    framed={
+                                                        !!story && config.mode === "development"
+                                                    }
                                                 >
-                                                    <Story
-                                                        framed={
-                                                            !!story && config.mode === "development"
-                                                        }
+                                                    <Entry
+                                                        story={story}
+                                                        stories={stories}
+                                                        storyTree={storyTree}
+                                                        storyUrls={storyUrls}
+                                                        config={config}
                                                     >
                                                         <React.Suspense fallback={<>loading...</>}>
                                                             {React.createElement(story.component)}
                                                         </React.Suspense>
-                                                    </Story>
-                                                </Entry>
+                                                    </Entry>
+                                                </Story>
                                             </Vibe>
                                         }
                                     />

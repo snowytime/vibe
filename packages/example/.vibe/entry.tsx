@@ -7,11 +7,15 @@ type EntryProps = {
     stories: Story[];
 };
 
+// import some styles
+import "@snowytime/css/fonts/visby/all.css";
+import "@snowytime/css/presets/visby.css";
+
 export default function Entry({ children, stories }: EntryProps) {
     // const { storyUrls } = useVibe();
     React.useEffect(() => {
         // console.log(stories[0]);
         // console.log(storyUrls);
     }, []);
-    return <>{children}</>;
+    return <>Entry: {children}</>;
 }

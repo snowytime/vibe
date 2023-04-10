@@ -86,58 +86,36 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
         addons.resize.height,
     ]);
 
-    // dragger handlers
+    // the onMouseDown is started on the handler, but the onMouseMove and onMouseUp are applied to the window
 
     const onMouseUp = useCallback(() => {
         setDragging(false);
-        window.removeEventListener("mouseup", onMouseUp);
     }, []);
 
-    const onMouseDown = useCallback(
-        (e: MouseEvent<HTMLDivElement>) => {
-            setDragging(true);
-            setInitialPos({ x: e.clientX, y: e.clientY });
-            window.addEventListener("mouseup", onMouseUp);
-        },
-        [onMouseUp],
-    );
+    const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
+        setDragging(true);
+        setInitialPos({ x: e.clientX, y: e.clientY });
+    }, []);
 
     const onMouseMove = useCallback(
-        (e: MouseEvent<HTMLDivElement>, direction: "top" | "right" | "bottom" | "left") => {
+        (e: MouseEvent<HTMLDivElement>) => {
+            e.preventDefault();
             if (!ref) return;
             if (!dragging) return;
             const deltaX = e.clientX - initialPos.x;
             const deltaY = e.clientY - initialPos.y;
-            if (direction === "right") {
-                const proposedValue = parseFloat(addons.resize.width) + deltaX * 2;
-                if (proposedValue > bounds.width) return;
+            const proposedX = parseFloat(addons.resize.width) + deltaX * 2;
+            const proposedY = parseFloat(addons.resize.height) + deltaY * 2;
+            if (proposedX < bounds.width) {
                 dispatch({
                     type: Action.setWidth,
                     payload: { state: `${parseFloat(addons.resize.width) + deltaX * 2}px` },
                 });
             }
-            if (direction === "bottom") {
-                const proposedValue = parseFloat(addons.resize.height) + deltaY * 2;
-                if (proposedValue > bounds.height) return;
+            if (proposedY < bounds.height) {
                 dispatch({
                     type: Action.setHeight,
                     payload: { state: `${parseFloat(addons.resize.height) + deltaY * 2}px` },
-                });
-            }
-            if (direction === "left") {
-                const proposedValue = parseFloat(addons.resize.width) - deltaX * 2;
-                if (proposedValue > bounds.width) return;
-                dispatch({
-                    type: Action.setWidth,
-                    payload: { state: `${parseFloat(addons.resize.width) - deltaX * 2}px` },
-                });
-            }
-            if (direction === "top") {
-                const proposedValue = parseFloat(addons.resize.height) - deltaY * 2;
-                if (proposedValue > bounds.height) return;
-                dispatch({
-                    type: Action.setHeight,
-                    payload: { state: `${parseFloat(addons.resize.height) - deltaY * 2}px` },
                 });
             }
             setInitialPos({ x: e.clientX, y: e.clientY });
@@ -156,13 +134,20 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
     );
 
     // passed onto the draggers individually
-    const draggerProps = (direction: "top" | "right" | "bottom" | "left") => ({
-        onMouseUp,
-        onMouseDown,
-        onMouseMove: (e: MouseEvent<HTMLDivElement>) => onMouseMove(e, direction),
+    const draggerProps = {
+        // onMouseUp,
+        onMouseDown: (e: MouseEvent<HTMLDivElement>) => onMouseDown(e),
+        // onMouseMove: (e: MouseEvent<HTMLDivElement>) => onMouseMove(e),
         role: "button",
         tabIndex: 0,
-    });
+    };
 
-    return { draggerProps };
+    const panelProps = {
+        onMouseUp,
+        onMouseMove,
+        role: "button",
+        tabIndex: 0,
+    };
+
+    return { draggerProps, panelProps };
 }

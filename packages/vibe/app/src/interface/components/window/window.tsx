@@ -22,7 +22,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
         dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
     };
 
-    const { draggerProps } = useResize(ref, panelRef);
+    const { draggerProps, panelProps } = useResize(ref, panelRef);
 
     return (
         <div className={`vibe__window ${addons.resize.enabled && "resize"}`}>
@@ -48,33 +48,26 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     </div>
                 </div>
             )}
-            <div className={`vibe__panel ${addons.resize.enabled && "resize"}`} ref={setPanelRef}>
+            <div
+                className={`vibe__panel ${addons.resize.enabled && "resize"}`}
+                ref={setPanelRef}
+                {...panelProps}
+            >
                 <div
                     className='vibe__content'
                     style={{ width: addons.resize.width, height: addons.resize.height }}
                     ref={setRef}
                 >
                     {addons.resize.enabled ? (
-                        <div className='vibe__window-dragger right' {...draggerProps("right")}>
-                            <div />
-                        </div>
-                    ) : null}
-                    {addons.resize.enabled ? (
-                        <div className='vibe__window-dragger top' {...draggerProps("top")}>
+                        <div
+                            draggable={false}
+                            className='vibe__window-dragger right'
+                            {...draggerProps}
+                        >
                             <div />
                         </div>
                     ) : null}
                     {children}
-                    {addons.resize.enabled ? (
-                        <div className='vibe__window-dragger bottom' {...draggerProps("bottom")}>
-                            <div />
-                        </div>
-                    ) : null}
-                    {addons.resize.enabled ? (
-                        <div className='vibe__window-dragger left' {...draggerProps("left")}>
-                            <div />
-                        </div>
-                    ) : null}
                 </div>
             </div>
         </div>
