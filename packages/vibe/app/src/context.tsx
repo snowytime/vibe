@@ -15,6 +15,7 @@ const defaultSettings = {
         open: true,
     },
     addons: {
+        open: false,
         resize: {
             enabled: false,
             width: "",
@@ -66,6 +67,7 @@ type Settings = {
         open: boolean;
     };
     addons: {
+        open: boolean;
         resize: {
             enabled: boolean;
             width: string;
@@ -101,6 +103,7 @@ export enum Action {
     setWidth = "setWidth",
     setHeight = "setHeight",
     setFilteredTree = "setFilteredTree",
+    setAddonsOpen = "setAddonsOpen",
 }
 
 export type Actions =
@@ -111,13 +114,18 @@ export type Actions =
     | { type: Action.setSearch; payload: { state: string } }
     | { type: Action.setWidth; payload: { state: string } }
     | { type: Action.setHeight; payload: { state: string } }
-    | { type: Action.setFilteredTree; payload: { state: Category[] } };
+    | { type: Action.setFilteredTree; payload: { state: Category[] } }
+    | { type: Action.setAddonsOpen; payload: { state: boolean } };
 
 // handler for all actions
 const vibeReducer = (state: VibeContextItems, action: Actions): VibeContextItems => {
     switch (action.type) {
         case Action.init: {
             const savedSettings = serializer.get();
+            // if an addon is enabled, open the addons panel on load
+            if (savedSettings.addons.resize.enabled) {
+                savedSettings.addons.open = true;
+            }
             if (savedSettings.theme) {
                 document.documentElement.setAttribute("data-theme", savedSettings.theme);
                 document.documentElement.style.transition = "color 0.2s ease-in-out";
@@ -184,6 +192,12 @@ const vibeReducer = (state: VibeContextItems, action: Actions): VibeContextItems
         case Action.setFilteredTree: {
             const filteredTree = action.payload.state;
             return { ...state, filteredTree };
+        }
+        case Action.setAddonsOpen: {
+            const open = action.payload.state;
+            // save the state
+            serializer.set("addons.open", open);
+            return { ...state, addons: { ...state.addons, open } };
         }
         default:
             return state;

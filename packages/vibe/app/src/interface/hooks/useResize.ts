@@ -7,8 +7,7 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
     const [dragging, setDragging] = useState(false);
     const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
 
-    // set the bound for the absolute max size of the element
-    useEffect(() => {
+    const updateRect = useCallback(() => {
         if (!panelRef) return;
         setBounds({
             width: panelRef.getBoundingClientRect().width - 60,
@@ -16,13 +15,36 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
         });
     }, [panelRef]);
 
-    const updateRect = useCallback(() => {
+    useEffect(() => {
         if (!ref) return;
-        setBounds({
-            width: ref.getBoundingClientRect().width,
-            height: ref.getBoundingClientRect().height,
-        });
-    }, [ref]);
+        console.log(bounds.height, addons.resize.height);
+        if (addons.resize && parseFloat(addons.resize.width) > bounds.width) {
+            dispatch({
+                type: Action.setWidth,
+                payload: { state: `${bounds.width}px` },
+            });
+        }
+        if (addons.resize && parseFloat(addons.resize.height) > bounds.height) {
+            dispatch({
+                type: Action.setHeight,
+
+                payload: { state: `${bounds.height}px` },
+            });
+        }
+    }, [
+        bounds,
+        addons.resize.width,
+        addons.resize.height,
+        dispatch,
+        addons.open,
+        ref,
+        addons.resize,
+    ]);
+
+    // set the bound for the absolute max size of the element
+    useEffect(() => {
+        updateRect();
+    }, [updateRect, dragging, addons.resize.enabled, addons.open]);
 
     const disableAll = useCallback(() => {
         dispatch({ type: Action.setWidth, payload: { state: "" } });

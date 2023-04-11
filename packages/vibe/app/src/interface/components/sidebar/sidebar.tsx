@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Transition } from "@snowytime/react-magic/components";
 import { Header } from "./header/index";
 import { Actions } from "./actions/index";
@@ -13,6 +13,7 @@ export const Sidebar = () => {
     return (
         <Transition
             show={sidebar.open}
+            as={Fragment}
             enter='vibe__sidebar-transition'
             leave='vibe__sidebar-transition'
             enterFrom='vibe__sidebar-close'

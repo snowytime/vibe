@@ -10,6 +10,24 @@ import "@snowytime/css/presets/visby.css";
 import { ContextStore } from "./context.js";
 import { Story } from "./interface/components/frame/story/index.js";
 import { NoStory } from "./interface/components/frame/no-story/index.js";
+import { Loader } from "./loader";
+
+const Wait = () => {
+    return (
+        <div
+            style={{
+                height: "100%",
+                width: "100%",
+                position: "absolute",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Loader />
+        </div>
+    );
+};
 
 const Main = () => {
     return (
@@ -49,17 +67,17 @@ const Main = () => {
                                                         !!story && config.mode === "development"
                                                     }
                                                 >
-                                                    <Entry
-                                                        story={story}
-                                                        stories={stories}
-                                                        storyTree={storyTree}
-                                                        storyUrls={storyUrls}
-                                                        config={config}
-                                                    >
-                                                        <React.Suspense fallback={<>loading...</>}>
+                                                    <React.Suspense fallback={<Wait />}>
+                                                        <Entry
+                                                            story={story}
+                                                            stories={stories}
+                                                            storyTree={storyTree}
+                                                            storyUrls={storyUrls}
+                                                            config={config}
+                                                        >
                                                             {React.createElement(story.component)}
-                                                        </React.Suspense>
-                                                    </Entry>
+                                                        </Entry>
+                                                    </React.Suspense>
                                                 </Story>
                                             </Vibe>
                                         }

@@ -1,0 +1,31 @@
+.vibe__addons {
+    background-color: hsl(var(--background));
+    border-top: 1px solid hsl(var(--accent-100));
+    flex-shrink: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.vibe__addons-bar {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+    margin: 0 20px 20px;
+    padding-top: 20px;
+}
+
+.vibe__addons-open {
+    height: 71px;
+    opacity: 1;
+}
+
+.vibe__addons-close {
+    height: 0;
+    opacity: 0;
+}
+
+.vibe__addons-transition {
+    transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}

@@ -4,6 +4,7 @@ import { useResize } from "../../hooks/useResize";
 import { useVibe, Action } from "../../../context";
 
 import "./styles.scss";
+import { Addons } from "./addons";
 
 const SidebarIcon = () => (
     <svg width='40%' viewBox='0 0 19 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -18,6 +19,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
     const { sidebar, dispatch, addons } = useVibe();
     const [ref, setRef] = useDomRef<HTMLDivElement>();
     const [panelRef, setPanelRef] = useDomRef<HTMLDivElement>();
+
     const toggleSidebar = () => {
         dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
     };
@@ -26,7 +28,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className={`vibe__window ${addons.resize.enabled && "resize"}`}>
-            {!sidebar.open ? (
+            {!sidebar.open && !addons.open ? (
                 <div
                     onClick={toggleSidebar}
                     className='vibe__float-open'
@@ -70,6 +72,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     {children}
                 </div>
             </div>
+            <Addons />
         </div>
     );
 };
