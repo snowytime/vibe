@@ -18,7 +18,11 @@
 }
 
 .vibe__action {
-    --fill: hsl(var(--accent-300));
+    --fill: hsl(var(--accent-500));
+
+    &[data-enabled="true"] {
+        --fill: hsl(var(--cyan-500));
+    }
 
     align-items: center;
     background-color: hsl(var(--accent-100));
@@ -28,6 +32,10 @@
     height: 30px;
     justify-content: center;
     width: 30px;
+
+    > svg {
+        overflow: visible;
+    }
 }
 
 .vibe__sidebar-open {

@@ -9,7 +9,7 @@ export enum Theme {
 }
 
 const storageKey = "vibe-settings";
-const defaultSettings = {
+const defaultSettings: Settings = {
     theme: Theme.light,
     sidebar: {
         open: true,
@@ -20,6 +20,29 @@ const defaultSettings = {
             enabled: false,
             width: "",
             height: "",
+        },
+        outline: {
+            enabled: false,
+        },
+        console: {
+            enabled: false,
+        },
+        listener: {
+            enabled: false,
+        },
+        layers: {
+            enabled: false,
+        },
+        controls: {
+            enabled: false,
+        },
+        padding: {
+            enabled: false,
+        },
+        background: {
+            enabled: false,
+            backgroundColor: "",
+            color: "",
         },
     },
     search: "",
@@ -73,6 +96,29 @@ type Settings = {
             width: string;
             height: string;
         };
+        outline: {
+            enabled: boolean;
+        };
+        console: {
+            enabled: boolean;
+        };
+        listener: {
+            enabled: boolean;
+        };
+        layers: {
+            enabled: boolean;
+        };
+        controls: {
+            enabled: boolean;
+        };
+        background: {
+            enabled: boolean;
+            backgroundColor: string;
+            color: string;
+        };
+        padding: {
+            enabled: boolean;
+        };
     };
     search: string;
 };
@@ -104,6 +150,7 @@ export enum Action {
     setHeight = "setHeight",
     setFilteredTree = "setFilteredTree",
     setAddonsOpen = "setAddonsOpen",
+    setOutlineAddonState = "setOutlineAddonState",
 }
 
 export type Actions =
@@ -115,7 +162,8 @@ export type Actions =
     | { type: Action.setWidth; payload: { state: string } }
     | { type: Action.setHeight; payload: { state: string } }
     | { type: Action.setFilteredTree; payload: { state: Category[] } }
-    | { type: Action.setAddonsOpen; payload: { state: boolean } };
+    | { type: Action.setAddonsOpen; payload: { state: boolean } }
+    | { type: Action.setOutlineAddonState; payload: { state: boolean } };
 
 // handler for all actions
 const vibeReducer = (state: VibeContextItems, action: Actions): VibeContextItems => {
@@ -198,6 +246,18 @@ const vibeReducer = (state: VibeContextItems, action: Actions): VibeContextItems
             // save the state
             serializer.set("addons.open", open);
             return { ...state, addons: { ...state.addons, open } };
+        }
+        case Action.setOutlineAddonState: {
+            const enabled = action.payload.state;
+            // save the state
+            serializer.set("addons.outline.enabled", enabled);
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    outline: { ...state.addons.outline, enabled },
+                },
+            };
         }
         default:
             return state;

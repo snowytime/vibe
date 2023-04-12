@@ -17,7 +17,6 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
 
     useEffect(() => {
         if (!ref) return;
-        console.log(bounds.height, addons.resize.height);
         if (addons.resize && parseFloat(addons.resize.width) > bounds.width) {
             dispatch({
                 type: Action.setWidth,
