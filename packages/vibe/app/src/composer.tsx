@@ -1,4 +1,5 @@
 import React from "react";
+import { Argument } from "./args";
 
 export const composer = (module: any, storyName: string, data: any) => {
     // some initial things
@@ -13,7 +14,11 @@ export const composer = (module: any, storyName: string, data: any) => {
         defaultDecorator({
             Component: () =>
                 storyDecorator({
-                    Component: () => React.createElement(component, args),
+                    Component: () => (
+                        <Argument args={vibe.arguments || {}} data={args}>
+                            {component}
+                        </Argument>
+                    ),
                     ...args,
                 }),
             ...args,

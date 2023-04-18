@@ -17,40 +17,32 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
 
     useEffect(() => {
         if (!ref) return;
-        if (addons.resize && parseFloat(addons.resize.width) > bounds.width) {
+        if (addons.resize && parseFloat(addons.resize.data.width) > bounds.width) {
             dispatch({
-                type: Action.setWidth,
-                payload: { state: `${bounds.width}px` },
+                type: Action.set_addon_resize_width,
+                payload: { width: `${bounds.width}px` },
             });
         }
-        if (addons.resize && parseFloat(addons.resize.height) > bounds.height) {
+        if (addons.resize && parseFloat(addons.resize.data.height) > bounds.height) {
             dispatch({
-                type: Action.setHeight,
+                type: Action.set_addon_resize_height,
 
-                payload: { state: `${bounds.height}px` },
+                payload: { height: `${bounds.height}px` },
             });
         }
-    }, [
-        bounds,
-        addons.resize.width,
-        addons.resize.height,
-        dispatch,
-        addons.open,
-        ref,
-        addons.resize,
-    ]);
+    }, [bounds, addons.resize.data.width, addons.resize.data.height, dispatch, ref, addons.resize]);
 
     // set the bound for the absolute max size of the element
     useEffect(() => {
         updateRect();
-    }, [updateRect, dragging, addons.resize.enabled, addons.open]);
+    }, [updateRect, dragging, addons.resize.enabled]);
 
     const disableAll = useCallback(() => {
-        dispatch({ type: Action.setWidth, payload: { state: "" } });
-        dispatch({ type: Action.setHeight, payload: { state: "" } });
+        dispatch({ type: Action.set_addon_resize_width, payload: { width: "" } });
+        dispatch({ type: Action.set_addon_resize_height, payload: { height: "" } });
         setDragging(false);
         setInitialPos({ x: 0, y: 0 });
-        dispatch({ type: Action.setResizeEnabled, payload: { state: false } });
+        dispatch({ type: Action.set_addon_resize_enabled, payload: { enabled: false } });
     }, [dispatch]);
 
     const disableOnResize = useCallback(() => {
@@ -65,12 +57,12 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
         if (!ref) return;
         window.addEventListener("resize", () => {
             updateRect();
-            disableOnResize();
+            // disableOnResize();
         });
         return () => {
             window.removeEventListener("resize", () => {
                 updateRect();
-                disableOnResize();
+                // disableOnResize();
             });
         };
     }, [ref, addons.resize.enabled, updateRect, disableOnResize]);
@@ -84,15 +76,15 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
             // we need to get the intial size of the element from the cache
             // if the sizing goes beyond the bounds, we set it to the default sizing
             dispatch({
-                type: Action.setWidth,
+                type: Action.set_addon_resize_width,
                 payload: {
-                    state: addons.resize.width || `${ref.getBoundingClientRect().width}px`,
+                    width: addons.resize.data.width || `${ref.getBoundingClientRect().width}px`,
                 },
             });
             dispatch({
-                type: Action.setHeight,
+                type: Action.set_addon_resize_height,
                 payload: {
-                    state: addons.resize.height || `${ref.getBoundingClientRect().height}px`,
+                    height: addons.resize.data.height || `${ref.getBoundingClientRect().height}px`,
                 },
             });
         }
@@ -103,8 +95,8 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
         dispatch,
         bounds.width,
         bounds.height,
-        addons.resize.width,
-        addons.resize.height,
+        addons.resize.data.width,
+        addons.resize.data.height,
     ]);
 
     // the onMouseDown is started on the handler, but the onMouseMove and onMouseUp are applied to the window
@@ -125,25 +117,25 @@ export function useResize(ref: HTMLDivElement, panelRef: HTMLDivElement) {
             if (!dragging) return;
             const deltaX = e.clientX - initialPos.x;
             const deltaY = e.clientY - initialPos.y;
-            const proposedX = parseFloat(addons.resize.width) + deltaX * 2;
-            const proposedY = parseFloat(addons.resize.height) + deltaY * 2;
+            const proposedX = parseFloat(addons.resize.data.width) + deltaX * 2;
+            const proposedY = parseFloat(addons.resize.data.height) + deltaY * 2;
             if (proposedX < bounds.width) {
                 dispatch({
-                    type: Action.setWidth,
-                    payload: { state: `${parseFloat(addons.resize.width) + deltaX * 2}px` },
+                    type: Action.set_addon_resize_width,
+                    payload: { width: `${parseFloat(addons.resize.data.width) + deltaX * 2}px` },
                 });
             }
             if (proposedY < bounds.height) {
                 dispatch({
-                    type: Action.setHeight,
-                    payload: { state: `${parseFloat(addons.resize.height) + deltaY * 2}px` },
+                    type: Action.set_addon_resize_height,
+                    payload: { height: `${parseFloat(addons.resize.data.height) + deltaY * 2}px` },
                 });
             }
             setInitialPos({ x: e.clientX, y: e.clientY });
         },
         [
-            addons.resize.height,
-            addons.resize.width,
+            addons.resize.data.height,
+            addons.resize.data.width,
             bounds.height,
             bounds.width,
             dispatch,

@@ -1,0 +1,30 @@
+.vibe__data_panel {
+    flex-shrink: 0;
+    overflow: hidden;
+    width: 400px;
+}
+
+.vibe__data_panel_inner {
+    border-left: 1px solid hsl(var(--accent-100));
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 20px;
+    height: 100%;
+    overflow: auto;
+    width: 400px;
+}
+
+.vibe__data_panel_open {
+    opacity: 1;
+    width: 400px;
+}
+
+.vibe__data_panel_close {
+    opacity: 0;
+    width: 0;
+}
+
+.vibe__data_panel_transition {
+    transition: width 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}

@@ -29,3 +29,10 @@
 .vibe__addons-transition {
     transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
+
+.vibe__actions_main {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 20px;
+}

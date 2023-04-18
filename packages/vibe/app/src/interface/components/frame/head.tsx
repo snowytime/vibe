@@ -22,6 +22,8 @@ export const SynchronizeHead = ({
         if (!storyWindow) return;
         const mainHead = document.head;
 
+        storyWindow.document.documentElement.style.backgroundColor = "transparent";
+
         // Loop through each stylesheet in the main document head
         for (let i = 0; i < mainHead.children.length; i++) {
             const child = mainHead.children[i];

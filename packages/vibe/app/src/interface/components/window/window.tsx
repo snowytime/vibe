@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 import { useResize } from "../../hooks/useResize";
 import { useVibe, Action } from "../../../context";
@@ -16,19 +16,19 @@ const SidebarIcon = () => (
 );
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
-    const { sidebar, dispatch, addons } = useVibe();
+    const { sidebarPanel, dispatch, addons, addonPanel } = useVibe();
     const [ref, setRef] = useDomRef<HTMLDivElement>();
     const [panelRef, setPanelRef] = useDomRef<HTMLDivElement>();
 
     const toggleSidebar = () => {
-        dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
+        dispatch({ type: Action.set_sidebar_open, payload: { open: !sidebarPanel.open } });
     };
 
     const { draggerProps, panelProps } = useResize(ref, panelRef);
 
     return (
         <div className={`vibe__window ${addons.resize.enabled && "resize"}`}>
-            {!sidebar.open && !addons.open ? (
+            {!sidebarPanel.open && !addonPanel.open ? (
                 <div
                     onClick={toggleSidebar}
                     className='vibe__float-open'
@@ -42,11 +42,11 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 <div className='vibe__resize-meta'>
                     <div className='vibe__size-box'>
                         width
-                        <div className='vibe__size'>{addons.resize.width}</div>
+                        <div className='vibe__size'>{addons.resize.data.width}</div>
                     </div>
                     <div className='vibe__size-box'>
                         height
-                        <div className='vibe__size'>{addons.resize.height}</div>
+                        <div className='vibe__size'>{addons.resize.data.height}</div>
                     </div>
                 </div>
             )}
@@ -57,7 +57,11 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
             >
                 <div
                     className='vibe__content'
-                    style={{ width: addons.resize.width, height: addons.resize.height }}
+                    style={{
+                        width: addons.resize.data.width,
+                        height: addons.resize.data.height,
+                        backgroundColor: addons.background.backgroundColor,
+                    }}
                     ref={setRef}
                 >
                     {addons.resize.enabled ? (

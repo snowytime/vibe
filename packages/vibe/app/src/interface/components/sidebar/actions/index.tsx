@@ -1,14 +1,14 @@
 import React from "react";
-import { useVibe, Action, Theme as _Theme } from "../../../../context";
+import { useVibe, Action, Theme } from "../../../../context";
 
 import "./styles.scss";
 
-export const Theme = () => {
+export const ThemeToggle = () => {
     const { theme, dispatch } = useVibe();
     const themeToggle = () =>
         dispatch({
-            type: Action.setTheme,
-            payload: { state: theme === "light" ? _Theme.dark : _Theme.light },
+            type: Action.set_theme,
+            payload: { theme: theme === Theme.light ? Theme.dark : Theme.light },
         });
     return (
         <>
@@ -45,15 +45,15 @@ const Addons = ({ onClick, enabled }: { onClick: () => void; enabled: boolean })
 };
 
 export const Actions = () => {
-    const { addons, dispatch } = useVibe();
+    const { addonPanel, dispatch } = useVibe();
     const toggleAddons = () => {
-        dispatch({ type: Action.setAddonsOpen, payload: { state: !addons.open } });
+        dispatch({ type: Action.set_addons_open, payload: { open: !addonPanel.open } });
     };
     return (
         <div className='vibe__sidebar__actions'>
             <div className='vibe__sidebar-actions-bar'>
-                <Theme />
-                <Addons enabled={addons.open} onClick={toggleAddons} />
+                <ThemeToggle />
+                <Addons enabled={addonPanel.open} onClick={toggleAddons} />
             </div>
         </div>
     );

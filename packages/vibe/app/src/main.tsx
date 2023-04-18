@@ -7,10 +7,10 @@ import { Vibe } from "./interface/index.js";
 import "@snowytime/css/fonts/visby/all.css";
 import "@snowytime/css/presets/visby.css";
 
-import { ContextStore } from "./context.js";
 import { Story } from "./interface/components/frame/story/index.js";
 import { NoStory } from "./interface/components/frame/no-story/index.js";
 import { Loader } from "./loader";
+import { ContextStore } from "./context/context.js";
 
 const Wait = () => {
     return (
@@ -22,6 +22,7 @@ const Wait = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                background: "hsl(var(--background))",
             }}
         >
             <Loader />

@@ -32,7 +32,7 @@ export const Search = () => {
     const { search, dispatch } = useVibe();
 
     const setSearch = (value: string) => {
-        dispatch({ type: Action.setSearch, payload: { state: value } });
+        dispatch({ type: Action.set_search, payload: { search: value } });
     };
 
     useFilter(search);

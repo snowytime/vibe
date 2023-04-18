@@ -3,7 +3,7 @@ import { Transition } from "@snowytime/react-magic/components";
 import { Action, useVibe } from "../../../../context";
 
 import "./styles.scss";
-import { Loader } from "../../loader";
+import { Button } from "../../ui/button";
 
 const OpenSidebar = ({ onClick }: { onClick: () => void }) => (
     <div className='vibe__action' onClick={onClick} role='button' tabIndex={0}>
@@ -168,51 +168,94 @@ export const ControlsAddon = ({ onClick, enabled }: { onClick: () => void; enabl
     </div>
 );
 
-export const PaddingAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
-    <div
-        className='vibe__action'
-        data-enabled={enabled}
-        onClick={onClick}
-        role='button'
-        tabIndex={0}
+export const DataBar = () => (
+    <svg
+        style={{ "--fill": "currentColor" }}
+        height='50%'
+        viewBox='0 0 17 16'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
     >
-        <svg width='50%' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-            <path
-                d='M3.4603 6.82772C4.09188 6.82772 4.66726 6.67459 5.18644 6.36832C5.71097 6.05677 6.13113 5.64488 6.44692 5.13267C6.76271 4.61518 6.92061 4.04488 6.92061 3.42178C6.92061 2.79868 6.76271 2.22838 6.44692 1.71089C6.13113 1.1934 5.71097 0.778878 5.18644 0.467327C4.66726 0.155776 4.09188 0 3.4603 0C2.82872 0 2.25067 0.155776 1.72614 0.467327C1.20161 0.778878 0.781445 1.1934 0.465656 1.71089C0.155219 2.22838 0 2.79868 0 3.42178C0 4.04488 0.157895 4.61518 0.473684 5.13267C0.789474 5.64488 1.20963 6.05677 1.73417 6.36832C2.2587 6.67459 2.83408 6.82772 3.4603 6.82772ZM3.05085 5.25149C2.96521 5.25149 2.89028 5.233 2.82605 5.19604C2.76717 5.1538 2.7083 5.09835 2.64942 5.0297L1.75022 3.9604C1.68064 3.87591 1.64585 3.77294 1.64585 3.65149C1.64585 3.53531 1.68332 3.43762 1.75825 3.35842C1.83854 3.27921 1.9322 3.2396 2.03925 3.2396C2.11954 3.2396 2.18644 3.25545 2.23996 3.28713C2.29884 3.31881 2.35504 3.36898 2.40856 3.43762L3.03479 4.22178L4.46387 1.95644C4.56021 1.80858 4.68064 1.73465 4.82516 1.73465C4.93756 1.73465 5.0339 1.77162 5.11418 1.84554C5.19982 1.91947 5.24264 2.0066 5.24264 2.10693C5.24264 2.21254 5.20785 2.32079 5.13827 2.43168L3.4603 5.0297C3.36396 5.17756 3.22748 5.25149 3.05085 5.25149ZM3.4603 16C4.09188 16 4.66726 15.8442 5.18644 15.5327C5.71097 15.2211 6.13113 14.8066 6.44692 14.2891C6.76271 13.7716 6.92061 13.204 6.92061 12.5861C6.92061 11.9578 6.76271 11.3848 6.44692 10.8673C6.13113 10.3498 5.71097 9.93795 5.18644 9.63168C4.66726 9.32013 4.09188 9.16436 3.4603 9.16436C2.82872 9.16436 2.25067 9.32013 1.72614 9.63168C1.20161 9.94323 0.781445 10.3578 0.465656 10.8752C0.155219 11.3927 0 11.963 0 12.5861C0 13.204 0.157895 13.7716 0.473684 14.2891C0.789474 14.8066 1.20963 15.2211 1.73417 15.5327C2.2587 15.8442 2.83408 16 3.4603 16ZM3.4603 14.8436C3.04817 14.8436 2.66815 14.7406 2.32025 14.5347C1.97235 14.3287 1.69402 14.0541 1.48528 13.7109C1.27654 13.3677 1.17217 12.9927 1.17217 12.5861C1.17217 12.1743 1.27654 11.7967 1.48528 11.4535C1.69402 11.1102 1.97235 10.8356 2.32025 10.6297C2.66815 10.4238 3.04817 10.3208 3.4603 10.3208C3.87244 10.3208 4.25245 10.4238 4.60036 10.6297C4.94826 10.8356 5.22658 11.1102 5.43533 11.4535C5.64407 11.7967 5.74844 12.1743 5.74844 12.5861C5.74844 12.9927 5.64407 13.3677 5.43533 13.7109C5.22658 14.0541 4.94826 14.3287 4.60036 14.5347C4.25245 14.7406 3.87244 14.8436 3.4603 14.8436ZM9.32114 4.02376H17.3818C17.5531 4.02376 17.6976 3.96568 17.8153 3.84951C17.9384 3.73333 18 3.59076 18 3.42178C18 3.25809 17.9384 3.11815 17.8153 3.00198C17.6976 2.88581 17.5531 2.82772 17.3818 2.82772H9.32114C9.14987 2.82772 9.00535 2.88581 8.8876 3.00198C8.76985 3.11815 8.71097 3.25809 8.71097 3.42178C8.71097 3.59076 8.76985 3.73333 8.8876 3.84951C9.00535 3.96568 9.14987 4.02376 9.32114 4.02376ZM9.32114 13.1802H17.3818C17.5531 13.1802 17.6976 13.1221 17.8153 13.0059C17.9384 12.8898 18 12.7498 18 12.5861C18 12.4172 17.9384 12.2746 17.8153 12.1584C17.6976 12.0422 17.5531 11.9842 17.3818 11.9842H9.32114C9.14987 11.9842 9.00535 12.0422 8.8876 12.1584C8.76985 12.2746 8.71097 12.4172 8.71097 12.5861C8.71097 12.7498 8.76985 12.8898 8.8876 13.0059C9.00535 13.1221 9.14987 13.1802 9.32114 13.1802Z'
-                fill='var(--fill)'
-                stroke='var(--fill)'
-                strokeWidth='0.1'
-            />
-        </svg>
-    </div>
+        <path
+            d='M0 7.97029C0 8.96027 0.272265 9.7179 0.816794 10.2432C1.36132 10.7685 2.15522 11.0311 3.19847 11.0311H5.84733C6.50891 11.1069 7.17303 11.218 7.83969 11.3645C8.51145 11.511 9.17812 11.6928 9.83969 11.91C10.5064 12.1272 11.1578 12.3822 11.7939 12.6752C12.4351 12.9681 13.056 13.2964 13.6565 13.6601V12.3115C13.0712 11.958 12.4656 11.6423 11.8397 11.3645C11.2137 11.0867 10.57 10.8442 9.9084 10.6372C9.25191 10.4301 8.58015 10.2583 7.89313 10.122C7.20611 9.98559 6.50891 9.88205 5.80153 9.81134H3.19847C2.50127 9.81134 1.99746 9.66739 1.68702 9.37949C1.38168 9.09159 1.22901 8.62186 1.22901 7.97029V6.85657C1.22901 6.20501 1.38168 5.73528 1.68702 5.44738C1.99746 5.15948 2.50127 5.01553 3.19847 5.01553H5.73282C6.45038 4.94481 7.16031 4.84127 7.8626 4.7049C8.56489 4.56347 9.24936 4.38922 9.91603 4.18213C10.5827 3.97504 11.229 3.7326 11.855 3.4548C12.4809 3.17701 13.0814 2.86133 13.6565 2.50776V1.16675C13.0814 1.53042 12.4656 1.85872 11.8092 2.15168C11.1578 2.44463 10.4911 2.70475 9.80916 2.93204C9.12723 3.15428 8.45293 3.33863 7.78626 3.48511C7.12468 3.62653 6.49364 3.73008 5.89313 3.79574H3.19847C2.15522 3.79574 1.36132 4.05838 0.816794 4.58368C0.272265 5.10392 0 5.86155 0 6.85657V7.97029ZM7.09924 10.9326H5.93893L6.58015 14.1601C6.61069 14.3268 6.58779 14.4632 6.51145 14.5693C6.4402 14.6804 6.34351 14.7587 6.22137 14.8041C6.09415 14.8496 5.9542 14.8471 5.80153 14.7966C5.65394 14.7461 5.5369 14.6299 5.45038 14.4481L3.72519 10.7887H2.47328L4.23664 14.6678C4.44529 15.1274 4.69466 15.4582 4.98473 15.6603C5.27481 15.8623 5.56997 15.9734 5.87023 15.9936C6.17048 16.0138 6.44275 15.986 6.68702 15.9103C7.05852 15.7941 7.34351 15.5693 7.54198 15.236C7.74555 14.9026 7.79644 14.4834 7.69466 13.9783L7.09924 10.9326ZM4.81679 4.37154V10.4553H6.05344V4.37154H4.81679ZM13.2214 12.9025C13.2214 13.2762 13.3003 13.602 13.458 13.8798C13.6158 14.1627 13.8371 14.3824 14.1221 14.539C14.4071 14.6955 14.7354 14.7738 15.1069 14.7738C15.4886 14.7738 15.8193 14.6955 16.0992 14.539C16.3842 14.3824 16.6056 14.1627 16.7634 13.8798C16.9211 13.602 17 13.2762 17 12.9025V1.87135C17 1.49759 16.9211 1.1718 16.7634 0.894006C16.6056 0.611157 16.3842 0.391443 16.0992 0.234866C15.8193 0.0782887 15.4886 0 15.1069 0C14.7354 0 14.4071 0.0782887 14.1221 0.234866C13.8371 0.391443 13.6158 0.611157 13.458 0.894006C13.3003 1.1718 13.2214 1.49759 13.2214 1.87135V12.9025ZM14.458 12.9025V1.87135C14.458 1.67437 14.5165 1.51779 14.6336 1.40162C14.7506 1.2804 14.9084 1.21979 15.1069 1.21979C15.3053 1.21979 15.4656 1.2804 15.5878 1.40162C15.7099 1.51779 15.771 1.67437 15.771 1.87135V12.9025C15.771 13.0995 15.7099 13.2586 15.5878 13.3798C15.4656 13.496 15.3053 13.554 15.1069 13.554C14.9084 13.554 14.7506 13.496 14.6336 13.3798C14.5165 13.2586 14.458 13.0995 14.458 12.9025Z'
+            fill='var(--fill)'
+            stroke='var(--fill)'
+            strokeWidth='0.1'
+        />
+    </svg>
 );
 
 export const Addons = () => {
-    const { dispatch, addons, sidebar } = useVibe();
+    const { dispatch, addons, sidebarPanel, watcherPanel, addonPanel } = useVibe();
 
     const toggleResize = () => {
-        dispatch({ type: Action.setResizeEnabled, payload: { state: !addons.resize.enabled } });
+        dispatch({
+            type: Action.set_addon_resize_enabled,
+            payload: { enabled: !addons.resize.enabled },
+        });
     };
 
     const toggleAddonPanel = () => {
-        dispatch({ type: Action.setAddonsOpen, payload: { state: !addons.open } });
+        dispatch({ type: Action.set_addons_open, payload: { open: !addonPanel.open } });
     };
 
     const toggleSidebar = () => {
-        dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
+        dispatch({ type: Action.set_sidebar_open, payload: { open: !sidebarPanel.open } });
     };
 
     const toggleOutline = () => {
         dispatch({
-            type: Action.setOutlineAddonState,
-            payload: { state: !addons.outline.enabled },
+            type: Action.set_addon_outline_enabled,
+            payload: { enabled: !addons.outline.enabled },
+        });
+    };
+
+    const toggleDataPanel = () => {
+        dispatch({
+            type: Action.set_watcher_open,
+            payload: { open: !watcherPanel.open },
+        });
+    };
+
+    const toggleLayers = () => {
+        dispatch({
+            type: Action.set_addon_layers_enabled,
+            payload: { enabled: !addons.layers.enabled },
+        });
+    };
+
+    const toggleBackground = () => {
+        dispatch({
+            type: Action.set_addon_background_enabled,
+            payload: { enabled: !addons.background.enabled },
+        });
+    };
+
+    const toggleListener = () => {
+        dispatch({
+            type: Action.set_addon_listeners_enabled,
+            payload: { enabled: !addons.listeners.enabled },
+        });
+    };
+
+    const toggleControls = () => {
+        dispatch({
+            type: Action.set_addon_controls_enabled,
+            payload: { enabled: !addons.controls.enabled },
+        });
+    };
+
+    const toggleConsole = () => {
+        dispatch({
+            type: Action.set_addon_console_enabled,
+            payload: { enabled: !addons.console.enabled },
         });
     };
 
     return (
         <Transition
             as={Fragment}
-            show={addons.open}
+            show={addonPanel.open}
             enter='vibe__addons-transition'
             leave='vibe__addons-transition'
             enterFrom='vibe__addons-close'
@@ -222,17 +265,33 @@ export const Addons = () => {
         >
             <div className='vibe__addons'>
                 <div className='vibe__addons-bar'>
-                    {!sidebar.open ? <OpenSidebar onClick={toggleSidebar} /> : null}
-                    <CloseIcon onClick={toggleAddonPanel} />
-                    <ControlsAddon enabled={false} onClick={() => false} />
-                    <ResizeAddon enabled={addons.resize.enabled} onClick={toggleResize} />
-                    <LayerAddon enabled={false} onClick={() => false} />
-                    <OutlineAddon enabled={addons.outline.enabled} onClick={toggleOutline} />
-                    <ConsoleAddon enabled={false} onClick={() => false} />
-                    <ListenerAddon enabled={false} onClick={() => false} />
-                    <BackgroundAddon enabled={false} onClick={() => false} />
-                    <PaddingAddon enabled={false} onClick={() => false} />
-                    <Loader />
+                    <div className='vibe__actions_main'>
+                        {!sidebarPanel.open ? <OpenSidebar onClick={toggleSidebar} /> : null}
+                        <CloseIcon onClick={toggleAddonPanel} />
+                        <ControlsAddon enabled={addons.controls.enabled} onClick={toggleControls} />
+                        <ResizeAddon enabled={addons.resize.enabled} onClick={toggleResize} />
+                        <LayerAddon enabled={addons.layers.enabled} onClick={toggleLayers} />
+                        <OutlineAddon enabled={addons.outline.enabled} onClick={toggleOutline} />
+                        <ConsoleAddon enabled={addons.console.enabled} onClick={toggleConsole} />
+                        <ListenerAddon
+                            enabled={addons.listeners.enabled}
+                            onClick={toggleListener}
+                        />
+                        <BackgroundAddon
+                            enabled={addons.background.enabled}
+                            onClick={toggleBackground}
+                        />
+                    </div>
+                    {/* <DataBar enabled={false} onClick={() => false} /> */}
+                    <Button
+                        style={{
+                            color: watcherPanel.open ? "hsl(var(--sky-500))" : "",
+                        }}
+                        onClick={toggleDataPanel}
+                    >
+                        <DataBar />
+                        data panel
+                    </Button>
                 </div>
             </div>
         </Transition>

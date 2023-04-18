@@ -26,7 +26,9 @@
         "declarationMap": true,
         "outDir": "dist",
         "resolveJsonModule": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "typeRoots": ["../src", "./node_modules/@types"]
     },
+
     "include": ["./src/**/*", "./app/**/*"]
 }

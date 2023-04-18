@@ -31,5 +31,6 @@ module.exports = {
         "jsx-a11y/click-events-have-key-events": "off",
         "react/jsx-props-no-spreading": "off",
         "@typescript-eslint/no-empty-function": "off",
+        "no-restricted-globals": "off",
     },
 };

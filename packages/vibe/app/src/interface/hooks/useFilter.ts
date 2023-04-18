@@ -30,11 +30,11 @@ export const useFilter = (search: string) => {
     useEffect(() => {
         if (search === "") {
             // reset to original tree if search query is empty
-            dispatch({ type: Action.setFilteredTree, payload: { state: storyTree } });
+            dispatch({ type: Action.set_search_filtered_tree, payload: { tree: storyTree } });
         } else {
             // filter tree based on search query
             const filtered = filterTree(storyTree, search);
-            dispatch({ type: Action.setFilteredTree, payload: { state: filtered } });
+            dispatch({ type: Action.set_search_filtered_tree, payload: { tree: filtered } });
         }
     }, [storyTree, search, dispatch]);
 };

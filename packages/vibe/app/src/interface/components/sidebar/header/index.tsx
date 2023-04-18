@@ -39,9 +39,9 @@ const Close = ({ onClick }: { onClick: () => void }) => (
 );
 
 export const Header = () => {
-    const { dispatch, sidebar } = useVibe();
+    const { dispatch, sidebarPanel } = useVibe();
     const toggleSidebar = () => {
-        dispatch({ type: Action.setSidebar, payload: { state: !sidebar.open } });
+        dispatch({ type: Action.set_sidebar_open, payload: { open: !sidebarPanel.open } });
     };
     return (
         <div className='vibe__header'>

@@ -9,10 +9,10 @@ import { useVibe } from "../../../context";
 import "./styles.scss";
 
 export const Sidebar = () => {
-    const { sidebar } = useVibe();
+    const { sidebarPanel } = useVibe();
     return (
         <Transition
-            show={sidebar.open}
+            show={sidebarPanel.open}
             as={Fragment}
             enter='vibe__sidebar-transition'
             leave='vibe__sidebar-transition'
