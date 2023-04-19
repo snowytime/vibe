@@ -1,0 +1,97 @@
+.radio_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    color: hsl(var(--accent-600));
+    font-size: 12px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    text-transform: capitalize;
+    user-select: none;
+}
+
+.label_inner {
+    align-items: flex-start;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    justify-content: center;
+}
+
+.radio_outer {
+    align-items: center;
+    border: 1px solid hsl(var(--accent-100));
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 0;
+    height: 16px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 3px;
+    transition: border-color 0.2s ease-in-out;
+    width: 16px;
+
+    &[data-selected="true"] {
+        border-color: hsl(var(--foreground));
+    }
+}
+
+.radio {
+    background-color: hsl(var(--foreground));
+    border-radius: 50%;
+    display: block;
+    height: 100%;
+    opacity: 0;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+}
+
+.input {
+    border-width: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.value {
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.enter {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.leave {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.enterFrom {
+    opacity: 0;
+}
+
+.enterTo {
+    opacity: 1;
+}
+
+.leaveFrom {
+    opacity: 1;
+}
+
+.leaveTo {
+    opacity: 0;
+}

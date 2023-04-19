@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import { Transition } from "@snowytime/react-magic/components";
 import { Action, useVibe } from "../../../context/index.js";
 
@@ -6,9 +6,17 @@ import "./styles.scss";
 // import { ColorPicker } from "../ui/color-picker";
 
 import styles from "./styles.module.scss";
+import { useControls } from "../../../context/hooks/use-controls.js";
+import { Input, InputSize, TextInput } from "../ui/input/index.js";
+import { Checkbox } from "../ui/checkbox/index.js";
+import { Radio, RadioGroup } from "../ui/radio/index.js";
 
 export const DataPanel = () => {
     const { watcherPanel, addons, dispatch } = useVibe();
+    const { storyControls, update } = useControls();
+
+    const [val, setVal] = useState(false);
+    const [radio, setRadio] = useState("");
     // const [color, setColor] = useState("#5bda1b");
 
     const enabledAddons = useMemo(() => {
@@ -22,28 +30,6 @@ export const DataPanel = () => {
             type: Action.set_watcher_selected,
             payload: { selected: state },
         });
-
-    const randomize = () => {
-        function generateRandomString() {
-            let result = "";
-            const characters = "abcdefghijklmnopqrstuvwxyz";
-
-            for (let i = 0; i < 10; i++) {
-                const randomIndex = Math.floor(Math.random() * characters.length);
-                result += characters.charAt(randomIndex);
-            }
-
-            return result;
-        }
-
-        dispatch({
-            type: Action.set_addon_controls_update,
-            payload: {
-                name: "name",
-                value: generateRandomString(),
-            },
-        });
-    };
 
     return (
         <Transition
@@ -82,7 +68,40 @@ export const DataPanel = () => {
                         </div>
                     </div>
                     <pre>{enabledAddons}</pre>
-                    <button onClick={randomize}>randomize</button>
+                    <div className={styles.controls}>
+                        {storyControls.map(({ name, value, original }, key) => {
+                            return (
+                                <Input
+                                    size={InputSize.small}
+                                    label={name}
+                                    placeholder={original}
+                                    type='text'
+                                    value={value}
+                                    onChange={(e) => update(name, { value: e.target.value })}
+                                    key={key}
+                                />
+                            );
+                        })}
+                        <div style={{ margin: "50px" }}>
+                            <Checkbox
+                                checked={val}
+                                // indeterminate
+                                label='Some state'
+                                error='You must agree before proceeding'
+                                onChange={(e) => setVal(e.target.checked)}
+                            >
+                                Option 1 Option 2
+                            </Checkbox>
+                        </div>
+                        <div style={{ margin: "50px" }}>
+                            <RadioGroup value={radio} onChange={setRadio}>
+                                {radio}
+                                <Radio value='1'>Option 1</Radio>
+                                <Radio value='2'>Option 2</Radio>
+                                <Radio value='3'>Option 3</Radio>
+                            </RadioGroup>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Transition>

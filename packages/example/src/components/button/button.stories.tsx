@@ -8,7 +8,7 @@ export const Base = (props) => {
 Base.story = {
     poop: "meep",
     arguments: {
-        name: {
+        children: {
             type: "text",
             description: "description",
             value: "click me",

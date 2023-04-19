@@ -138,6 +138,13 @@ export enum Action {
     set_addon_listeners_enabled = "SET_ADDON_LISTENERS_ENABLED",
 }
 
+export type Args = {
+    type?: Control;
+    value?: any;
+    name?: string;
+    description?: string;
+};
+
 export enum Control {
     select = "select",
     multi_select = "multi-select",

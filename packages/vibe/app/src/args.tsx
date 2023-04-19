@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useVibe } from "./context/hook.js";
 import { Action, Control } from "./context/types.js";
-import { useLocation } from "react-router-dom";
-
-function getObjectArrayWithNames(obj) {
-    return Object.entries(obj).map(([name, value]) => ({ name, ...value }));
-}
 
 export const Argument = ({ children, args, data }) => {
     const { pathname } = useLocation();
@@ -18,6 +14,7 @@ export const Argument = ({ children, args, data }) => {
             });
             const obj = Object.entries(args).map(([name, value]) => ({
                 name,
+                original: value.value,
                 ...value,
             }));
 

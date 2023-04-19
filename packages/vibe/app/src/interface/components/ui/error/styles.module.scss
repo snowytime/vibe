@@ -1,0 +1,22 @@
+.wrapper {
+    align-items: center;
+    color: hsl(var(--red-500));
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    gap: 6px;
+    justify-content: flex-start;
+
+    svg {
+        flex-shrink: 0;
+        height: 16px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 10px;
+    justify-content: flex-start;
+}

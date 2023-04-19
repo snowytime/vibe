@@ -11,9 +11,10 @@ export type Actions =
           type: Action.set_addon_controls_update;
           payload: {
               type?: Control;
-              value?: string | number | boolean;
+              value?: any;
               name?: string;
               description?: string;
+              original?: any;
           };
       }
     | { type: Action.set_addon_controls_switch }
@@ -242,16 +243,17 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
             };
         }
         case Action.set_addon_controls_update: {
-            const { name, description, value, type } = action.payload;
-            console.log(action.payload);
+            const { name, description, value, type, original } = action.payload;
 
+            console.log(typeof description);
             // for persistence
             const payload = {
                 ...state.addons.controls.data[name],
                 name,
-                ...(description ? { description } : {}),
-                ...(value ? { value } : {}),
-                ...(type ? { type } : {}),
+                ...(description === undefined ? {} : { description }),
+                ...(value === undefined ? {} : { value }),
+                ...(type === undefined ? {} : { type }),
+                ...(original === undefined ? {} : { original }),
             };
 
             serializer.set(`addons.controls.data.${name}`, payload);
