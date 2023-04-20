@@ -1,6 +1,6 @@
 .vibe__search {
     align-items: center;
-    background: hsl(var(--accent-100));
+    background: hsl(var(--accent-50));
     border-radius: 200px;
     display: flex;
     flex-direction: row;
@@ -28,6 +28,7 @@
         border: 0;
         color: inherit;
         font: inherit;
+        font-size: 14px;
         max-width: 100%;
         outline: none;
     }

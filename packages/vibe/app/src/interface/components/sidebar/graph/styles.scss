@@ -14,11 +14,11 @@
     width: 100%;
 
     &.active {
-        background: hsl(var(--accent-100));
+        background: hsl(var(--accent-50));
     }
 
     &:hover {
-        background: hsl(var(--accent-100));
+        background: hsl(var(--accent-50));
     }
 }
 
