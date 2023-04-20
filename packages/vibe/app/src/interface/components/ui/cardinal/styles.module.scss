@@ -1,0 +1,39 @@
+.container {
+    align-items: flex-start;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.count {
+    font-weight: 500;
+
+    &[data-size="small"] {
+        font-size: 18px;
+    }
+
+    &[data-size="default"] {
+        font-size: 22px;
+    }
+
+    &[data-size="medium"] {
+        font-size: 26px;
+    }
+
+    &[data-size="large"] {
+        font-size: 30px;
+    }
+}
+
+.descriptor {
+    font-size: 14px;
+
+    &[data-size="small"] {
+        font-size: 12px;
+    }
+
+    &[data-size="large"] {
+        font-size: 15px;
+    }
+}

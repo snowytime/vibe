@@ -10,18 +10,33 @@ type Props = React.HTMLProps<HTMLInputElement> & {
     indeterminate?: boolean;
     error?: React.ReactNode;
     label?: string;
+    block?: boolean;
 };
 
-export const Checkbox = ({ children, checked, indeterminate, error, label, ...rest }: Props) => {
+export const Checkbox = ({
+    children,
+    checked,
+    indeterminate,
+    error,
+    label,
+    block,
+    ...rest
+}: Props) => {
     const id = useId();
 
     return (
         <div className={styles.checkbox_container}>
-            <label className={styles.wrapper} htmlFor={id}>
+            <label
+                className={styles.wrapper}
+                htmlFor={id}
+                data-disabled={rest.disabled}
+                data-block={block}
+            >
                 {label ? <div className={styles.label}>{label}</div> : null}
                 <div className={styles.labelInner}>
                     <span
                         className={styles.checkboxOuter}
+                        data-disabled={rest.disabled}
                         data-selected={!indeterminate && checked}
                     >
                         <Transition
@@ -37,11 +52,14 @@ export const Checkbox = ({ children, checked, indeterminate, error, label, ...re
                             <span
                                 className={styles.checkbox}
                                 data-selected={!indeterminate && checked}
+                                data-disabled={rest.disabled}
                             >
                                 {indeterminate ? (
                                     <svg fill='none' height='16' viewBox='0 0 20 20' width='16'>
                                         <line
-                                            stroke='hsl(var(--foreground))'
+                                            stroke={`hsl(var(${
+                                                rest.disabled ? "--accent-300" : "--foreground"
+                                            }))`}
                                             strokeLinecap='round'
                                             strokeLinejoin='round'
                                             strokeWidth='2'

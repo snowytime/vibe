@@ -1,0 +1,22 @@
+.link {
+    align-items: center;
+    color: hsl(var(--blue-500));
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+    font: inherit;
+    gap: 3px;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    transition: transform 200ms ease-in-out;
+
+    &:hover {
+        transform: translate3d(0, -1px, 0);
+    }
+
+    &[data-disabled="true"] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}

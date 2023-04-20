@@ -1,12 +1,24 @@
 .checkbox_container {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .wrapper {
-    display: flex;
+    align-self: stretch;
+    cursor: pointer;
+    display: inline-flex;
     flex-direction: column;
+
+    &[data-block="true"] {
+        display: flex;
+    }
+
+    &[data-disabled="true"] {
+        color: hsl(var(--accent-300));
+        cursor: not-allowed;
+    }
 }
 
 .error {
@@ -25,7 +37,6 @@
 
 .labelInner {
     align-items: flex-start;
-    cursor: pointer;
     display: flex;
     flex-direction: row;
     gap: 6px;
@@ -39,11 +50,15 @@
     justify-content: center;
     overflow: hidden;
     position: relative;
-    transition: background 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out;
     width: 100%;
 
     &[data-selected="true"] {
-        background: hsl(var(--foreground));
+        background-color: hsl(var(--foreground));
+
+        &[data-disabled="true"] {
+            background-color: hsl(var(--accent-300));
+        }
     }
 
     > svg {
@@ -63,6 +78,10 @@
 
     &[data-selected="true"] {
         border-color: hsl(var(--foreground));
+
+        &[data-disabled="true"] {
+            border-color: hsl(var(--accent-300));
+        }
     }
 }
 
