@@ -1,5 +1,5 @@
 .wrapper {
-    border: 1px solid hsl(var(--accent-100));
+    border: 1px solid hsl(var(--accent-200));
     border-radius: 4px;
     color: hsl(var(--foreground));
     cursor: default;
@@ -10,7 +10,7 @@
     padding: 10px 12px;
 
     &[data-variant="primary"] {
-        border: 1px solid hsl(var(--accent-100));
+        border: 1px solid hsl(var(--accent-200));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
             background-color: hsl(var(--foreground));

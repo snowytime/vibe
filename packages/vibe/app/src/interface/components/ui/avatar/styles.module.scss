@@ -1,0 +1,32 @@
+.container {
+    align-items: center;
+    aspect-ratio: 1/1;
+    background: hsl(var(--accent-100));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    color: hsl(var(--accent-400));
+    cursor: pointer;
+    display: flex;
+    font-size: 12px;
+    font-weight: 500;
+    height: 30px;
+    justify-content: center;
+
+    &[data-grouped="true"] {
+        border: 2px solid hsl(var(--background));
+    }
+
+    &[data-size="small"] {
+        height: 20px;
+    }
+
+    &[data-size="large"] {
+        height: 40px;
+    }
+
+    > svg {
+        height: 50%;
+    }
+}

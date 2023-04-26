@@ -186,7 +186,15 @@ export const DataBar = () => (
 );
 
 export const Addons = () => {
-    const { dispatch, addons, sidebarPanel, watcherPanel, addonPanel } = useVibe();
+    const {
+        dispatch,
+        addons,
+        sidebarPanel,
+        watcherPanel,
+        addonPanel,
+        toggleAddon,
+        toggleConsoleAddon,
+    } = useVibe();
 
     const toggleResize = () => {
         dispatch({
@@ -268,14 +276,29 @@ export const Addons = () => {
                     <div className='vibe__actions_main'>
                         {!sidebarPanel.open ? <OpenSidebar onClick={toggleSidebar} /> : null}
                         <CloseIcon onClick={toggleAddonPanel} />
-                        <ControlsAddon enabled={addons.controls.enabled} onClick={toggleControls} />
-                        <ResizeAddon enabled={addons.resize.enabled} onClick={toggleResize} />
-                        <LayerAddon enabled={addons.layers.enabled} onClick={toggleLayers} />
-                        <OutlineAddon enabled={addons.outline.enabled} onClick={toggleOutline} />
-                        <ConsoleAddon enabled={addons.console.enabled} onClick={toggleConsole} />
+                        <ControlsAddon
+                            enabled={addons.controls.enabled}
+                            onClick={() => toggleAddon("controls")}
+                        />
+                        <ResizeAddon
+                            enabled={addons.resize.enabled}
+                            onClick={() => toggleAddon("resize")}
+                        />
+                        <LayerAddon
+                            enabled={addons.layers.enabled}
+                            onClick={() => toggleAddon("layers")}
+                        />
+                        <OutlineAddon
+                            enabled={addons.outline.enabled}
+                            onClick={() => toggleAddon("outline")}
+                        />
+                        <ConsoleAddon
+                            enabled={addons.console.enabled}
+                            onClick={() => toggleConsoleAddon()}
+                        />
                         <ListenerAddon
                             enabled={addons.listeners.enabled}
-                            onClick={toggleListener}
+                            onClick={() => toggleAddon("listeners")}
                         />
                         <BackgroundAddon
                             enabled={addons.background.enabled}

@@ -1,4 +1,4 @@
-.line_container {
+.container {
     background: hsl(var(--accent-100));
     border-radius: 999px;
     display: flex;
@@ -9,6 +9,18 @@
         justify-content: flex-start;
         overflow: hidden;
         width: 100%;
+
+        &[data-size="small"] {
+            height: 8px;
+        }
+
+        &[data-size="default"] {
+            height: 10px;
+        }
+
+        &[data-size="large"] {
+            height: 12px;
+        }
     }
 
     &[data-orientation="vertical"] {
@@ -18,15 +30,23 @@
         justify-content: center;
         overflow: hidden;
         width: 10px;
+
+        &[data-size="small"] {
+            width: 8px;
+        }
+
+        &[data-size="default"] {
+            width: 10px;
+        }
+
+        &[data-size="large"] {
+            width: 12px;
+        }
     }
 }
 
-.line_fill {
+.child {
     background-color: hsl(var(--foreground));
     border-radius: 999px;
-    transition: all 200ms ease-in-out;
-}
-
-.circle_under {
     transition: all 200ms ease-in-out;
 }

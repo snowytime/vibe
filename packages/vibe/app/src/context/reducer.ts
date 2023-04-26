@@ -31,7 +31,9 @@ export type Actions =
     | { type: Action.set_watcher_selected; payload: { selected: string | null } }
     | { type: Action.set_search; payload: { search: string } }
     | { type: Action.set_search_filtered_tree; payload: { tree: Tree } }
-    | { type: Action.set_theme; payload: { theme: Theme } };
+    | { type: Action.set_theme; payload: { theme: Theme } }
+    | { type: Action.set_addon_console_log; payload: { log: any } }
+    | { type: Action.toggle; payload: { category: string; enabled: boolean } };
 
 export const reducer = (state: VibeContextItems, action: Actions): VibeContextItems => {
     switch (action.type) {
@@ -103,6 +105,20 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
             const { selected } = action.payload;
             serializer.set("watcherPanel.selected", selected);
             return { ...state, watcherPanel: { ...state.watcherPanel, selected } };
+        }
+        case Action.toggle: {
+            const { category, enabled } = action.payload;
+            serializer.set(`addons.${category}.enabled`, enabled);
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    [category]: {
+                        ...state.addons[category],
+                        enabled,
+                    },
+                },
+            };
         }
         // resize addon
         case Action.set_addon_resize_enabled: {
@@ -194,6 +210,19 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
                     console: {
                         ...state.addons.console,
                         enabled,
+                    },
+                },
+            };
+        }
+        case Action.set_addon_console_log: {
+            const { log } = action.payload;
+            return {
+                ...state,
+                addons: {
+                    ...state.addons,
+                    console: {
+                        ...state.addons.console,
+                        log: [...state.addons.console.log, log],
                     },
                 },
             };

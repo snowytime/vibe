@@ -1,0 +1,39 @@
+.container {
+    cursor: progress;
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+}
+
+@keyframes loading-blink {
+    0% {
+        opacity: 0.2;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
+
+.dot {
+    animation-duration: 1.4s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-name: loading-blink;
+    background-color: hsl(var(--accent-600));
+    border-radius: 50%;
+    height: 4px;
+    width: 4px;
+
+    &:nth-of-type(2) {
+        animation-delay: 200ms;
+    }
+
+    &:nth-of-type(3) {
+        animation-delay: 400ms;
+    }
+}

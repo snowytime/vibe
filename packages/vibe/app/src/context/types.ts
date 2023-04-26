@@ -31,6 +31,7 @@ export type Settings = {
         };
         console: {
             enabled: boolean;
+            log: any[];
         };
         listeners: {
             enabled: boolean;
@@ -80,6 +81,7 @@ export const defaultSettings: Settings = {
         },
         console: {
             enabled: false,
+            log: [],
         },
         listeners: {
             enabled: false,
@@ -136,6 +138,8 @@ export enum Action {
     set_addon_controls_id = "SET_ADDON_CONTROLS_ID",
     // listeners addon
     set_addon_listeners_enabled = "SET_ADDON_LISTENERS_ENABLED",
+    toggle = "TOGGLE",
+    set_addon_console_log = "SET_ADDON_CONSOLE_LOG",
 }
 
 export type Args = {
@@ -168,4 +172,6 @@ export type VibeContextItems = Settings &
     VibePlugin & {
         filteredTree: Category[];
         dispatch: React.Dispatch<Actions>;
+        toggleAddon: (s: string) => void;
+        toggleConsoleAddon: () => void;
     };

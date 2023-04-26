@@ -21,9 +21,9 @@ export const Tab = ({
     ...rest
 }: TabProps) => {
     const handleClick = useCallback(() => {
-        if (disabled) return;
+        if (disabled || globalDisable) return;
         selectHandler(value);
-    }, [disabled, selectHandler, value]);
+    }, [disabled, globalDisable, selectHandler, value]);
 
     return (
         <div
@@ -36,7 +36,9 @@ export const Tab = ({
             data-disabled={disabled || globalDisable}
         >
             <div className={styles.tab_overlay} data-selected={selected === value} />
-            <div className={styles.tab_inner}>{children}</div>
+            <div className={styles.tab_inner} data-selected={selected === value}>
+                {children}
+            </div>
         </div>
     );
 };

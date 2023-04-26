@@ -1,15 +1,16 @@
 .vibe__loader {
+    aspect-ratio: 1/1;
     color: official;
-    height: 30px;
+    cursor: progress;
+    height: 20px;
     position: relative;
-    width: 30px;
 
     @for $i from 1 through 12 {
         > :nth-child(#{$i}) {
             $delay: calc(1.2s / 12 * #{$i - 1} - 1.2s);
 
             animation-delay: $delay;
-            transform: rotate((($i - 1) * 30deg)) translate(146%);
+            transform: rotate((($i - 1) * 30deg)) translate(150%);
         }
     }
 }
@@ -36,8 +37,8 @@
     background: hsl(var(--accent-300));
     border-radius: 100px;
     height: 8%;
-    left: calc(50% - (6px / 2));
+    left: calc(50% - (24% / 2));
     position: absolute;
-    top: calc(50% - (30px * 0.08 / 2));
-    width: 6px;
+    top: calc(50% - (8% / 2));
+    width: 24%;
 }

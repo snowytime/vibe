@@ -1,0 +1,39 @@
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+@keyframes pulse-animation {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.4);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.dot {
+    background-color: hsl(var(--foreground));
+    border-radius: 50%;
+    height: 8px;
+    width: 8px;
+
+    &[data-pulse="true"] {
+        animation: pulse-animation 1.5s infinite ease-in-out;
+    }
+}
+
+.label {
+}

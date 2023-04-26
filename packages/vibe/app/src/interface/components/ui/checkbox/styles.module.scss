@@ -16,7 +16,7 @@
     }
 
     &[data-disabled="true"] {
-        color: hsl(var(--accent-300));
+        color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
@@ -57,7 +57,7 @@
         background-color: hsl(var(--foreground));
 
         &[data-disabled="true"] {
-            background-color: hsl(var(--accent-300));
+            background-color: hsl(var(--accent-400));
         }
     }
 
@@ -68,7 +68,7 @@
 }
 
 .checkboxOuter {
-    border: 1px solid hsl(var(--accent-100));
+    border: 1px solid hsl(var(--accent-200));
     border-radius: 3px;
     flex-shrink: 0;
     height: 16px;
@@ -80,7 +80,7 @@
         border-color: hsl(var(--foreground));
 
         &[data-disabled="true"] {
-            border-color: hsl(var(--accent-300));
+            border-color: hsl(var(--accent-400));
         }
     }
 }

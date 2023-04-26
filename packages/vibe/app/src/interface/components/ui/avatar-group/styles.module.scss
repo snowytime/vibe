@@ -1,0 +1,16 @@
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    > div:not(:first-child) {
+        margin-left: -10px;
+    }
+}
+
+.label {
+    color: hsl(var(--accent-700));
+    font-size: 14px;
+    font-weight: 500;
+}

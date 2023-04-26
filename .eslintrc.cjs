@@ -32,5 +32,6 @@ module.exports = {
         "react/jsx-props-no-spreading": "off",
         "@typescript-eslint/no-empty-function": "off",
         "no-restricted-globals": "off",
+        "react/jsx-boolean-value": "off",
     },
 };

@@ -4,7 +4,7 @@ import { Error } from "../error/index";
 
 import styles from "./styles.module.scss";
 
-type Props = React.HTMLProps<HTMLInputElement> & {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
     children: React.ReactNode;
     checked: boolean;
     indeterminate?: boolean;
@@ -84,7 +84,7 @@ export const Checkbox = ({
                         </Transition>
                         <input
                             className={styles.input}
-                            value={checked}
+                            checked={checked}
                             type='checkbox'
                             id={id}
                             {...rest}

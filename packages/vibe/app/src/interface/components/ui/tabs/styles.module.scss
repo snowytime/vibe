@@ -1,5 +1,5 @@
 .tabs_wrapper {
-    border-bottom: 1px solid hsl(var(--accent-100));
+    border-bottom: 1px solid hsl(var(--accent-200));
     display: flex;
     flex-direction: row;
     gap: 12px;
@@ -12,19 +12,28 @@
     position: relative;
 
     &[data-disabled="true"] {
-        color: hsl(var(--accent-300));
+        color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
 
 .tab_inner {
     align-items: center;
+    color: hsl(var(--accent-500));
     display: flex;
     flex-direction: row;
     gap: 6px;
     height: 100%;
-    padding: 8px;
+    padding: 8px 12px;
     width: 100%;
+
+    &[data-selected="true"] {
+        color: hsl(var(--foreground));
+
+        &[data-disabled="true"] {
+            color: hsl(var(--accent-600));
+        }
+    }
 }
 
 .tab_overlay {

@@ -7,6 +7,12 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+
+    &[data-disabled="true"] {
+        color: hsl(var(--accent-400));
+        cursor: not-allowed;
+    }
 }
 
 .label {
@@ -20,7 +26,6 @@
 
 .label_inner {
     align-items: flex-start;
-    cursor: pointer;
     display: flex;
     flex-direction: row;
     gap: 6px;
@@ -29,7 +34,7 @@
 
 .radio_outer {
     align-items: center;
-    border: 1px solid hsl(var(--accent-100));
+    border: 1px solid hsl(var(--accent-200));
     border-radius: 50%;
     display: flex;
     flex-shrink: 0;

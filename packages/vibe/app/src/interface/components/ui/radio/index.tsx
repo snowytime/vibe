@@ -1,16 +1,20 @@
 import React, { Fragment, useId } from "react";
+import { Transition } from "@snowytime/react-magic/components";
 
 import styles from "./styles.module.scss";
-import { Transition } from "@snowytime/react-magic/components";
 
 export const Radio = ({ children, label, value, checked, ...rest }) => {
     const id = useId();
     return (
         <div className={styles.radio_container}>
-            <label className={styles.wrapper} htmlFor={id}>
+            <label className={styles.wrapper} htmlFor={id} data-disabled={rest.disabled}>
                 {label ? <div className={styles.label}>{label}</div> : null}
                 <div className={styles.label_inner}>
-                    <span className={styles.radio_outer} data-selected={checked}>
+                    <span
+                        className={styles.radio_outer}
+                        data-selected={checked}
+                        data-disabled={rest.disabled}
+                    >
                         <Transition
                             show={checked}
                             as={Fragment}
@@ -52,6 +56,7 @@ export const RadioGroup = ({ value, onChange, children }) => {
             {React.Children.map(children, (child) => {
                 if (React.isValidElement(child)) {
                     return React.cloneElement(child, {
+                        ...child.props,
                         checked: child.props.value === value,
                         onChange: handleChange,
                         name,
