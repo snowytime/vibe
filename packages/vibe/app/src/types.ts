@@ -7,6 +7,7 @@ export type Story = {
     componentName: string; // name of the component in the story file
     id: string; // random hash vibe id
     name: string; // custom story name, or the name of the component story
+    design: string;
 };
 
 export type Stories = Story[];

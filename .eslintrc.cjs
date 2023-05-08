@@ -33,5 +33,6 @@ module.exports = {
         "@typescript-eslint/no-empty-function": "off",
         "no-restricted-globals": "off",
         "react/jsx-boolean-value": "off",
+        "jsx-a11y/no-redundant-roles": "off",
     },
 };

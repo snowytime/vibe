@@ -10,6 +10,7 @@ export function storyModule(stories: Story[]) {
             filePath: '${story.filePath}',
             id: '${story.id}',
             name: '${story.name}',
+            design: '${story.design ?? ""}'
         },\n`;
     });
     storyStart += storyClose;

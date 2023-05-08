@@ -3,7 +3,8 @@ import { Transition } from "@snowytime/react-magic/components";
 import { Action, useVibe } from "../../../../context";
 
 import "./styles.scss";
-import { Button } from "../../ui/button";
+import { Button } from "../../../ui/button";
+import { useSettings } from "../../../../controls/use-settings";
 
 const OpenSidebar = ({ onClick }: { onClick: () => void }) => (
     <div className='vibe__action' onClick={onClick} role='button' tabIndex={0}>
@@ -186,6 +187,8 @@ export const DataBar = () => (
 );
 
 export const Addons = () => {
+    const { toggleSidebar, sidebarOpen, toggleAddons, addonsOpen, toggleControls, controlsOpen } =
+        useSettings();
     const {
         dispatch,
         addons,
@@ -203,25 +206,10 @@ export const Addons = () => {
         });
     };
 
-    const toggleAddonPanel = () => {
-        dispatch({ type: Action.set_addons_open, payload: { open: !addonPanel.open } });
-    };
-
-    const toggleSidebar = () => {
-        dispatch({ type: Action.set_sidebar_open, payload: { open: !sidebarPanel.open } });
-    };
-
     const toggleOutline = () => {
         dispatch({
             type: Action.set_addon_outline_enabled,
             payload: { enabled: !addons.outline.enabled },
-        });
-    };
-
-    const toggleDataPanel = () => {
-        dispatch({
-            type: Action.set_watcher_open,
-            payload: { open: !watcherPanel.open },
         });
     };
 
@@ -246,7 +234,7 @@ export const Addons = () => {
         });
     };
 
-    const toggleControls = () => {
+    const toggleControlsAddon = () => {
         dispatch({
             type: Action.set_addon_controls_enabled,
             payload: { enabled: !addons.controls.enabled },
@@ -263,7 +251,7 @@ export const Addons = () => {
     return (
         <Transition
             as={Fragment}
-            show={addonPanel.open}
+            show={addonsOpen}
             enter='vibe__addons-transition'
             leave='vibe__addons-transition'
             enterFrom='vibe__addons-close'
@@ -274,8 +262,8 @@ export const Addons = () => {
             <div className='vibe__addons'>
                 <div className='vibe__addons-bar'>
                     <div className='vibe__actions_main'>
-                        {!sidebarPanel.open ? <OpenSidebar onClick={toggleSidebar} /> : null}
-                        <CloseIcon onClick={toggleAddonPanel} />
+                        {!sidebarOpen ? <OpenSidebar onClick={toggleSidebar} /> : null}
+                        <CloseIcon onClick={toggleAddons} />
                         <ControlsAddon
                             enabled={addons.controls.enabled}
                             onClick={() => toggleAddon("controls")}
@@ -308,9 +296,9 @@ export const Addons = () => {
                     {/* <DataBar enabled={false} onClick={() => false} /> */}
                     <Button
                         style={{
-                            color: watcherPanel.open ? "hsl(var(--sky-500))" : "",
+                            color: controlsOpen ? "hsl(var(--sky-500))" : "",
                         }}
-                        onClick={toggleDataPanel}
+                        onClick={toggleControls}
                     >
                         <DataBar />
                         data panel

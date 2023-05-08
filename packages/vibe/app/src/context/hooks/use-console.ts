@@ -1,8 +1,23 @@
 import { GenericContext } from "@snowytime/react-magic/helpers";
-import { useCallback, useContext, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Action, VibeContextItems } from "../types";
 
 export const useConsole = (addons, dispatch) => {
+    // manage things within
+    const [enabled, setEnabled] = useState(false);
+    const [log, setLog] = useState([]);
+
+    // methods
+    const toggleEnabled = useCallback(() => {}, []);
+
+    const addToLog = useCallback((entry) => {
+        setLog((prev) => [...prev, entry]);
+    }, []);
+
+    const clearLog = useCallback(() => {
+        setLog([]);
+    }, []);
+
     const initialConsoleLog = useRef(window.console.log);
 
     const mountAddon = useCallback(() => {
@@ -16,6 +31,9 @@ export const useConsole = (addons, dispatch) => {
     }, [dispatch]);
 
     const unmountAddon = useCallback(() => {
+        // when unmounting the console addon
+        // we remove all its content
+        setLog([]);
         window.console.log = initialConsoleLog.current;
     }, []);
 

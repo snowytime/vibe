@@ -4,13 +4,11 @@ import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
 
 import { Vibe } from "./interface/index.js";
 
-import "@snowytime/css/fonts/visby/all.css";
-import "@snowytime/css/presets/visby.css";
-
 import { Story } from "./interface/components/frame/story/index.js";
 import { NoStory } from "./interface/components/frame/no-story/index.js";
 import { Loader } from "./loader";
 import { ContextStore } from "./context/context.js";
+import { VibeSettings } from "./controls/use-settings/index.js";
 
 const Wait = () => {
     return (
@@ -62,25 +60,29 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Vibe>
-                                                <Story
-                                                    framed={
-                                                        !!story && config.mode === "development"
-                                                    }
-                                                >
-                                                    <React.Suspense fallback={<Wait />}>
-                                                        <Entry
-                                                            story={story}
-                                                            stories={stories}
-                                                            storyTree={storyTree}
-                                                            storyUrls={storyUrls}
-                                                            config={config}
-                                                        >
-                                                            {React.createElement(story.component)}
-                                                        </Entry>
-                                                    </React.Suspense>
-                                                </Story>
-                                            </Vibe>
+                                            <VibeSettings storyTree={storyTree} story={story}>
+                                                <Vibe>
+                                                    <Story
+                                                        framed={
+                                                            !!story && config.mode === "development"
+                                                        }
+                                                    >
+                                                        <React.Suspense fallback={<Wait />}>
+                                                            <Entry
+                                                                story={story}
+                                                                stories={stories}
+                                                                storyTree={storyTree}
+                                                                storyUrls={storyUrls}
+                                                                config={config}
+                                                            >
+                                                                {React.createElement(
+                                                                    story.component,
+                                                                )}
+                                                            </Entry>
+                                                        </React.Suspense>
+                                                    </Story>
+                                                </Vibe>
+                                            </VibeSettings>
                                         }
                                     />
                                 );

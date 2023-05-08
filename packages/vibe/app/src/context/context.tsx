@@ -4,6 +4,7 @@ import { serializer } from "./helpers";
 import { Action, VibeContextItems, VibeProps } from "./types";
 import { reducer } from "./reducer";
 import { useConsole } from "./hooks/use-console";
+import { useStore } from "../controls/store/use-store";
 
 export const ContextStore = ({ children, stories, config, urlMap, storyTree }: VibeProps) => {
     const initial: VibeContextItems = {
@@ -20,7 +21,7 @@ export const ContextStore = ({ children, stories, config, urlMap, storyTree }: V
     const [data, dispatch] = useReducer(reducer, initial);
     // need to run the appropriate change on initial render to get theme
     useEffect(() => {
-        dispatch({ type: Action.initialize });
+        // dispatch({ type: Action.initialize });
     }, []);
 
     // helpers
@@ -59,6 +60,15 @@ export const ContextStore = ({ children, stories, config, urlMap, storyTree }: V
     );
 
     const [consoleMount, consoleUnmount] = useConsole(data.addons, dispatch);
+
+    // const update = useStore<{ value1: string; value2: string }>("test", ({ value1, value2 }) =>
+    //     console.log({ value1, value2 }),
+    // );
+
+    // React.useEffect(() => {
+    //     update("value1", "test");
+    //     update("value2", "other test");
+    // }, [update]);
 
     const toggleConsoleAddon = useCallback(() => {
         const state = data.addons.console.enabled;

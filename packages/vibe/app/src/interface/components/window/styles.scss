@@ -173,3 +173,24 @@
     width: 50px;
     z-index: 99;
 }
+
+.vibe__addons-open {
+    // height: 400px;
+    // opacity: 1;
+}
+
+.vibe__addons-close {
+    height: 0;
+    // opacity: 0;
+}
+
+.vibe__addons-transition {
+    transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.vibe__actions_main {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 20px;
+}

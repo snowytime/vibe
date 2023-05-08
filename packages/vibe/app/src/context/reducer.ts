@@ -42,7 +42,7 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
             const savedSettings = serializer.get();
             if (savedSettings.theme) {
                 document.documentElement.setAttribute("data-theme", savedSettings.theme);
-                document.documentElement.style.transition = "color 0.2s ease-in-out";
+                // document.documentElement.style.transition = "color 0.2s ease-in-out";
             }
             return { ...state, ...savedSettings };
         }
@@ -83,10 +83,10 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
         // theme
         case Action.set_theme: {
             const { theme } = action.payload;
-            document.documentElement.setAttribute("data-theme", theme);
-            document.documentElement.style.transition = "color 0.2s ease-in-out";
-            // save the theme
-            serializer.set("theme", theme);
+            // document.documentElement.setAttribute("data-theme", theme);
+            // document.documentElement.style.transition = "color 0.2s ease-in-out";
+            // // save the theme
+            // serializer.set("theme", theme);
             return { ...state, theme };
         }
         // search
@@ -274,7 +274,7 @@ export const reducer = (state: VibeContextItems, action: Actions): VibeContextIt
         case Action.set_addon_controls_update: {
             const { name, description, value, type, original } = action.payload;
 
-            console.log(typeof description);
+            // console.log(typeof description);
             // for persistence
             const payload = {
                 ...state.addons.controls.data[name],

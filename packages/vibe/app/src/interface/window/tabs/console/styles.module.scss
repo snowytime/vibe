@@ -1,0 +1,80 @@
+.boolean {
+    color: hsl(var(--green-600));
+}
+
+.number {
+    color: hsl(var(--green-600));
+}
+
+.string {
+    color: hsl(var(--accent-800));
+}
+
+.array {
+    color: hsl(var(--accent-800));
+    display: flex;
+    flex-direction: row;
+}
+
+.entry {
+    border-bottom: 1px solid hsl(var(--accent-100));
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    font-weight: 400;
+    gap: 6px;
+    padding: 6px 10px;
+}
+
+.array_header {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+
+.array_description {
+    color: hsl(var(--accent-600));
+}
+
+.array_internal {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    padding: 0 4px;
+
+    > p {
+        display: inline;
+    }
+}
+
+.arrow {
+    color: hsl(var(--accent-600));
+    margin-right: 4px;
+    padding: 5px 2px 2px;
+    transform: rotate(0);
+    transition: transform 200ms ease-in-out;
+    width: 10px;
+
+    &[data-expanded="true"] {
+        transform: rotate(90deg);
+    }
+}
+
+.expanded {
+    padding: 2px 8px;
+}
+
+.array_row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    > :first-child {
+        color: hsl(var(--accent-600));
+        font-weight: 500;
+    }
+}
+
+.tnum {
+    font-feature-settings: "tnum";
+}

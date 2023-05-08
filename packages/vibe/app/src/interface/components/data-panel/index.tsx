@@ -7,35 +7,38 @@ import "./styles.scss";
 
 import styles from "./styles.module.scss";
 import { useControls } from "../../../context/hooks/use-controls.js";
-import { Input, InputSize, TextInput } from "../ui/input/index.js";
-import { Checkbox } from "../ui/checkbox/index.js";
-import { Radio, RadioGroup } from "../ui/radio/index.js";
-import { Note, NoteVariant } from "../ui/note/index.js";
-import { Tab, Tabs } from "../ui/tabs/index.js";
-import { TextArea } from "../ui/textarea/index.js";
-import { Loader } from "../ui/loader";
+import { Input, InputSize, TextInput } from "../../ui/input/index.js";
+import { Checkbox } from "../../ui/checkbox/index.js";
+import { Radio, RadioGroup } from "../../ui/radio/index.js";
+import { Note, NoteVariant } from "../../ui/note/index.js";
+import { Tab, Tabs } from "../../ui/tabs/index.js";
+import { TextArea } from "../../ui/textarea/index.js";
+import { Loader } from "../../ui/loader/index.js";
 import {
     Progress,
     ProgressOrientation,
     ProgressSize,
     ProgressVariant,
-} from "../ui/progress/index.js";
-import { Cardinal, CardinalSize } from "../ui/cardinal/index.js";
-import { Link } from "../ui/link/index.js";
-import { LinearProgress } from "../ui/linear-progress/index.js";
-import { CircularProgress } from "../ui/curcular-progress/index.js";
-import { Avatar, AvatarSize } from "../ui/avatar/index.js";
-import { AvatarGroup } from "../ui/avatar-group/index.js";
-import { Badge, BadgeVariant } from "../ui/badge/index.js";
-import { Status } from "../ui/status/index.js";
-import { LoadingDots } from "../ui/loading-dots/index.js";
-import { Capacity } from "../ui/capacity/index.js";
-import { Toggle } from "../ui/toggle/index.js";
-import { Switch } from "../ui/switch/index.js";
+} from "../../ui/progress/index.js";
+import { Cardinal, CardinalSize } from "../../ui/cardinal/index.js";
+import { Link } from "../../ui/link/index.js";
+import { LinearProgress } from "../../ui/linear-progress/index.js";
+import { CircularProgress } from "../../ui/curcular-progress/index.js";
+import { Avatar, AvatarSize } from "../../ui/avatar/index.js";
+import { AvatarGroup } from "../../ui/avatar-group/index.js";
+import { Badge, BadgeVariant } from "../../ui/badge/index.js";
+import { Status } from "../../ui/status/index.js";
+import { LoadingDots } from "../../ui/loading-dots/index.js";
+import { Capacity } from "../../ui/capacity/index.js";
+import { Toggle } from "../../ui/toggle/index.js";
+import { Switch } from "../../ui/switch/index.js";
+import { useSettings } from "../../../controls/use-settings/index.js";
 
 export const DataPanel = () => {
     const { watcherPanel, addons, dispatch } = useVibe();
     const { storyControls, update } = useControls();
+
+    const { controlsOpen } = useSettings();
 
     const [val, setVal] = useState(false);
     const [radio, setRadio] = useState("");
@@ -65,7 +68,7 @@ export const DataPanel = () => {
 
     return (
         <Transition
-            show={watcherPanel.open}
+            show={controlsOpen}
             as={Fragment}
             enter={styles.transition}
             leave={styles.transition}
@@ -691,6 +694,8 @@ const AddonsPanel = () => {
     const { watcherPanel, addons, dispatch } = useVibe();
     const { storyControls, update } = useControls();
 
+    const { sidebarOpen, toggleSidebar } = useSettings();
+
     const enabledAddons = useMemo(() => {
         return Object.entries(addons)
             .filter(([key, value]) => value.enabled)
@@ -719,8 +724,9 @@ const AddonsPanel = () => {
                 </Tabs>
             </div>
             <div className={styles.addons_container}>
-                <button onClick={() => console.log("hi")}>hi</button>
-                <pre>{JSON.stringify(addons.console.log, null, 2)}</pre>
+                {/* <button onClick={() => console.log("hi")}>hi</button>
+                <pre>{JSON.stringify(addons.console.log, null, 2)}</pre> */}
+                <b onClick={toggleSidebar}>{sidebarOpen ? "open" : "closed"}</b>
             </div>
         </>
     );

@@ -1,31 +1,8 @@
-import React, { useCallback, useEffect, useState, MouseEvent, Fragment } from "react";
-import { useDomRef } from "@snowytime/react-magic/hooks";
-import { Transition } from "@snowytime/react-magic/components";
-import { useResize } from "../../hooks/useResize";
-import { useVibe } from "../../../context";
-
+import React from "react";
 import styles from "./styles.module.scss";
-
-import "./styles.scss";
-import { Addons } from "./addons";
-import { useSettings } from "../../../controls/use-settings";
-import { Tab, Tabs } from "../../ui/tabs";
-import { Badge, BadgeVariant } from "../../ui/badge";
-import {
-    useResizeAddon,
-    useOutlineAddon,
-    useLayersAddon,
-    useControlsAddon,
-} from "../../../controls";
-
-const SidebarIcon = () => (
-    <svg width='40%' viewBox='0 0 19 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
-        <path
-            d='M10.193 12.5801H15.8978C16.1503 12.5801 16.3302 12.5231 16.4377 12.409C16.5505 12.2949 16.6069 12.1075 16.6069 11.8468V3.16133C16.6069 2.9006 16.5505 2.7132 16.4377 2.59913C16.3302 2.48506 16.1503 2.42803 15.8978 2.42803H10.193C9.94049 2.42803 9.75785 2.48506 9.64504 2.59913C9.5376 2.7132 9.48388 2.9006 9.48388 3.16133V11.8468C9.48388 12.1075 9.5376 12.2949 9.64504 12.409C9.75785 12.5231 9.94049 12.5801 10.193 12.5801ZM2.74767 7.49593C2.74767 7.64259 2.7987 7.77295 2.90076 7.88702C3.0082 7.99565 3.13175 8.04997 3.27142 8.04997H5.52757L6.7201 8.00109L6.05131 8.64476L5.18109 9.51657C5.07902 9.61434 5.02799 9.74199 5.02799 9.89951C5.02799 10.0462 5.07096 10.1684 5.15691 10.2662C5.24823 10.3585 5.36373 10.4047 5.50339 10.4047C5.58397 10.4047 5.6538 10.3884 5.71289 10.3558C5.77735 10.3232 5.83644 10.2743 5.89016 10.2091L8.0335 7.89517C8.15168 7.7648 8.21077 7.63172 8.21077 7.49593C8.21077 7.36013 8.15168 7.22705 8.0335 7.09669L5.89016 4.78273C5.83644 4.72298 5.77735 4.67681 5.71289 4.64422C5.6538 4.61162 5.58397 4.59533 5.50339 4.59533C5.36373 4.59533 5.24823 4.64422 5.15691 4.74199C5.07096 4.83433 5.02799 4.95383 5.02799 5.10049C5.02799 5.25258 5.07902 5.38023 5.18109 5.48343L6.05131 6.34709L6.7201 6.99077L5.52757 6.95003H3.27142C3.13175 6.95003 3.0082 7.00435 2.90076 7.11298C2.79333 7.22162 2.7423 7.34927 2.74767 7.49593ZM2.53011 15H16.4699C17.3186 15 17.9525 14.7882 18.3715 14.3645C18.7905 13.9462 19 13.3188 19 12.4823V2.5258C19 1.6893 18.7905 1.05921 18.3715 0.635524C17.9525 0.211841 17.3186 0 16.4699 0H2.53011C1.68674 0 1.05287 0.211841 0.628499 0.635524C0.2095 1.05378 0 1.68387 0 2.5258V12.4823C0 13.3188 0.2095 13.9462 0.628499 14.3645C1.05287 14.7882 1.68674 15 2.53011 15ZM2.54623 13.6882C2.14334 13.6882 1.83446 13.5823 1.61959 13.3705C1.40472 13.1532 1.29729 12.8327 1.29729 12.409V2.59913C1.29729 2.17545 1.40472 1.85497 1.61959 1.6377C1.83446 1.42042 2.14334 1.31179 2.54623 1.31179H16.4538C16.8513 1.31179 17.1575 1.42042 17.3724 1.6377C17.5926 1.85497 17.7027 2.17545 17.7027 2.59913V12.409C17.7027 12.8327 17.5926 13.1532 17.3724 13.3705C17.1575 13.5823 16.8513 13.6882 16.4538 13.6882H2.54623Z'
-            fill='hsl(var(--accent-300))'
-        />
-    </svg>
-);
+import { useLayersAddon, useOutlineAddon, useResizeAddon, useSettings } from "../../controls";
+import { TabSection } from "./tabs";
+import { Tab, Tabs } from "../ui/tabs";
 
 const ResizeAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
     <div
@@ -41,25 +18,6 @@ const ResizeAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boole
                 fill='var(--fill)'
                 stroke='var(--fill)'
                 strokeWidth='0.3'
-            />
-        </svg>
-    </div>
-);
-
-export const ControlsAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
-    <div
-        className={styles.addon}
-        data-enabled={enabled}
-        onClick={onClick}
-        role='button'
-        tabIndex={0}
-    >
-        <svg width='50%' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-            <path
-                d='M3.4603 6.82772C4.09188 6.82772 4.66726 6.67459 5.18644 6.36832C5.71097 6.05677 6.13113 5.64488 6.44692 5.13267C6.76271 4.61518 6.92061 4.04488 6.92061 3.42178C6.92061 2.79868 6.76271 2.22838 6.44692 1.71089C6.13113 1.1934 5.71097 0.778878 5.18644 0.467327C4.66726 0.155776 4.09188 0 3.4603 0C2.82872 0 2.25067 0.155776 1.72614 0.467327C1.20161 0.778878 0.781445 1.1934 0.465656 1.71089C0.155219 2.22838 0 2.79868 0 3.42178C0 4.04488 0.157895 4.61518 0.473684 5.13267C0.789474 5.64488 1.20963 6.05677 1.73417 6.36832C2.2587 6.67459 2.83408 6.82772 3.4603 6.82772ZM3.05085 5.25149C2.96521 5.25149 2.89028 5.233 2.82605 5.19604C2.76717 5.1538 2.7083 5.09835 2.64942 5.0297L1.75022 3.9604C1.68064 3.87591 1.64585 3.77294 1.64585 3.65149C1.64585 3.53531 1.68332 3.43762 1.75825 3.35842C1.83854 3.27921 1.9322 3.2396 2.03925 3.2396C2.11954 3.2396 2.18644 3.25545 2.23996 3.28713C2.29884 3.31881 2.35504 3.36898 2.40856 3.43762L3.03479 4.22178L4.46387 1.95644C4.56021 1.80858 4.68064 1.73465 4.82516 1.73465C4.93756 1.73465 5.0339 1.77162 5.11418 1.84554C5.19982 1.91947 5.24264 2.0066 5.24264 2.10693C5.24264 2.21254 5.20785 2.32079 5.13827 2.43168L3.4603 5.0297C3.36396 5.17756 3.22748 5.25149 3.05085 5.25149ZM3.4603 16C4.09188 16 4.66726 15.8442 5.18644 15.5327C5.71097 15.2211 6.13113 14.8066 6.44692 14.2891C6.76271 13.7716 6.92061 13.204 6.92061 12.5861C6.92061 11.9578 6.76271 11.3848 6.44692 10.8673C6.13113 10.3498 5.71097 9.93795 5.18644 9.63168C4.66726 9.32013 4.09188 9.16436 3.4603 9.16436C2.82872 9.16436 2.25067 9.32013 1.72614 9.63168C1.20161 9.94323 0.781445 10.3578 0.465656 10.8752C0.155219 11.3927 0 11.963 0 12.5861C0 13.204 0.157895 13.7716 0.473684 14.2891C0.789474 14.8066 1.20963 15.2211 1.73417 15.5327C2.2587 15.8442 2.83408 16 3.4603 16ZM3.4603 14.8436C3.04817 14.8436 2.66815 14.7406 2.32025 14.5347C1.97235 14.3287 1.69402 14.0541 1.48528 13.7109C1.27654 13.3677 1.17217 12.9927 1.17217 12.5861C1.17217 12.1743 1.27654 11.7967 1.48528 11.4535C1.69402 11.1102 1.97235 10.8356 2.32025 10.6297C2.66815 10.4238 3.04817 10.3208 3.4603 10.3208C3.87244 10.3208 4.25245 10.4238 4.60036 10.6297C4.94826 10.8356 5.22658 11.1102 5.43533 11.4535C5.64407 11.7967 5.74844 12.1743 5.74844 12.5861C5.74844 12.9927 5.64407 13.3677 5.43533 13.7109C5.22658 14.0541 4.94826 14.3287 4.60036 14.5347C4.25245 14.7406 3.87244 14.8436 3.4603 14.8436ZM9.32114 4.02376H17.3818C17.5531 4.02376 17.6976 3.96568 17.8153 3.84951C17.9384 3.73333 18 3.59076 18 3.42178C18 3.25809 17.9384 3.11815 17.8153 3.00198C17.6976 2.88581 17.5531 2.82772 17.3818 2.82772H9.32114C9.14987 2.82772 9.00535 2.88581 8.8876 3.00198C8.76985 3.11815 8.71097 3.25809 8.71097 3.42178C8.71097 3.59076 8.76985 3.73333 8.8876 3.84951C9.00535 3.96568 9.14987 4.02376 9.32114 4.02376ZM9.32114 13.1802H17.3818C17.5531 13.1802 17.6976 13.1221 17.8153 13.0059C17.9384 12.8898 18 12.7498 18 12.5861C18 12.4172 17.9384 12.2746 17.8153 12.1584C17.6976 12.0422 17.5531 11.9842 17.3818 11.9842H9.32114C9.14987 11.9842 9.00535 12.0422 8.8876 12.1584C8.76985 12.2746 8.71097 12.4172 8.71097 12.5861C8.71097 12.7498 8.76985 12.8898 8.8876 13.0059C9.00535 13.1221 9.14987 13.1802 9.32114 13.1802Z'
-                fill='var(--fill)'
-                stroke='var(--fill)'
-                strokeWidth='0.1'
             />
         </svg>
     </div>
@@ -104,48 +62,14 @@ export const LayerAddon = ({ onClick, enabled }: { onClick: () => void; enabled:
 );
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
-    const { addons } = useVibe();
-    const {
-        sidebarOpen,
-        toggleSidebar,
-        selectedPanel,
-        updateSelectedPanel,
-        selectedTab,
-        updateTab,
-        tabHeight,
-        tabOpen,
-    } = useSettings();
-
+    const { sidebarOpen, toggleSidebar, selectedPanel, updateSelectedPanel } = useSettings();
     const resizeAddon = useResizeAddon();
     const outlineAddon = useOutlineAddon();
     const layersAddon = useLayersAddon();
-    const controlsAddon = useControlsAddon();
-
-    const [ref, setRef] = useDomRef<HTMLDivElement>();
-    const [panelRef, setPanelRef] = useDomRef<HTMLDivElement>();
-
-    const { draggerProps, panelProps } = useResize(ref, panelRef);
-
-    const [view, setView] = useState("sandbox");
-    const [util, setUtil] = useState("design");
-
-    const [utilityRef, setUtilityRef] = useDomRef<HTMLDivElement>();
-
-    const { dragProps, wrapperProps } = useUtilityResize(utilityRef);
 
     return (
-        <div className={styles.wrapper} {...wrapperProps}>
-            {!sidebarOpen ? (
-                <div
-                    onClick={toggleSidebar}
-                    className='vibe__float-open'
-                    tabIndex={0}
-                    role='button'
-                >
-                    <SidebarIcon />
-                </div>
-            ) : null}
-            {/* panel tabs */}
+        <div className={styles.wrapper}>
+            {/* features */}
             <div className={styles.tabs}>
                 <Tabs selected={selectedPanel} onChange={updateSelectedPanel}>
                     <Tab value='sandbox'>
@@ -160,10 +84,6 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                         enabled={resizeAddon.enabled}
                         onClick={resizeAddon.toggleEnabled}
                     />
-                    {/* <ControlsAddon
-                        enabled={controlsAddon.enabled}
-                        onClick={controlsAddon.toggleEnabled}
-                    /> */}
                     <OutlineAddon
                         enabled={outlineAddon.enabled}
                         onClick={outlineAddon.toggleEnabled}
@@ -171,166 +91,10 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     <LayerAddon enabled={layersAddon.enabled} onClick={layersAddon.toggleEnabled} />
                 </div>
             </div>
-            <div className={styles.content} data-resize-enabled={resizeAddon.enabled}>
-                <div className={styles.inner}>
-                    <div style={{ height: "2000px" }}>content</div>
-                </div>
+            <div className={styles.window} data-resize-enabled={resizeAddon.enabled}>
+                <div className={styles.canvas}>{children}</div>
             </div>
-            <Transition
-                as={Fragment}
-                show={tabOpen}
-                enter='vibe__addons-transition'
-                leave='vibe__addons-transition'
-                enterFrom='vibe__addons-close'
-                enterTo='vibe__addons-open'
-                leaveFrom='vibe__addons-open'
-                leaveTo='vibe__addons-close'
-            >
-                <div
-                    ref={setUtilityRef}
-                    className={styles.utilities}
-                    style={{ height: tabOpen ? `${tabHeight}px` : "" }}
-                >
-                    <div className={styles.scroller} {...dragProps} />
-                    <div className={styles.util_tabs}>
-                        <Tabs selected={selectedTab} onChange={updateTab}>
-                            <Tab value='design'>
-                                <div className={styles.tab}>Design</div>
-                            </Tab>
-                            <Tab value='controls'>
-                                <div className={styles.tab}>Controls</div>
-                            </Tab>
-                            <Tab value='console'>
-                                <div className={styles.tab}>
-                                    Console
-                                    <Badge size='small' variant={BadgeVariant.error}>
-                                        2
-                                    </Badge>
-                                </div>
-                            </Tab>
-                            <Tab value='listeners'>
-                                <div className={styles.tab}>
-                                    Listeners
-                                    <Badge size='small' variant={BadgeVariant.error}>
-                                        12
-                                    </Badge>
-                                </div>
-                            </Tab>
-                        </Tabs>
-                    </div>
-                    <iframe
-                        style={{
-                            outline: "none",
-                            border: "none",
-                            flexGrow: 1,
-                        }}
-                        title='Design frame'
-                        width='100%'
-                        src='https://www.figma.com/embed?embed_host=localhost&url=https://www.figma.com/file/Ekqg8F9tdUCaVCWRcdIZp7/Untitled?type=design&node-id=0-1&t=ftpROuazSUeOIpYp-0'
-                    />
-                </div>
-            </Transition>
-            {/* {!sidebarOpen && !addonsOpen ? (
-                <div
-                    onClick={toggleSidebar}
-                    className='vibe__float-open'
-                    tabIndex={0}
-                    role='button'
-                >
-                    <SidebarIcon />
-                </div>
-            ) : null}
-            {addons.resize.enabled && (
-                <div className='vibe__resize-meta'>
-                    <div className='vibe__size-box'>
-                        width
-                        <div className='vibe__size'>{addons.resize.data.width}</div>
-                    </div>
-                    <div className='vibe__size-box'>
-                        height
-                        <div className='vibe__size'>{addons.resize.data.height}</div>
-                    </div>
-                </div>
-            )}
-            <div
-                className={`vibe__panel ${addons.resize.enabled && "resize"}`}
-                ref={setPanelRef}
-                {...panelProps}
-            >
-                <div
-                    className='vibe__content'
-                    style={{
-                        width: addons.resize.data.width,
-                        height: addons.resize.data.height,
-                        backgroundColor: addons.background.backgroundColor,
-                    }}
-                    ref={setRef}
-                >
-                    {addons.resize.enabled ? (
-                        <div
-                            draggable={false}
-                            className='vibe__window-dragger right'
-                            {...draggerProps}
-                        >
-                            <div />
-                        </div>
-                    ) : null}
-                    {children}
-                </div>
-            </div>
-            <Addons /> */}
+            <TabSection />
         </div>
     );
-};
-
-const useUtilityResize = (ref: HTMLDivElement) => {
-    const { tabHeight, updateTabHeight } = useSettings();
-    const [dragging, setDragging] = useState(false);
-    const [initialPos, setInitialPos] = useState(0);
-
-    const minHeight = 200;
-
-    // handlers
-    const onMouseUp = useCallback(() => {
-        setDragging(false);
-    }, []);
-
-    const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        setDragging(true);
-        setInitialPos(e.clientY);
-    }, []);
-
-    const onMouseMove = useCallback(
-        (e: MouseEvent<HTMLDivElement>) => {
-            e.preventDefault();
-            if (!ref) return;
-            if (!dragging) return;
-            const currentHeight = ref.getBoundingClientRect().height;
-            const deltaY = e.clientY - initialPos;
-            const proposedY = currentHeight - deltaY;
-            if (proposedY < minHeight) {
-                return;
-            }
-            updateTabHeight(proposedY);
-            // ref.style.height = `${proposedY}px`;
-            setInitialPos(e.clientY);
-        },
-        [dragging, initialPos, ref, updateTabHeight],
-    );
-
-    return {
-        dragProps: {
-            onMouseDown: (e: MouseEvent<HTMLDivElement>) => onMouseDown(e),
-            // onMouseMove: (e: MouseEvent<HTMLDivElement>) => onMouseMove(e),
-            role: "button",
-            tabIndex: 0,
-        },
-        wrapperProps: {
-            onMouseUp,
-            onMouseMove,
-            role: "button",
-            tabIndex: 0,
-        },
-    };
 };

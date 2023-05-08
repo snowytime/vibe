@@ -1,0 +1,44 @@
+.row {
+    align-items: center;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    gap: 6px;
+    height: 30px;
+    justify-content: flex-start;
+    margin-bottom: 6px;
+    padding: 0 8px;
+    width: 100%;
+
+    &[data-active="true"] {
+        background: hsl(var(--accent-100));
+    }
+
+    &:hover {
+        background: hsl(var(--accent-100));
+    }
+}
+
+.icon {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    height: 100%;
+    justify-content: center;
+    width: 30px;
+}
+
+.title {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.panel {
+    flex-grow: 1;
+    margin: 0 20px;
+    overflow: auto;
+}
