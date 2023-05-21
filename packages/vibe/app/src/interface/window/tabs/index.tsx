@@ -4,17 +4,19 @@ import { Transition } from "@snowytime/react-magic/components";
 import { useTabs } from "./use-tabs";
 import { Badge, BadgeVariant } from "../../ui/badge";
 import { Tab, Tabs } from "../../ui/tabs";
-import { useSettings, useConsole } from "../../../controls";
+import { useSettings, useConsole, useControls } from "../../../controls";
 
 import styles from "./styles.module.scss";
 import { Design } from "./design";
 import { Console } from "./console";
+import { Controls } from "./controls";
 
 export const TabSection = () => {
     const [tabRef, setTabRef] = useDomRef<HTMLDivElement>();
     const { dragProps, wrapperProps, dragging } = useTabs(tabRef);
 
     const { tabOpen, tabHeight, updateTab, selectedTab, story } = useSettings();
+    const { enabled } = useControls();
 
     const { log, pending } = useConsole();
 
@@ -22,12 +24,12 @@ export const TabSection = () => {
         <Transition
             as={Fragment}
             show={tabOpen}
-            enter='vibe__addons-transition'
-            leave='vibe__addons-transition'
-            enterFrom='vibe__addons-close'
-            enterTo='vibe__addons-open'
-            leaveFrom='vibe__addons-open'
-            leaveTo='vibe__addons-close'
+            enter={styles.transition}
+            leave={styles.transition}
+            enterFrom={styles.close}
+            enterTo={styles.open}
+            leaveFrom={styles.open}
+            leaveTo={styles.close}
         >
             <div
                 ref={setTabRef}
@@ -43,9 +45,11 @@ export const TabSection = () => {
                                 <div className={styles.tab}>Design</div>
                             </Tab>
                         ) : null}
-                        <Tab value='controls'>
-                            <div className={styles.tab}>Controls</div>
-                        </Tab>
+                        {enabled ? (
+                            <Tab value='controls'>
+                                <div className={styles.tab}>Controls</div>
+                            </Tab>
+                        ) : null}
                         <Tab value='console'>
                             <div className={styles.tab}>
                                 Console
@@ -69,6 +73,7 @@ export const TabSection = () => {
                 <div className={styles.content}>
                     {selectedTab === "design" ? <Design dragging={dragging} /> : null}
                     {selectedTab === "console" ? <Console log={log} /> : null}
+                    {selectedTab === "controls" ? <Controls /> : null}
                 </div>
             </div>
         </Transition>

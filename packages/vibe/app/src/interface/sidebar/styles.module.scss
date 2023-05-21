@@ -7,23 +7,13 @@
     height: 100%;
     overflow: auto;
     width: 300px;
-
-    &.open {
-        width: 300px;
-    }
-
-    &.close {
-        width: 0;
-    }
 }
 
-.open-open {
-    opacity: 1;
+.open {
     width: 300px;
 }
 
 .close {
-    opacity: 0;
     width: 0;
 }
 

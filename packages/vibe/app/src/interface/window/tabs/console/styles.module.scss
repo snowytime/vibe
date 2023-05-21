@@ -10,6 +10,14 @@
     color: hsl(var(--accent-800));
 }
 
+.null {
+    color: hsl(var(--accent-600));
+}
+
+.undefined {
+    color: hsl(var(--accent-600));
+}
+
 .array {
     color: hsl(var(--accent-800));
     display: flex;

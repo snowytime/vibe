@@ -1,0 +1,13 @@
+.btn {
+    &[data-variant="first"] {
+        background: orange;
+    }
+
+    &[data-variant="second"] {
+        background: green;
+    }
+
+    &[data-variant="third"] {
+        background: blue;
+    }
+}

@@ -65,7 +65,6 @@ export const useStore = <T>(key: string) => {
         (name: string, what: T[keyof T]) => {
             const completeKey = append(key, name);
             serializer.set(completeKey, what);
-            // update local storage with the key and string
         },
         [key],
     );

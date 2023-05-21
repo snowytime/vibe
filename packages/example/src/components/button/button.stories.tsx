@@ -35,6 +35,8 @@ export const Console = () => {
                         [1, 2, 3],
                         true,
                         { name: "1", arr: [2, true, "world"], age: 2 },
+                        undefined,
+                        null,
                     ])
                 }
             >
@@ -52,6 +54,16 @@ Base.story = {
             type: "text",
             description: "description",
             value: "click me",
+        },
+        disabled: {
+            type: "check",
+            description: "toggles the disabled state",
+            value: false,
+        },
+        variant: {
+            type: "radio",
+            value: "second",
+            options: ["first", "second", "third"],
         },
     },
 };

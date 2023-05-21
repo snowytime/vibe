@@ -1,8 +1,15 @@
 import React from "react";
+import styles from "./styles.module.scss";
 
-export const Button = ({ children }) => {
+export const Button = ({ children, disabled, variant }) => {
     return (
-        <button onClick={() => console.log("hello")} type='button'>
+        <button
+            className={styles.btn}
+            data-variant={variant}
+            disabled={disabled}
+            onClick={() => console.log("hello")}
+            type='button'
+        >
             {children}
         </button>
     );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
-import { Badge } from "../../../ui/badge";
+import { Badge, BadgeVariant } from "../../../ui/badge";
 
 export const Console = ({ log }: { log: { message: string; count: number }[] }) => {
     return (
@@ -8,7 +8,13 @@ export const Console = ({ log }: { log: { message: string; count: number }[] }) 
             {log.map((en, i) => {
                 return (
                     <div className={styles.entry} key={i}>
-                        {en.count > 1 ? <Badge size='small'>{en.count}</Badge> : ""}
+                        {en.count > 1 ? (
+                            <Badge size='small' variant={BadgeVariant.secondary} contrast>
+                                {en.count}
+                            </Badge>
+                        ) : (
+                            ""
+                        )}
                         <RenderPrimitive>{en.message}</RenderPrimitive>
                     </div>
                 );
@@ -25,7 +31,10 @@ const RenderPrimitive = ({ children }: { children: unknown }) => {
             return <String>{children}</String>;
         case "number":
             return <Number>{children}</Number>;
+        case "undefined":
+            return <Undefined />;
         case "object":
+            if (children === null) return <Null />;
             return (
                 <>
                     {Array.isArray(children) ? (
@@ -44,11 +53,13 @@ const Boolean = ({ children }: { children: boolean }) => (
     <p className={styles.boolean}>{children.toString()}</p>
 );
 const String = ({ children }: { children: string }) => (
-    <p className={styles.string}>{children.toString()}</p>
+    <p className={styles.string}>&quot;{children.toString()}&quot;</p>
 );
 const Number = ({ children }: { children: number }) => (
     <p className={styles.number}>{children.toString()}</p>
 );
+const Null = () => <p className={styles.null}>null</p>;
+const Undefined = () => <p className={styles.undefined}>undefined</p>;
 
 const Arrow = ({ expanded }: { expanded: boolean }) => (
     <div className={styles.arrow} data-expanded={expanded}>
@@ -76,7 +87,7 @@ const ArrayObject = ({ children }: { children: unknown[] }) => {
                 <div className={styles.array_internal}>
                     {children.map((c, i) => (
                         <>
-                            {typeof c === "object" ? (
+                            {c !== null && typeof c === "object" ? (
                                 Array.isArray(c) ? (
                                     <p className={styles.array_description}>({c.length}) [...]</p>
                                 ) : (
@@ -122,7 +133,7 @@ const ObjectObject = ({ children }: { children: any }) => {
                 <div className={styles.array_internal}>
                     {Object.entries(children).map((c, i) => (
                         <>
-                            {typeof c[1] === "object" ? (
+                            {c[1] !== null && typeof c[1] === "object" ? (
                                 Array.isArray(c[1]) ? (
                                     <>
                                         <div className={styles.array_description}>{c[0]}:</div>
