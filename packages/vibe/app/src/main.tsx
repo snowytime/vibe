@@ -6,7 +6,7 @@ import { Vibe } from "./interface/index.js";
 
 import { Story } from "./interface/components/frame/story/index.js";
 import { NoStory } from "./interface/components/frame/no-story/index.js";
-import { Loader } from "./loader";
+import { Loader } from "./interface/ui/loader";
 import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./controls/use-settings/index.js";
 import { VibeControls } from "./controls/index.js";

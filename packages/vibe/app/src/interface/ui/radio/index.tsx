@@ -43,7 +43,7 @@ export const Radio = ({ children, label, value, checked, ...rest }) => {
     );
 };
 
-export const RadioGroup = ({ value, onChange, children }) => {
+export const RadioGroup = ({ value, onChange, children, label }) => {
     const name = useId();
     const handleChange = (event) => {
         if (onChange) {
@@ -53,6 +53,7 @@ export const RadioGroup = ({ value, onChange, children }) => {
 
     return (
         <div>
+            {label ? <div className={styles.label}>{label}</div> : null}
             {React.Children.map(children, (child) => {
                 if (React.isValidElement(child)) {
                     return React.cloneElement(child, {

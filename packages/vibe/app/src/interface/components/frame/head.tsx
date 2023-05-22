@@ -24,42 +24,34 @@ export const SynchronizeHead = ({
 
         storyWindow.document.documentElement.style.backgroundColor = "transparent";
 
-        // Loop through each stylesheet in the main document head
-        for (let i = 0; i < mainHead.children.length; i++) {
-            const child = mainHead.children[i];
+        [...(document.head.children as any)].forEach((child) => {
             if (
                 child.tagName === "STYLE" ||
                 (child.tagName === "LINK" &&
                     (child.getAttribute("type") === "text/css" ||
                         child.getAttribute("rel") === "stylesheet"))
             ) {
+                // remove it from the vibe main styles if it does not pertain to globals
                 const href = child.getAttribute("href");
                 const devId = child.getAttribute("data-vite-dev-id");
 
-                // Check if the stylesheet path contains any of the globalRegistry strings
                 if (
                     (href && globalRegistry.some((str) => href.includes(str))) ||
                     (devId && globalRegistry.some((str) => devId.includes(str)))
                 ) {
                     // Leave this stylesheet in the main document head
-                    continue;
+                    return;
                 }
 
-                // Copy the stylesheet to the iframe head
                 storyWindow.document.head.appendChild(child.cloneNode(true)) as HTMLStyleElement;
-
-                // Remove the stylesheet from the main document head
                 mainHead.removeChild(child);
-                i--;
             }
-        }
+        });
     }, [storyWindow]);
 
     // theme sync effect
     React.useEffect(() => {
-        // theme
         if (!active) return;
-        syncHead();
         const themeObserver = new MutationObserver(() => syncTheme());
         themeObserver.observe(document.documentElement, { attributes: true });
         const headObserver = new MutationObserver(() => syncHead());

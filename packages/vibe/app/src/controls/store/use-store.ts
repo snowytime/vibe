@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 
 const append = (key: string, specifier: string) => {
     return `${key}.${specifier}`;
@@ -33,6 +33,13 @@ export const serializer = {
         url.search = decodeURIComponent(searchParams.toString());
         window.history.replaceState(null, "", url.toString());
     },
+    clear: (key: string) => {
+        const searchParams = new URLSearchParams();
+        searchParams.delete(key);
+        const url = new URL(window.location.href);
+        url.search = decodeURIComponent(searchParams.toString());
+        window.history.replaceState(null, "", url.toString());
+    },
     get: (key?: string) => {
         const urlParams = new URLSearchParams(window.location.search);
         const state: { [key: string]: any } = {};
@@ -56,18 +63,25 @@ export const serializer = {
 };
 
 export const useStore = <T>(key: string) => {
-    const state = useMemo(() => {
+    const getState = useCallback(() => {
         const data = serializer.get(key) as T;
         return data || ({} as T);
     }, [key]);
+
+    const [state, setState] = useState(getState());
+
+    const clear = useCallback(() => {
+        setState({} as T);
+    }, []);
 
     const update = useCallback(
         (name: string, what: T[keyof T]) => {
             const completeKey = append(key, name);
             serializer.set(completeKey, what);
+            setState(getState());
         },
-        [key],
+        [getState, key],
     );
 
-    return { update, state };
+    return { update, state, clear };
 };

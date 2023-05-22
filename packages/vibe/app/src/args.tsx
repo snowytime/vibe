@@ -7,13 +7,17 @@ import { useControls } from "./controls/use-controls";
 export const Argument = ({ children, args, data }) => {
     const { initializeControl, controls, resetControls } = useControls();
     useEffect(() => {
-        resetControls();
         // reset the state
         const obj = Object.entries(args).map(([name, value]) => ({
             name,
             original: value.value,
             ...value,
         }));
+
+        if (obj.length === 0) {
+            resetControls();
+            return;
+        }
 
         for (const entry of obj) {
             initializeControl(entry);
