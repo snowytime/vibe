@@ -1,8 +1,11 @@
-import React from "react";
+import React, { KeyboardEventHandler, useCallback, useState } from "react";
+import { useDomRef } from "@snowytime/react-magic/hooks";
+
 import styles from "./styles.module.scss";
 import { useLayersAddon, useOutlineAddon, useResizeAddon, useSettings } from "../../controls";
 import { TabSection } from "./tabs";
 import { Tab, Tabs } from "../ui/tabs";
+import { Input, InputSize } from "../ui/input";
 
 const ResizeAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
     <div
@@ -80,6 +83,12 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
     const outlineAddon = useOutlineAddon();
     const layersAddon = useLayersAddon();
 
+    const [canvasRef, setCanvasRef] = useDomRef<HTMLDivElement>();
+
+    const toggleResizeEnabled = useCallback(() => {
+        resizeAddon.toggleEnabled(canvasRef);
+    }, [canvasRef, resizeAddon]);
+
     return (
         <div className={styles.wrapper}>
             {/* features */}
@@ -94,10 +103,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 </Tabs>
                 <div className={styles.features}>
                     {!sidebarOpen ? <SidebarButton onClick={toggleSidebar} /> : null}
-                    <ResizeAddon
-                        enabled={resizeAddon.enabled}
-                        onClick={resizeAddon.toggleEnabled}
-                    />
+                    <ResizeBar toggle={toggleResizeEnabled} />
                     <OutlineAddon
                         enabled={outlineAddon.enabled}
                         onClick={outlineAddon.toggleEnabled}
@@ -106,9 +112,133 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 </div>
             </div>
             <div className={styles.window} data-resize-enabled={resizeAddon.enabled}>
-                <div className={styles.canvas}>{children}</div>
+                <div ref={setCanvasRef} className={styles.canvas}>
+                    {children}
+                </div>
             </div>
             <TabSection />
         </div>
+    );
+};
+
+const ResizeBar = ({ toggle }) => {
+    const { enabled } = useResizeAddon();
+
+    return (
+        <div className={styles.resize_container}>
+            <ResizeAddon enabled={enabled} onClick={toggle} />
+            {enabled ? (
+                <div className={styles.resize_inner}>
+                    <WidthInput />
+                    <HeightInput />
+                </div>
+            ) : null}
+        </div>
+    );
+};
+
+const WidthInput = () => {
+    const { width, updateWidth } = useResizeAddon();
+    const [internalWidth, setInternalWidth] = useState(width);
+
+    const saveEvent = useCallback(
+        (value: string) => {
+            if (internalWidth !== width) {
+                updateWidth(Number(value));
+            }
+        },
+        [internalWidth, updateWidth, width],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            const target = e.target as HTMLInputElement;
+            if (e.key === "Escape") {
+                target.blur();
+            }
+            if (e.key === "Enter") {
+                saveEvent(target.value);
+            }
+        },
+        [saveEvent],
+    );
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        const parsedNumber = Number(inputValue);
+
+        if (isNaN(parsedNumber)) {
+            return;
+        }
+
+        setInternalWidth(parsedNumber);
+    };
+
+    return (
+        <Input
+            label='width'
+            orientation='row'
+            suffix='px'
+            value={internalWidth}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+            onBlur={() => setInternalWidth(width)}
+            size={InputSize.tiny}
+            type='text'
+            width='100px'
+        />
+    );
+};
+
+const HeightInput = () => {
+    const { height, updateHeight } = useResizeAddon();
+    const [internalHeight, setInternalHeight] = useState(height);
+
+    const saveEvent = useCallback(
+        (value: string) => {
+            if (internalHeight !== height) {
+                updateHeight(Number(value));
+            }
+        },
+        [height, internalHeight, updateHeight],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            const target = e.target as HTMLInputElement;
+            if (e.key === "Escape") {
+                target.blur();
+            }
+            if (e.key === "Enter") {
+                saveEvent(target.value);
+            }
+        },
+        [saveEvent],
+    );
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        const parsedNumber = Number(inputValue);
+
+        if (isNaN(parsedNumber)) {
+            return;
+        }
+
+        setInternalHeight(parsedNumber);
+    };
+
+    return (
+        <Input
+            label='height'
+            orientation='row'
+            suffix='px'
+            value={internalHeight}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+            onBlur={() => setInternalHeight(height)}
+            size={InputSize.tiny}
+            type='text'
+            width='100px'
+        />
     );
 };

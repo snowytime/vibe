@@ -1,34 +1,62 @@
-import React, { useId } from "react";
+import React, { forwardRef, useId, useState } from "react";
+
 import styles from "./styles.module.scss";
 
 export enum InputSize {
+    tiny = "tiny",
     small = "small",
     default = "default",
     large = "large",
 }
 
-type Props = Omit<React.HTMLProps<HTMLInputElement>, "size"> & {
+type Props = Omit<React.ComponentProps<"input">, "size"> & {
     label?: string;
     size?: InputSize;
+    suffix?: string;
+    width?: string;
+    orientation?: string;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
-export const Input = ({ label, size, ...rest }: Props) => {
-    const id = useId();
-    return (
-        <label className={styles.container} htmlFor={id}>
-            {label ? <div className={styles.label}>{label}</div> : null}
-            <div className={styles.innerContainer}>
-                <input
-                    id={id}
-                    data-size={size}
-                    className={styles.input}
-                    autoCapitalize='none'
-                    autoComplete='none'
-                    autoCorrect='off'
-                    spellCheck='false'
-                    {...rest}
-                />
-            </div>
-        </label>
-    );
-};
+export const Input = forwardRef<HTMLInputElement, Props>(
+    ({ label, size, suffix, width, orientation, onBlur = () => {}, ...rest }, ref) => {
+        const id = useId();
+        const [focus, setFocus] = useState(false);
+
+        const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+            onBlur(e);
+            setFocus(false);
+        };
+
+        return (
+            <label data-orientation={orientation} className={styles.container} htmlFor={id}>
+                {label ? (
+                    <div data-orientation={orientation} className={styles.label}>
+                        {label}
+                    </div>
+                ) : null}
+                <div
+                    style={{ width: width ?? "auto" }}
+                    data-focused={focus}
+                    className={styles.innerContainer}
+                >
+                    <input
+                        ref={ref}
+                        id={id}
+                        onFocus={() => setFocus(true)}
+                        onBlur={handleBlur}
+                        data-size={size}
+                        className={styles.input}
+                        autoCapitalize='none'
+                        autoComplete='none'
+                        autoCorrect='off'
+                        spellCheck='false'
+                        {...rest}
+                    />
+                    {suffix ? <div className={styles.suffix}>{suffix}</div> : null}
+                </div>
+            </label>
+        );
+    },
+);
+Input.displayName = "Input";

@@ -9,7 +9,7 @@ import { NoStory } from "./interface/components/frame/no-story/index.js";
 import { Loader } from "./interface/ui/loader";
 import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./controls/use-settings/index.js";
-import { VibeControls } from "./controls/index.js";
+import { ResizeContext, VibeControls } from "./controls/index.js";
 
 const Wait = () => {
     return (
@@ -62,30 +62,32 @@ const Main = () => {
                                         path={story.url}
                                         element={
                                             <VibeSettings storyTree={storyTree} story={story}>
-                                                <VibeControls>
-                                                    <Vibe>
-                                                        <Story
-                                                            framed={
-                                                                !!story &&
-                                                                config.mode === "development"
-                                                            }
-                                                        >
-                                                            <React.Suspense fallback={<Wait />}>
-                                                                <Entry
-                                                                    story={story}
-                                                                    stories={stories}
-                                                                    storyTree={storyTree}
-                                                                    storyUrls={storyUrls}
-                                                                    config={config}
-                                                                >
-                                                                    {React.createElement(
-                                                                        story.component,
-                                                                    )}
-                                                                </Entry>
-                                                            </React.Suspense>
-                                                        </Story>
-                                                    </Vibe>
-                                                </VibeControls>
+                                                <ResizeContext>
+                                                    <VibeControls>
+                                                        <Vibe>
+                                                            <Story
+                                                                framed={
+                                                                    !!story &&
+                                                                    config.mode === "development"
+                                                                }
+                                                            >
+                                                                <React.Suspense fallback={<Wait />}>
+                                                                    <Entry
+                                                                        story={story}
+                                                                        stories={stories}
+                                                                        storyTree={storyTree}
+                                                                        storyUrls={storyUrls}
+                                                                        config={config}
+                                                                    >
+                                                                        {React.createElement(
+                                                                            story.component,
+                                                                        )}
+                                                                    </Entry>
+                                                                </React.Suspense>
+                                                            </Story>
+                                                        </Vibe>
+                                                    </VibeControls>
+                                                </ResizeContext>
                                             </VibeSettings>
                                         }
                                     />

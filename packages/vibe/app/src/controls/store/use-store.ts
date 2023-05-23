@@ -76,7 +76,7 @@ export const useStore = <T>(key: string) => {
 
     const update = useCallback(
         (name: string, what: T[keyof T]) => {
-            const completeKey = append(key, name);
+            const completeKey = name ? append(key, name) : key;
             serializer.set(completeKey, what);
             setState(getState());
         },

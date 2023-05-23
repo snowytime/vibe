@@ -15,7 +15,7 @@ export const TabSection = () => {
     const [tabRef, setTabRef] = useDomRef<HTMLDivElement>();
     const { dragProps, wrapperProps, dragging } = useTabs(tabRef);
 
-    const { tabOpen, tabHeight, updateTab, selectedTab, story } = useSettings();
+    const { tabOpen, tabHeight, updateTab, selectedTab, story, sidebarOpen } = useSettings();
     const { enabled } = useControls();
 
     const { log, pending } = useConsole();
@@ -74,6 +74,7 @@ export const TabSection = () => {
                     {selectedTab === "design" ? <Design dragging={dragging} /> : null}
                     {selectedTab === "console" ? <Console log={log} /> : null}
                     {selectedTab === "controls" ? <Controls /> : null}
+                    {selectedTab === "listeners" ? <>{"" + sidebarOpen}</> : null}
                 </div>
             </div>
         </Transition>

@@ -88,3 +88,20 @@
     padding: 2px;
     user-select: none;
 }
+
+.resize_container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.resize_inner {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    height: 100%;
+    justify-content: flex-start;
+}
