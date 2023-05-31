@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useCallback, useState } from "react";
+import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useState } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 
 import styles from "./styles.module.scss";
@@ -79,15 +79,10 @@ export const SidebarButton = ({ onClick }: { onClick: () => void }) => (
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
     const { sidebarOpen, toggleSidebar, selectedPanel, updateSelectedPanel } = useSettings();
+
     const resizeAddon = useResizeAddon();
     const outlineAddon = useOutlineAddon();
     const layersAddon = useLayersAddon();
-
-    const [canvasRef, setCanvasRef] = useDomRef<HTMLDivElement>();
-
-    const toggleResizeEnabled = useCallback(() => {
-        resizeAddon.toggleEnabled(canvasRef);
-    }, [canvasRef, resizeAddon]);
 
     return (
         <div className={styles.wrapper}>
@@ -103,7 +98,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 </Tabs>
                 <div className={styles.features}>
                     {!sidebarOpen ? <SidebarButton onClick={toggleSidebar} /> : null}
-                    <ResizeBar toggle={toggleResizeEnabled} />
+                    <ResizeBar toggle={resizeAddon.toggleEnabled} />
                     <OutlineAddon
                         enabled={outlineAddon.enabled}
                         onClick={outlineAddon.toggleEnabled}
@@ -111,9 +106,36 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                     <LayerAddon enabled={layersAddon.enabled} onClick={layersAddon.toggleEnabled} />
                 </div>
             </div>
-            <div className={styles.window} data-resize-enabled={resizeAddon.enabled}>
-                <div ref={setCanvasRef} className={styles.canvas}>
-                    {children}
+            <div
+                ref={resizeAddon.registerWindowRef}
+                className={styles.window}
+                data-resize-enabled={resizeAddon.enabled}
+            >
+                <div className={styles.panel}>
+                    <div
+                        ref={resizeAddon.registerCanvasRef}
+                        style={
+                            resizeAddon.enabled
+                                ? {
+                                      width: `${resizeAddon.width}px`,
+                                      height: `${resizeAddon.height}px`,
+                                  }
+                                : {}
+                        }
+                        className={styles.canvas}
+                        {...resizeAddon.panelProps}
+                    >
+                        {children}
+                        {resizeAddon.enabled ? (
+                            <div
+                                className={styles.dragger}
+                                data-direction='right'
+                                {...resizeAddon.draggerProps}
+                            >
+                                <div />
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
             </div>
             <TabSection />
@@ -140,6 +162,10 @@ const ResizeBar = ({ toggle }) => {
 const WidthInput = () => {
     const { width, updateWidth } = useResizeAddon();
     const [internalWidth, setInternalWidth] = useState(width);
+
+    useEffect(() => {
+        setInternalWidth(width);
+    }, [width]);
 
     const saveEvent = useCallback(
         (value: string) => {
@@ -193,6 +219,10 @@ const WidthInput = () => {
 const HeightInput = () => {
     const { height, updateHeight } = useResizeAddon();
     const [internalHeight, setInternalHeight] = useState(height);
+
+    useEffect(() => {
+        setInternalHeight(height);
+    }, [height]);
 
     const saveEvent = useCallback(
         (value: string) => {

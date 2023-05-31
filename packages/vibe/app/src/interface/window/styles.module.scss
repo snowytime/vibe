@@ -9,25 +9,36 @@
 }
 
 .window {
-    background: hsl(var(--background));
-
-    flex-grow: 1;
+    align-items: center;
+    background: radial-gradient(circle 1px, hsl(var(--accent-200)) 1px, transparent 1px),
+        radial-gradient(circle 1px, hsl(var(--background)) 1px, transparent 1px);
+    background-size: 16px 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    max-width: 100%;
     overflow: hidden;
-    padding: 0;
+    position: relative;
     width: 100%;
 
     &[data-resize-enabled="true"] {
-        background: radial-gradient(circle 1px, hsl(var(--accent-200)) 1px, transparent 1px),
-            radial-gradient(circle 1px, hsl(var(--background)) 1px, transparent 1px);
-        background-size: 16px 16px;
         padding: 30px;
     }
+}
+
+.panel {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
 }
 
 .canvas {
     background: hsl(var(--background));
     height: 100%;
-    overflow: auto;
+    position: relative;
     width: 100%;
 }
 
@@ -104,4 +115,33 @@
     gap: 12px;
     height: 100%;
     justify-content: flex-start;
+}
+
+.dragger {
+    border-radius: 200px;
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+
+    &[data-direction="right"] {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+
+        &:hover {
+            background: hsl(var(--accent-100));
+        }
+
+        > div {
+            background: hsl(var(--accent-500));
+            border-radius: 100px;
+            height: 50px;
+            width: 4px;
+        }
+    }
 }
