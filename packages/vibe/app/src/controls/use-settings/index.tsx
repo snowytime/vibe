@@ -16,6 +16,19 @@ export enum Theme {
     dark = "dark",
 }
 
+type SettingsProps = {
+    sidebarOpen: boolean;
+    theme: Theme;
+    tabOpen: boolean;
+    selectedPanel: "sandbox" | "docs";
+    selectedTab: string;
+    search: string;
+    selectedAddon: string;
+    tabHeight: number;
+    filteredTree: Tree;
+    story: Story;
+};
+
 type Settings = {
     sidebarOpen: boolean;
     theme: Theme;
@@ -49,96 +62,106 @@ export const VibeSettings = ({
     storyTree: Tree;
     story: Story;
 }) => {
-    const { update, state } = useStore<Settings>("settings");
-    // useEffect(() => console.log(state.sidebarOpen), [state]);
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(state.sidebarOpen ?? true);
-    const [selectedPanel, setSelectedPanel] = useState<"sandbox" | "docs">(
-        state.selectedPanel ?? "sandbox",
-    );
-    const [selectedTab, setSelectedTab] = useState(state.selectedTab ?? "design");
-    const [tabOpen, setTabOpen] = useState(state.tabOpen ?? true);
-    const [theme, setTheme] = useState<Theme>(state.theme ?? Theme.light);
-    const [search, setSearch] = useState(state.search ?? "");
-    const [selectedAddon, setSelectedAddon] = useState(state.selectedAddon ?? "");
-    const [tabHeight, setTabHeight] = useState(300);
+    const { state, update } = useStore<SettingsProps>("settings", {
+        sidebarOpen: {
+            value: true,
+            cache: true,
+        },
+        theme: {
+            value: Theme.light,
+            cache: true,
+        },
+        tabOpen: {
+            value: true,
+            cache: true,
+        },
+        selectedPanel: {
+            value: "sandbox",
+            cache: true,
+        },
+        selectedTab: {
+            value: null,
+            cache: true,
+        },
+        search: {
+            value: "",
+            cache: true,
+        },
+        selectedAddon: {
+            value: null,
+            cache: true,
+        },
+        tabHeight: {
+            value: 300,
+            cache: true,
+        },
+    });
 
     const [filteredTree, setFilteredTree] = useState(storyTree);
 
     useLayoutEffect(() => {
-        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.setAttribute("data-theme", state.theme);
         document.documentElement.style.transition = "color 0.2s ease-in-out";
-    }, [search, storyTree, theme]);
+    }, [state.theme]);
 
     // methods
     const updateSearch = useCallback(
         (query: string) => {
-            setSearch(query);
+            update({ search: query });
             setFilteredTree(filterTree(storyTree, query));
-            update("search", query);
         },
         [storyTree, update],
     );
 
     const toggleSidebar = useCallback(() => {
-        const updatedState = !sidebarOpen;
-        setSidebarOpen(updatedState);
-        update("sidebarOpen", updatedState);
-    }, [sidebarOpen, update]);
+        const updatedState = !state.sidebarOpen;
+        update({ sidebarOpen: updatedState });
+    }, [state.sidebarOpen, update]);
 
     const toggleTab = useCallback(() => {
-        const updatedState = !tabOpen;
-        setTabOpen(updatedState);
-        setTabHeight(null);
-        update("tabOpen", updatedState);
-    }, [tabOpen, update]);
+        const updatedState = !state.tabOpen;
+        update({ tabOpen: updatedState });
+    }, [state.tabOpen, update]);
 
     const updateSelectedPanel = useCallback(
         (panel: "sandbox" | "docs") => {
-            setSelectedPanel(panel);
-            update("selectedPanel", panel);
+            update({ selectedPanel: panel });
         },
         [update],
     );
 
     const updateTab = useCallback(
         (tab: string) => {
-            setSelectedTab(tab);
-            update("selectedTab", tab);
+            update({ selectedTab: tab });
         },
         [update],
     );
 
     const updateTheme = useCallback(
         (theme: Theme) => {
-            setTheme(theme);
-            update("theme", theme);
+            update({ theme });
         },
         [update],
     );
 
     const updateSelectedAddon = useCallback(
         (addon: string) => {
-            setSelectedAddon(addon);
-            update("selectedAddon", addon);
+            update({ selectedAddon: addon });
         },
         [update],
     );
 
-    const updateTabHeight = useCallback((height: number) => {
-        setTabHeight(height);
-    }, []);
+    const updateTabHeight = useCallback(
+        (height: number, cache?: boolean = false) => {
+            update({ tabHeight: height, cache });
+        },
+        [update],
+    );
 
     const memo = useMemo(
         () => ({
             // states
-            sidebarOpen,
-            theme,
-            search,
-            selectedAddon,
-            selectedTab,
-            selectedPanel,
-            tabOpen,
-            tabHeight,
+            ...state,
             filteredTree,
             story,
             // methods
@@ -150,17 +173,11 @@ export const VibeSettings = ({
             updateSelectedPanel,
             updateTab,
             updateTabHeight,
+            update,
         }),
         [
-            search,
-            selectedAddon,
-            selectedPanel,
-            selectedTab,
-            sidebarOpen,
-            tabHeight,
-            tabOpen,
-            theme,
             filteredTree,
+            state,
             story,
             toggleSidebar,
             toggleTab,
@@ -170,6 +187,7 @@ export const VibeSettings = ({
             updateTab,
             updateTabHeight,
             updateTheme,
+            update,
         ],
     );
 

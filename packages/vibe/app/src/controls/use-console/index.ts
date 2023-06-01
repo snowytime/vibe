@@ -45,9 +45,9 @@ export const useConsole = () => {
     const initialConsoleLog = useRef(window.console.log);
 
     const mountAddon = useCallback(() => {
-        // window.console.log = <T>(t: T) => {
-        //     updatePending(t);
-        // };
+        window.console.log = <T>(t: T) => {
+            updatePending(t);
+        };
     }, [updatePending]);
 
     const unmountAddon = useCallback(() => {

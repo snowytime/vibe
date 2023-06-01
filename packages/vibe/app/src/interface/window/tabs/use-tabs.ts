@@ -2,7 +2,7 @@ import { useCallback, useState, MouseEvent } from "react";
 import { useSettings } from "../../../controls";
 
 export const useTabs = (ref: HTMLDivElement) => {
-    const { updateTabHeight } = useSettings();
+    const { updateTabHeight, tabHeight } = useSettings();
     const [dragging, setDragging] = useState(false);
     const [initialPos, setInitialPos] = useState(0);
 
@@ -11,7 +11,8 @@ export const useTabs = (ref: HTMLDivElement) => {
     // handlers
     const onMouseUp = useCallback(() => {
         setDragging(false);
-    }, []);
+        updateTabHeight(tabHeight, true);
+    }, [tabHeight, updateTabHeight]);
 
     const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -30,7 +31,7 @@ export const useTabs = (ref: HTMLDivElement) => {
             if (proposedY < minHeight) {
                 return;
             }
-            updateTabHeight(proposedY);
+            updateTabHeight(proposedY, false);
             // ref.style.height = `${proposedY}px`;
             setInitialPos(e.clientY);
         },

@@ -55,14 +55,14 @@ type ControlContext = {
 const ControlsContext = createContext<ControlContext>({} as ControlContext);
 
 export const VibeControls = ({ children }: { children: React.ReactNode }) => {
-    const { update, state, clear } = useStore<CachedControls>("controls");
+    const { update, state, clearState } = useStore<CachedControls>("controls", {});
     const [controls, setControls] = useState({});
     const enabled = useMemo(() => Object.keys(controls).length > 0, [controls]);
     const [loading, setLoading] = useState(true);
 
     const resetControls = useCallback(() => {
-        clear();
-    }, [clear]);
+        clearState();
+    }, [clearState]);
 
     const initializeControl = useCallback(
         (data: Partial<Control>) => {
@@ -98,7 +98,7 @@ export const VibeControls = ({ children }: { children: React.ReactNode }) => {
                 return newState;
             });
             // serialize
-            update(name, value);
+            update({ [name]: value });
         },
         [update],
     );

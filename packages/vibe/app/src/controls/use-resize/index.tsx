@@ -8,7 +8,7 @@ import React, {
     useState,
     useReducer,
 } from "react";
-import { _useStore, useObjectiveMemo } from "../store/use-store";
+import { useStore, useObjectiveMemo } from "../store/use-store";
 
 type ResizeState = {
     height: number;
@@ -47,7 +47,7 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         state: resizeState,
         update: updateResizeState,
         clearState,
-    } = _useStore<ResizeState>("resize", {
+    } = useStore<ResizeState>("resize", {
         enabled: {
             value: false,
             cache: true,
@@ -75,8 +75,9 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
     const [windowRef, setWindowRef] = useState<HTMLDivElement>(null);
     const [canvasRef, setCanvasRef] = useState<HTMLDivElement>(null);
 
-    // on enabling
-    useEffect(() => {
+    const setMax = useCallback(() => {}, []);
+
+    const initExtremes = useCallback(() => {
         if (resizeState.enabled && canvasRef && windowRef && !resizeState.maxHeight) {
             const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
             const { height, width } = canvasRef.getBoundingClientRect();
@@ -112,6 +113,11 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         updateResizeState,
         windowRef,
     ]);
+
+    // on enabling
+    useEffect(() => {
+        initExtremes();
+    }, [initExtremes, resizeState.enabled]);
 
     const updateHeight = useCallback(
         (height: number) => {
@@ -155,38 +161,73 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
     // this will keep the max size of the window in sync
     const handleResizeObservation = useCallback(() => {
-        // get the bounding box of the window item
-        clearState();
-        updateResizeState({ enabled: false, cache: false, clear: true });
-    }, [clearState, updateResizeState]);
+        const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
+        const { height, width } = canvasRef.getBoundingClientRect();
+        if (!maxHeight || !maxWidth) return;
+
+        const currentHeight = resizeState.height || height;
+        const currentWidth = resizeState.width || width;
+
+        const adjustedMaxHeight = maxHeight - 2 * 30;
+        const adjustedMaxWidth = maxWidth - 2 * 30;
+
+        const getHeight = () => {
+            const enlarged = currentHeight > adjustedMaxHeight;
+            if (enlarged) {
+                return { height: adjustedMaxHeight };
+            }
+            return {};
+        };
+
+        const getWidth = () => {
+            const enlarged = currentWidth > adjustedMaxWidth;
+            if (enlarged) {
+                return { width: adjustedMaxWidth };
+            }
+            return {};
+        };
+
+        updateResizeState({
+            maxHeight: adjustedMaxHeight,
+            maxWidth: adjustedMaxWidth,
+            ...getHeight(),
+            ...getWidth(),
+            cache: false,
+        });
+    }, [canvasRef, resizeState.height, resizeState.width, updateResizeState, windowRef]);
 
     useEffect(() => {
-        window.addEventListener("resize", handleResizeObservation);
-        return () => window.removeEventListener("resize", handleResizeObservation);
-    }, [handleResizeObservation]);
+        if (!windowRef) return;
+
+        const windowObserver = new ResizeObserver(handleResizeObservation);
+        windowObserver.observe(windowRef);
+
+        return () => windowObserver.disconnect();
+    }, [handleResizeObservation, resizeState.enabled, windowRef]);
 
     // resize handlers
     const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
-    const [proposedSize, setProposedSize] = useTypedReducer<{
-        height: number | null;
-        width: number | null;
-    }>((prev, curr) => ({ ...prev, ...curr }), {
-        height: null,
-        width: null,
-    });
+
+    const [temporaryHeight, setTemporaryHeight] = useState(null);
+    const [temporaryWidth, setTemporaryWidth] = useState(null);
 
     const [dragging, setDragging] = useState(false);
 
-    const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
-        setDragging(true);
-        setInitialPos({ x: e.clientX, y: e.clientY });
-    }, []);
+    const onMouseDown = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            setDragging(true);
+            setInitialPos({ x: e.clientX, y: e.clientY });
+            setTemporaryHeight(resizeState.height);
+            setTemporaryWidth(resizeState.width);
+        },
+        [resizeState.height, resizeState.width],
+    );
 
     const onMouseUp = useCallback(() => {
         setDragging(false);
-        updateResizeState({ height: resizeState.height, width: resizeState.width });
+        updateResizeState({ height: temporaryHeight, width: temporaryWidth });
         setInitialPos({ x: 0, y: 0 });
-    }, [resizeState.height, resizeState.width, updateResizeState]);
+    }, [temporaryHeight, temporaryWidth, updateResizeState]);
 
     const onMouseMove = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {
@@ -195,15 +236,15 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
             const deltaX = e.clientX - initialPos.x;
             const deltaY = e.clientY - initialPos.y;
-            const proposedX = resizeState.width + deltaX * 2;
-            const proposedY = resizeState.height + deltaY * 2;
+            const proposedX = temporaryWidth + deltaX * 2;
+            const proposedY = temporaryHeight + deltaY * 2;
             if (proposedX <= resizeState.maxWidth) {
-                updateResizeState({ width: proposedX, cache: false });
-                // setProposedSize({ height: proposedX });
+                // updateResizeState({ width: proposedX, cache: false });
+                setTemporaryWidth(proposedX);
             }
             if (proposedY <= resizeState.maxHeight) {
-                updateResizeState({ height: proposedY, cache: false });
-                // setProposedSize({ width: proposedY });
+                // updateResizeState({ height: proposedY, cache: false });
+                setTemporaryHeight(proposedY);
             }
             setInitialPos({ x: e.clientX, y: e.clientY });
         },
@@ -211,11 +252,10 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
             dragging,
             initialPos.x,
             initialPos.y,
-            resizeState.height,
             resizeState.maxHeight,
             resizeState.maxWidth,
-            resizeState.width,
-            updateResizeState,
+            temporaryHeight,
+            temporaryWidth,
         ],
     );
 
@@ -243,7 +283,9 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
     const memo = useMemo(
         () => ({
-            ...resizeState,
+            enabled: resizeState.enabled,
+            width: dragging ? temporaryWidth : resizeState.width,
+            height: dragging ? temporaryHeight : resizeState.height,
             toggleEnabled,
             updateHeight,
             updateWidth,
@@ -253,7 +295,12 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
             draggerProps,
         }),
         [
-            resizeState,
+            resizeState.enabled,
+            resizeState.width,
+            resizeState.height,
+            dragging,
+            temporaryWidth,
+            temporaryHeight,
             toggleEnabled,
             updateHeight,
             updateWidth,

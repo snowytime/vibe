@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useStore } from "../store/use-store";
 
 type Outline = {
@@ -6,17 +6,20 @@ type Outline = {
 };
 
 export const useOutlineAddon = () => {
-    const { update, state } = useStore<Outline>("outline");
-    const [enabled, setEnabled] = useState(state.enabled ?? false);
+    const { update, state } = useStore<Outline>("outline", {
+        enabled: {
+            value: false,
+            cache: true,
+        },
+    });
 
     const toggleEnabled = useCallback(() => {
-        const updatedState = !enabled;
-        setEnabled(updatedState);
-        update("enabled", updatedState);
-    }, [enabled, update]);
+        const updatedState = !state.enabled;
+        update({ enabled: updatedState });
+    }, [state.enabled, update]);
 
     return {
-        enabled,
+        enabled: state.enabled,
         toggleEnabled,
     };
 };

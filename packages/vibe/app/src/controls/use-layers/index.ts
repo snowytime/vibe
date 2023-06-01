@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useStore } from "../store/use-store";
 
 type Layers = {
@@ -6,17 +6,20 @@ type Layers = {
 };
 
 export const useLayersAddon = () => {
-    const { update, state } = useStore<Layers>("layers");
-    const [enabled, setEnabled] = useState(state.enabled ?? false);
+    const { update, state } = useStore<Layers>("layers", {
+        enabled: {
+            value: false,
+            cache: true,
+        },
+    });
 
     const toggleEnabled = useCallback(() => {
-        const updatedState = !enabled;
-        setEnabled(updatedState);
-        update("enabled", updatedState);
-    }, [enabled, update]);
+        const updatedState = !state.enabled;
+        update({ enabled: updatedState });
+    }, [state.enabled, update]);
 
     return {
-        enabled,
+        enabled: state.enabled,
         toggleEnabled,
     };
 };
