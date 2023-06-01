@@ -68,6 +68,9 @@ export const VibeControls = ({ children }: { children: React.ReactNode }) => {
         (data: Partial<Control>) => {
             const cachedState = state[data.name] || null;
 
+            // initial
+            update({ [data.name]: cachedState || data.value, cache: false });
+
             setControls((prevState) => {
                 const newState = {
                     ...prevState,
@@ -81,12 +84,13 @@ export const VibeControls = ({ children }: { children: React.ReactNode }) => {
 
             setLoading(false);
         },
-        [state],
+        [state, update],
     );
 
     const updateControl = useCallback(
         <T,>(name: string, value: T) => {
             // set control
+            update({ [name]: value });
             setControls((prevState) => {
                 const newState = {
                     ...prevState,
@@ -97,8 +101,6 @@ export const VibeControls = ({ children }: { children: React.ReactNode }) => {
                 };
                 return newState;
             });
-            // serialize
-            update({ [name]: value });
         },
         [update],
     );

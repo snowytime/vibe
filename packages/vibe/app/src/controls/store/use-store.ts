@@ -98,10 +98,14 @@ export const useStore = <T>(key: string, config: Config<T>) => {
     const getRawState = useCallback(() => {
         const state = {};
         const keys = Object.keys(memoizedConfig);
-        if (!keys.length) return state as T;
+        if (!keys.length) {
+            // just get the cache
+            return getCache() as T;
+        }
         keys.forEach((key) => {
             const { value, cache } = memoizedConfig[key];
-            const updatedValue = cache ? getCache()[key] ?? value : value;
+            const updatedValue =
+                cache || memoizedConfig.globalCache ? getCache()[key] ?? value : value;
             state[key] = updatedValue;
         });
         return state as T;
@@ -113,7 +117,11 @@ export const useStore = <T>(key: string, config: Config<T>) => {
             const { cache = true, clear = false, ...rest } = curr;
             Object.keys(rest).forEach((key) => {
                 // check if the cache should update
-                if (cache && memoizedConfig[key].cache) {
+                if (cache && !Object.keys(memoizedConfig).length) {
+                    // serialize everything
+                    updateCache({ [key]: rest[key] });
+                }
+                if (cache && memoizedConfig[key]?.cache) {
                     updateCache({ [key]: rest[key] });
                 }
             });
@@ -131,8 +139,10 @@ export const useStore = <T>(key: string, config: Config<T>) => {
         update({ ...newState, cache: false });
     }, [search, getRawState]);
 
+    const cachedState = useObjectiveMemo(state);
+
     return {
-        state,
+        state: cachedState,
         update,
         clearState,
     };
