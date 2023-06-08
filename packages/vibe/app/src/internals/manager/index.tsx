@@ -12,6 +12,7 @@ type Props = {
     registry: AddonConfig[];
     register: (data: AddonConfig) => void;
     generateId: () => string;
+    panels: AddonConfig[];
 };
 
 export const ManagerContext = createContext<Props>(null);

@@ -3,7 +3,6 @@ import { useDomRef } from "@snowytime/react-magic/hooks";
 import { Transition } from "@snowytime/react-magic/components";
 import { useTabs } from "./use-tabs";
 import { Tab, Tabs } from "../../ui/tabs";
-import { useControls } from "../../../controls";
 import { useSettings } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
@@ -35,52 +34,22 @@ export const TabSection = () => {
             >
                 <div className={styles.scroller} {...dragProps} />
                 <div className={styles.util_tabs}>
-                    <Tabs selected={selectedTab} onChange={updateTab}>
+                    <Tabs selected={selectedTab} onChange={(val) => updateTab(val)}>
                         {panels.map((panel) => (
                             <Tab value={panel.name} key={panel.id}>
                                 {panel.panelHeader ? (
                                     <>{panel.panelHeader}</>
                                 ) : (
-                                    <div className={styles.tab}>
-                                        {panel.name}
-                                        {/* {panel.panel?.pending > 0 ? (
-                                        <Badge size='small' variant={BadgeVariant.error}>
-                                            {panel.panel?.pending}
-                                        </Badge>
-                                    ) : null} */}
-                                    </div>
+                                    <div className={styles.tab}>{panel.name}</div>
                                 )}
                             </Tab>
                         ))}
-                        {/* {story.design ? (
-                            <Tab value='design'>
-                                <div className={styles.tab}>Design</div>
-                            </Tab>
-                        ) : null}
-                        {enabled ? (
-                            <Tab value='controls'>
-                                <div className={styles.tab}>Controls</div>
-                            </Tab>
-                        ) : null}
-                        <Tab value='console'>
-                            <div className={styles.tab}>
-                                Console
-                                {pending > 0 ? (
-                                    <Badge size='small' variant={BadgeVariant.error}>
-                                        {pending}
-                                    </Badge>
-                                ) : null}
-                            </div>
-                        </Tab> */}
                     </Tabs>
                 </div>
                 <div className={styles.content}>
                     {panels.map((panel) => (
                         <>{panel?.panel && panel.name === selectedTab && panel.panel}</>
                     ))}
-                    {/* {selectedTab === "design" ? <Design dragging={dragging} /> : null}
-                    {selectedTab === "console" ? <Console log={log} /> : null}
-                    {selectedTab === "controls" ? <Controls /> : null} */}
                 </div>
             </div>
         </Transition>

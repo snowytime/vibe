@@ -47,7 +47,7 @@ type Settings = {
     toggleTab: () => void;
     updateSelectedPanel: (panel: "sandbox" | "docs") => void;
     updateTab: (tab: string) => void;
-    updateTabHeight: (height: number) => void;
+    updateTabHeight: (height: number, cache?: boolean) => void;
 };
 
 const SettingsContext = createContext<Settings>(null);
@@ -107,7 +107,7 @@ export const VibeSettings = ({
         if (state.search) {
             setFilteredTree(filterTree(storyTree, state.search));
         }
-    }, [state.search, storyTree])
+    }, [state.search, storyTree]);
 
     // methods
     const updateSearch = useCallback(
@@ -157,7 +157,7 @@ export const VibeSettings = ({
     );
 
     const updateTabHeight = useCallback(
-        (height: number, cache?: boolean = false) => {
+        (height: number, cache = false) => {
             update({ tabHeight: height, cache });
         },
         [update],

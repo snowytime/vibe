@@ -43,8 +43,8 @@ export const Tab = ({
     );
 };
 
-type TabsProps = React.HTMLAttributes<HTMLDivElement> & {
-    children: React.ReactNode;
+type TabsProps = Omit<React.ComponentProps<"div">, "onChange"> & {
+    children: React.ReactElement<typeof Tab> | React.ReactElement<typeof Tab>[];
     selected: string;
     onChange: (updated: string) => void;
     disabled?: boolean;
