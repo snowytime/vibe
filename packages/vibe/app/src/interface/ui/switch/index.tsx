@@ -58,7 +58,6 @@ const Slot = <T,>({
 }: SlotProps<T>) => {
     const handleClick = useCallback(() => {
         if (disabled || globalDisable) return;
-        console.log(disabled);
         selectHandler(value);
     }, [disabled, globalDisable, selectHandler, value]);
 

@@ -1,15 +1,19 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useStore } from "../store/use-store";
+import { useAddonRegistry } from "../use-addon";
 
 export enum ControlType {
     check = "check",
     toggle = "toggle",
     text = "text",
+    textarea = "textarea",
     radio = "radio",
+    switch = "switch",
+    select = "select",
 }
 
-export type TextControl = {
-    type: ControlType.text;
+export type StringControl = {
+    type: ControlType.text | ControlType.textarea;
     value: string;
     name: string;
     description: string;
@@ -25,15 +29,15 @@ export type RadioControl = {
     original: string;
 };
 
-export type CheckboxControl = {
-    type: ControlType.check | ControlType.toggle;
+export type BooleanControl = {
+    type: ControlType.check | ControlType.toggle | ControlType.switch;
     value: boolean;
     name: string;
     description: string;
     original: boolean;
 };
 
-export type Control = TextControl | CheckboxControl | RadioControl;
+export type Control = BooleanControl | RadioControl | StringControl;
 
 type Controls = {
     [key: string]: Control;
@@ -55,28 +59,40 @@ type ControlContext = {
 const ControlsContext = createContext<ControlContext>({} as ControlContext);
 
 export const VibeControls = ({ children }: { children: React.ReactNode }) => {
+    const { register } = useAddonRegistry();
+
     const { update, state, clearState } = useStore<CachedControls>("controls", {});
+
     const [controls, setControls] = useState({});
     const enabled = useMemo(() => Object.keys(controls).length > 0, [controls]);
     const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        register({
+            id: "controls",
+            panel: enabled,
+        });
+    }, [enabled, register]);
+
     const resetControls = useCallback(() => {
         clearState();
-    }, [clearState]);
+        update({ clear: true });
+        setControls({});
+    }, [clearState, update]);
 
     const initializeControl = useCallback(
         (data: Partial<Control>) => {
-            const cachedState = state[data.name] || null;
+            const cachedState = state[data.name] ?? null;
 
             // initial
-            update({ [data.name]: cachedState || data.value, cache: false });
+            update({ [data.name]: cachedState ?? data.value, cache: false });
 
             setControls((prevState) => {
                 const newState = {
                     ...prevState,
                     [data.name]: {
                         ...data,
-                        value: cachedState || data.value,
+                        value: cachedState ?? data.value,
                     },
                 };
                 return newState;

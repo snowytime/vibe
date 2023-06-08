@@ -10,6 +10,7 @@ import { Loader } from "./interface/ui/loader";
 import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./controls/use-settings/index.js";
 import { ResizeContext, VibeControls } from "./controls/index.js";
+import { AddonManager } from "./controls/use-addon/index.js";
 
 const Wait = () => {
     return (
@@ -61,34 +62,39 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <VibeSettings storyTree={storyTree} story={story}>
-                                                <ResizeContext>
-                                                    <VibeControls>
-                                                        <Vibe>
-                                                            <Story
-                                                                framed={
-                                                                    !!story &&
-                                                                    config.mode === "development"
-                                                                }
-                                                            >
-                                                                <React.Suspense fallback={<Wait />}>
-                                                                    <Entry
-                                                                        story={story}
-                                                                        stories={stories}
-                                                                        storyTree={storyTree}
-                                                                        storyUrls={storyUrls}
-                                                                        config={config}
+                                            <AddonManager>
+                                                <VibeSettings storyTree={storyTree} story={story}>
+                                                    <ResizeContext>
+                                                        <VibeControls>
+                                                            <Vibe>
+                                                                <Story
+                                                                    framed={
+                                                                        !!story &&
+                                                                        config.mode ===
+                                                                            "development"
+                                                                    }
+                                                                >
+                                                                    <React.Suspense
+                                                                        fallback={<Wait />}
                                                                     >
-                                                                        {React.createElement(
-                                                                            story.component,
-                                                                        )}
-                                                                    </Entry>
-                                                                </React.Suspense>
-                                                            </Story>
-                                                        </Vibe>
-                                                    </VibeControls>
-                                                </ResizeContext>
-                                            </VibeSettings>
+                                                                        <Entry
+                                                                            story={story}
+                                                                            stories={stories}
+                                                                            storyTree={storyTree}
+                                                                            storyUrls={storyUrls}
+                                                                            config={config}
+                                                                        >
+                                                                            {React.createElement(
+                                                                                story.component,
+                                                                            )}
+                                                                        </Entry>
+                                                                    </React.Suspense>
+                                                                </Story>
+                                                            </Vibe>
+                                                        </VibeControls>
+                                                    </ResizeContext>
+                                                </VibeSettings>
+                                            </AddonManager>
                                         }
                                     />
                                 );

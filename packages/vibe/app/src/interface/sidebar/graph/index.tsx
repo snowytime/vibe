@@ -103,13 +103,28 @@ const Nest = ({
 }) => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const handleNavigation = () => {
+        const newPath = category.path || "/";
+        const searchParams = new URLSearchParams(location.search);
+
+        // Loop through existing query parameters and append them to the new URL
+        for (const [key, value] of searchParams.entries()) {
+            searchParams.set(key, value);
+        }
+
+        const newUrl = `${newPath}?${searchParams.toString()}`;
+
+        navigate(newUrl);
+    };
+
     return category.type === "file" ? (
         <Row
             title={category.name}
             type='file'
             level={depth}
             active={location.pathname === category.path}
-            onClick={() => navigate(category.path || "/")}
+            onClick={handleNavigation}
         />
     ) : (
         <Folder category={category} depth={depth} path={path} expand={expand} />

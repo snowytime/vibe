@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSettings } from "../use-settings";
+import { useAddonRegistry } from "../use-addon";
 
 export const useConsole = () => {
+    const { register } = useAddonRegistry();
+    useEffect(() => {
+        register({
+            id: "console",
+            panel: true,
+        });
+    }, [register]);
     const [log, setLog] = useState<{ message: string; count: number }[]>([]);
     const [pending, setPending] = useState(0);
     const { pathname } = useLocation();
@@ -45,9 +53,9 @@ export const useConsole = () => {
     const initialConsoleLog = useRef(window.console.log);
 
     const mountAddon = useCallback(() => {
-        window.console.log = <T>(t: T) => {
-            updatePending(t);
-        };
+        // window.console.log = <T>(t: T) => {
+        //     updatePending(t);
+        // };
     }, [updatePending]);
 
     const unmountAddon = useCallback(() => {

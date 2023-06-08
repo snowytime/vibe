@@ -3,7 +3,10 @@
     flex-direction: column;
     gap: 12px;
     height: 100%;
-    padding: 12px;
+}
+
+.inner {
+    padding: 30px;
 }
 
 .loading {
@@ -13,4 +16,21 @@
     height: 100%;
     justify-content: center;
     width: 100%;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+
+.description {
+    background-color: hsl(var(--accent-100));
+    color: hsl(var(--accent-700));
+    font-size: 14px;
+    padding: 12px;
 }

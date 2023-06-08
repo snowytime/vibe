@@ -60,21 +60,12 @@ export const TabSection = () => {
                                 ) : null}
                             </div>
                         </Tab>
-                        <Tab value='listeners'>
-                            <div className={styles.tab}>
-                                Listeners
-                                <Badge size='small' variant={BadgeVariant.error}>
-                                    12
-                                </Badge>
-                            </div>
-                        </Tab>
                     </Tabs>
                 </div>
                 <div className={styles.content}>
                     {selectedTab === "design" ? <Design dragging={dragging} /> : null}
                     {selectedTab === "console" ? <Console log={log} /> : null}
                     {selectedTab === "controls" ? <Controls /> : null}
-                    {selectedTab === "listeners" ? <>{"" + sidebarOpen}</> : null}
                 </div>
             </div>
         </Transition>

@@ -56,7 +56,7 @@ Base.story = {
             value: "click me",
         },
         disabled: {
-            type: "toggle",
+            type: "switch",
             description: "toggles the disabled state",
             value: false,
         },

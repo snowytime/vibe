@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 // new serializer
@@ -74,10 +74,10 @@ export const useObjectiveMemo = <T extends object>(object: T) => {
     }, [object]);
 };
 
-export const useStore = <T>(key: string, config: Config<T>) => {
+export const useStore = <T>(key: string, config: Config<T>, wipe?: boolean) => {
     const memoizedConfig = useObjectiveMemo(config);
 
-    const { search } = useLocation(); // on location changes we reset the state to our cached value
+    const { search, pathname } = useLocation(); // on location changes we reset the state to our cached value
 
     const getCache = useCallback(() => {
         const cachedState = serializer.get(key);
@@ -138,6 +138,19 @@ export const useStore = <T>(key: string, config: Config<T>) => {
         const newState = getRawState();
         update({ ...newState, cache: false });
     }, [search, getRawState]);
+
+    const pathRef = useRef(pathname);
+    useEffect(() => {
+        if (pathname !== pathRef.current) {
+            // run effect
+            if (wipe) {
+                clearState();
+                const newState = getRawState();
+                update({ ...newState, clear: true });
+            }
+            pathRef.current = pathname;
+        }
+    }, [clearState, getRawState, pathname, wipe]);
 
     const cachedState = useObjectiveMemo(state);
 

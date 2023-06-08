@@ -16,7 +16,6 @@ type ResizeState = {
     enabled: boolean;
     maxHeight: number;
     maxWidth: number;
-    updated: number;
 };
 
 type ResizeMethods = {
@@ -27,7 +26,21 @@ type ResizeMethods = {
     registerCanvasRef: (ref: HTMLDivElement) => void;
 };
 
-type ResizeProps = ResizeState & ResizeMethods;
+type ResizePassedProps = {
+    draggerProps: {
+        onMouseDown: (e: MouseEvent<HTMLDivElement>) => void;
+        role: string;
+        tabIndex: number;
+    };
+    panelProps: {
+        onMouseUp: () => void;
+        onMouseMove: (e: MouseEvent<HTMLDivElement>) => void;
+        role: string;
+        tabIndex: number;
+    };
+};
+
+type ResizeProps = ResizeState & ResizeMethods & ResizePassedProps;
 
 const Context = createContext<ResizeProps>(null);
 
@@ -74,8 +87,6 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
     const [windowRef, setWindowRef] = useState<HTMLDivElement>(null);
     const [canvasRef, setCanvasRef] = useState<HTMLDivElement>(null);
-
-    const setMax = useCallback(() => {}, []);
 
     const initExtremes = useCallback(() => {
         if (resizeState.enabled && canvasRef && windowRef && !resizeState.maxHeight) {
@@ -286,6 +297,8 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
             enabled: resizeState.enabled,
             width: dragging ? temporaryWidth : resizeState.width,
             height: dragging ? temporaryHeight : resizeState.height,
+            maxHeight: resizeState.maxHeight,
+            maxWidth: resizeState.maxWidth,
             toggleEnabled,
             updateHeight,
             updateWidth,
@@ -298,6 +311,8 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
             resizeState.enabled,
             resizeState.width,
             resizeState.height,
+            resizeState.maxHeight,
+            resizeState.maxWidth,
             dragging,
             temporaryWidth,
             temporaryHeight,
