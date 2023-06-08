@@ -2,23 +2,19 @@ import React, { Fragment } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 import { Transition } from "@snowytime/react-magic/components";
 import { useTabs } from "./use-tabs";
-import { Badge, BadgeVariant } from "../../ui/badge";
 import { Tab, Tabs } from "../../ui/tabs";
-import { useSettings, useConsole, useControls } from "../../../controls";
+import { useControls } from "../../../controls";
+import { useSettings } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
-import { Design } from "./design";
-import { Console } from "./console";
-import { Controls } from "./controls";
+import { useRegistry } from "../../../internals/manager";
 
 export const TabSection = () => {
     const [tabRef, setTabRef] = useDomRef<HTMLDivElement>();
-    const { dragProps, wrapperProps, dragging } = useTabs(tabRef);
+    const { dragProps, wrapperProps } = useTabs(tabRef);
+    const { panels } = useRegistry();
 
-    const { tabOpen, tabHeight, updateTab, selectedTab, story, sidebarOpen } = useSettings();
-    const { enabled } = useControls();
-
-    const { log, pending } = useConsole();
+    const { tabOpen, tabHeight, updateTab, selectedTab } = useSettings();
 
     return (
         <Transition
@@ -40,7 +36,23 @@ export const TabSection = () => {
                 <div className={styles.scroller} {...dragProps} />
                 <div className={styles.util_tabs}>
                     <Tabs selected={selectedTab} onChange={updateTab}>
-                        {story.design ? (
+                        {panels.map((panel) => (
+                            <Tab value={panel.name} key={panel.id}>
+                                {panel.panelHeader ? (
+                                    <>{panel.panelHeader}</>
+                                ) : (
+                                    <div className={styles.tab}>
+                                        {panel.name}
+                                        {/* {panel.panel?.pending > 0 ? (
+                                        <Badge size='small' variant={BadgeVariant.error}>
+                                            {panel.panel?.pending}
+                                        </Badge>
+                                    ) : null} */}
+                                    </div>
+                                )}
+                            </Tab>
+                        ))}
+                        {/* {story.design ? (
                             <Tab value='design'>
                                 <div className={styles.tab}>Design</div>
                             </Tab>
@@ -59,13 +71,16 @@ export const TabSection = () => {
                                     </Badge>
                                 ) : null}
                             </div>
-                        </Tab>
+                        </Tab> */}
                     </Tabs>
                 </div>
                 <div className={styles.content}>
-                    {selectedTab === "design" ? <Design dragging={dragging} /> : null}
+                    {panels.map((panel) => (
+                        <>{panel?.panel && panel.name === selectedTab && panel.panel}</>
+                    ))}
+                    {/* {selectedTab === "design" ? <Design dragging={dragging} /> : null}
                     {selectedTab === "console" ? <Console log={log} /> : null}
-                    {selectedTab === "controls" ? <Controls /> : null}
+                    {selectedTab === "controls" ? <Controls /> : null} */}
                 </div>
             </div>
         </Transition>

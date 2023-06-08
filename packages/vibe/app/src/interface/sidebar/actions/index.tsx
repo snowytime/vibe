@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useSettings, Theme } from "../../../controls/use-settings";
+import { useSettings, Theme } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
 

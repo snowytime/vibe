@@ -8,9 +8,9 @@ import { Story } from "./interface/components/frame/story/index.js";
 import { NoStory } from "./interface/components/frame/no-story/index.js";
 import { Loader } from "./interface/ui/loader";
 import { ContextStore } from "./context/context.js";
-import { VibeSettings } from "./controls/use-settings/index.js";
+import { VibeSettings } from "./internals/settings";
 import { ResizeContext, VibeControls } from "./controls/index.js";
-import { AddonManager } from "./controls/use-addon/index.js";
+import { Manager } from "./internals/manager/index.js";
 
 const Wait = () => {
     return (
@@ -62,7 +62,7 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <AddonManager>
+                                            <Manager>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <ResizeContext>
                                                         <VibeControls>
@@ -94,7 +94,7 @@ const Main = () => {
                                                         </VibeControls>
                                                     </ResizeContext>
                                                 </VibeSettings>
-                                            </AddonManager>
+                                            </Manager>
                                         }
                                     />
                                 );

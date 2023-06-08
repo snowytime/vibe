@@ -1,5 +1,5 @@
 import { useCallback, useState, MouseEvent } from "react";
-import { useSettings } from "../../../controls";
+import { useSettings } from "../../../internals/settings";
 
 export const useTabs = (ref: HTMLDivElement) => {
     const { updateTabHeight, tabHeight } = useSettings();

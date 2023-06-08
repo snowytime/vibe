@@ -1,0 +1,11 @@
+.tab {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-feature-settings: "tnum";
+    gap: 6px;
+    height: 24px;
+    justify-content: center;
+    padding: 2px;
+    user-select: none;
+}

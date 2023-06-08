@@ -235,10 +235,12 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
     );
 
     const onMouseUp = useCallback(() => {
+        if (!dragging) return;
+
         setDragging(false);
         updateResizeState({ height: temporaryHeight, width: temporaryWidth });
         setInitialPos({ x: 0, y: 0 });
-    }, [temporaryHeight, temporaryWidth, updateResizeState]);
+    }, [dragging, temporaryHeight, temporaryWidth, updateResizeState]);
 
     const onMouseMove = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {

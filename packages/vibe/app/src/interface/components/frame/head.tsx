@@ -1,7 +1,7 @@
 import React from "react";
 import { useFrame } from "react-frame-component";
 
-const globalRegistry = ["/vibe/app/src/interface"];
+const globalRegistry = ["/vibe/app/src"];
 
 export const SynchronizeHead = ({
     active,

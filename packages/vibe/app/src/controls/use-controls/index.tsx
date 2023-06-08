@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useStore } from "../store/use-store";
-import { useAddonRegistry } from "../use-addon";
 
 export enum ControlType {
     check = "check",
@@ -59,20 +58,11 @@ type ControlContext = {
 const ControlsContext = createContext<ControlContext>({} as ControlContext);
 
 export const VibeControls = ({ children }: { children: React.ReactNode }) => {
-    const { register } = useAddonRegistry();
-
     const { update, state, clearState } = useStore<CachedControls>("controls", {});
 
     const [controls, setControls] = useState({});
     const enabled = useMemo(() => Object.keys(controls).length > 0, [controls]);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        register({
-            id: "controls",
-            panel: enabled,
-        });
-    }, [enabled, register]);
 
     const resetControls = useCallback(() => {
         clearState();

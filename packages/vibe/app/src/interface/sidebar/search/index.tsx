@@ -1,6 +1,6 @@
 import React from "react";
 import { useFilter } from "../../hooks/useFilter";
-import { useSettings } from "../../../controls/use-settings";
+import { useSettings } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
 

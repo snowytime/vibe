@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Category } from "../../../types";
 
 import styles from "./styles.module.scss";
-import { useSettings } from "../../../controls/use-settings";
+import { useSettings } from "../../../internals/settings";
 
 const colorCategories = ["#20B9FD", "#17CC14", "#FF83AA", "#20B9FD", "#17CC14", "#FF83AA"];
 

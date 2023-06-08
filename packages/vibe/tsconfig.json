@@ -15,7 +15,8 @@
             "#structures/*": ["./src/structures/*"],
             "#parsers/*": ["./src/parsers/*"],
             "#server/*": ["./src/server/*"],
-            "#plugin/*": ["./src/plugin/*"]
+            "#plugin/*": ["./src/plugin/*"],
+            "#app/*": ["./app/*"]
         },
         "module": "NodeNext",
         "target": "ESNext",

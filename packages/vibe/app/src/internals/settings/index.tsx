@@ -2,15 +2,13 @@ import React, {
     createContext,
     useCallback,
     useContext,
-    useEffect,
     useLayoutEffect,
     useMemo,
     useState,
 } from "react";
-import { useStore } from "../store/use-store";
+import { useStore } from "../hooks";
 import { Story, Tree } from "../../types";
-import { filterTree } from "./helpers";
-import { useAddonRegistry } from "../use-addon";
+import { filterTree } from "../helpers";
 
 export enum Theme {
     light = "light",
@@ -63,10 +61,6 @@ export const VibeSettings = ({
     storyTree: Tree;
     story: Story;
 }) => {
-    const { registry } = useAddonRegistry();
-
-    useEffect(() => console.log(registry), [registry]);
-
     const { state, update } = useStore<SettingsProps>("settings", {
         sidebarOpen: {
             value: true,
@@ -110,15 +104,10 @@ export const VibeSettings = ({
     }, [state.theme]);
 
     useLayoutEffect(() => {
-        if (!registry.length) return;
-        const cachedTab = state.selectedTab;
-        const addonConfiguration = registry.find((entry) => entry.id === cachedTab);
-        if (!addonConfiguration.panel) {
-            // we need to select a new tab that is actually active
-            const nearestSelectedTab = registry.find((entry) => entry.panel)?.id || "";
-            update({ selectedTab: nearestSelectedTab, cache: true });
+        if (state.search) {
+            setFilteredTree(filterTree(storyTree, state.search));
         }
-    }, [registry, state.selectedTab, update]);
+    }, [state.search, storyTree])
 
     // methods
     const updateSearch = useCallback(

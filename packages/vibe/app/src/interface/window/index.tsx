@@ -1,11 +1,11 @@
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useState } from "react";
-import { useDomRef } from "@snowytime/react-magic/hooks";
+import React, { useCallback, useEffect, useState } from "react";
 
 import styles from "./styles.module.scss";
-import { useLayersAddon, useOutlineAddon, useResizeAddon, useSettings } from "../../controls";
+import { useLayersAddon, useOutlineAddon, useResizeAddon } from "../../controls";
 import { TabSection } from "./tabs";
 import { Tab, Tabs } from "../ui/tabs";
 import { Input, InputSize } from "../ui/input";
+import { useSettings } from "../../internals/settings";
 
 const ResizeAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
     <div

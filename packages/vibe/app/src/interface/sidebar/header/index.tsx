@@ -1,5 +1,5 @@
 import React from "react";
-import { useSettings } from "../../../controls/use-settings";
+import { useSettings } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
 
