@@ -26,6 +26,7 @@ type SettingsProps = {
     tabHeight: number;
     filteredTree: Tree;
     story: Story;
+    tabDragging: boolean;
 };
 
 type Settings = {
@@ -39,6 +40,7 @@ type Settings = {
     tabHeight: number;
     filteredTree: Tree;
     story: Story;
+    tabDragging: boolean;
     // methods:
     toggleSidebar: () => void;
     updateSearch: (query: string) => void;
@@ -48,6 +50,7 @@ type Settings = {
     updateSelectedPanel: (panel: "sandbox" | "docs") => void;
     updateTab: (tab: string) => void;
     updateTabHeight: (height: number, cache?: boolean) => void;
+    updateTabDragging: (state: boolean) => void;
 };
 
 const SettingsContext = createContext<Settings>(null);
@@ -93,6 +96,10 @@ export const VibeSettings = ({
         tabHeight: {
             value: 300,
             cache: true,
+        },
+        tabDragging: {
+            value: false,
+            cache: false,
         },
     });
 
@@ -163,6 +170,13 @@ export const VibeSettings = ({
         [update],
     );
 
+    const updateTabDragging = useCallback(
+        (dragging: boolean) => {
+            update({ tabDragging: dragging });
+        },
+        [update],
+    );
+
     const memo = useMemo(
         () => ({
             // states
@@ -179,6 +193,7 @@ export const VibeSettings = ({
             updateTab,
             updateTabHeight,
             update,
+            updateTabDragging,
         }),
         [
             filteredTree,
@@ -193,6 +208,7 @@ export const VibeSettings = ({
             updateTabHeight,
             updateTheme,
             update,
+            updateTabDragging,
         ],
     );
 

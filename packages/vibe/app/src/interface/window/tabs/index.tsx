@@ -48,7 +48,17 @@ export const TabSection = () => {
                 </div>
                 <div className={styles.content}>
                     {panels.map((panel) => (
-                        <>{panel?.panel && panel.name === selectedTab && panel.panel}</>
+                        <>
+                            {panel.panel && (
+                                <div
+                                    data-show={panel.panel && panel.name === selectedTab}
+                                    className={styles.panel_inner}
+                                    key={`tab-panel-${panel.id}`}
+                                >
+                                    {panel.panel}
+                                </div>
+                            )}
+                        </>
                     ))}
                 </div>
             </div>

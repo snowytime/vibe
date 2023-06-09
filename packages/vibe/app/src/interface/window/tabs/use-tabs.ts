@@ -2,29 +2,31 @@ import { useCallback, useState, MouseEvent } from "react";
 import { useSettings } from "../../../internals/settings";
 
 export const useTabs = (ref: HTMLDivElement) => {
-    const { updateTabHeight, tabHeight } = useSettings();
-    const [dragging, setDragging] = useState(false);
+    const { updateTabHeight, tabHeight, tabDragging, updateTabDragging } = useSettings();
     const [initialPos, setInitialPos] = useState(0);
 
     const minHeight = 200;
 
     // handlers
     const onMouseUp = useCallback(() => {
-        setDragging(false);
+        updateTabDragging(false);
         updateTabHeight(tabHeight, true);
-    }, [tabHeight, updateTabHeight]);
+    }, [tabHeight, updateTabDragging, updateTabHeight]);
 
-    const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        setDragging(true);
-        setInitialPos(e.clientY);
-    }, []);
+    const onMouseDown = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            e.stopPropagation();
+            updateTabDragging(true);
+            setInitialPos(e.clientY);
+        },
+        [updateTabDragging],
+    );
 
     const onMouseMove = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {
             e.preventDefault();
             if (!ref) return;
-            if (!dragging) return;
+            if (!tabDragging) return;
             const currentHeight = ref.getBoundingClientRect().height;
             const deltaY = e.clientY - initialPos;
             const proposedY = currentHeight - deltaY;
@@ -35,7 +37,7 @@ export const useTabs = (ref: HTMLDivElement) => {
             // ref.style.height = `${proposedY}px`;
             setInitialPos(e.clientY);
         },
-        [dragging, initialPos, ref, updateTabHeight],
+        [initialPos, ref, tabDragging, updateTabHeight],
     );
 
     return {
@@ -51,6 +53,6 @@ export const useTabs = (ref: HTMLDivElement) => {
             role: "button",
             tabIndex: 0,
         },
-        dragging,
+        dragging: tabDragging,
     };
 };

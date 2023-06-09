@@ -9,3 +9,4 @@ export * from "./checkbox";
 export * from "./loader";
 export * from "./loading-dots";
 export * from "./switch";
+export * from "./empty";

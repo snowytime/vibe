@@ -59,6 +59,12 @@
     transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
-// .inner {
-//     padding: 20px;
-// }
+.panel_inner {
+    display: none;
+    height: 100%;
+    width: 100%;
+
+    &[data-show="true"] {
+        display: block;
+    }
+}
