@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useRegistry } from "../../internals/manager";
 import { Panel } from "./panel";
 import { Header } from "./header";
 import { useConsole } from "./use-console";
 
 export const useRegisterConsoleAddon = () => {
-    const { register, generateId } = useRegistry();
+    const { register } = useRegistry();
     const { log, pending } = useConsole();
-    const { current: id } = useRef(generateId());
+    const id = "console-addon";
 
     useEffect(() => {
         register({
@@ -16,5 +16,5 @@ export const useRegisterConsoleAddon = () => {
             panel: <Panel log={log} />,
             panelHeader: <Header pending={pending} />,
         });
-    }, [log, pending, register, id]);
+    }, [register, id, log, pending]);
 };

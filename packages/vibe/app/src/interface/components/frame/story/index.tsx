@@ -3,13 +3,13 @@ import Frame from "react-frame-component";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 
 import { SynchronizeHead } from "../head.js";
-import { useOutlineAddon } from "../../../hooks/useOutlineAddon.js";
+// import { useOutlineAddon } from "../../../hooks/useOutlineAddon.js";
 
 import "./styles.scss";
 
 export const Story = ({ children, framed }: { children: React.ReactNode; framed: boolean }) => {
     const [ref, setRef] = useDomRef<HTMLIFrameElement>();
-    useOutlineAddon(ref);
+    // useOutlineAddon(ref);
     if (!framed) return <>{children}</>;
     return (
         <Frame

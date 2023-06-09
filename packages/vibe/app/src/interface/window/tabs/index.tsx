@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 import { Transition } from "@snowytime/react-magic/components";
 import { useTabs } from "./use-tabs";

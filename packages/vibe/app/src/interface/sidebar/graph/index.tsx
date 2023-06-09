@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { useCallback, useId } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Category } from "../../../types";
 
@@ -102,11 +102,10 @@ const Nest = ({
     expand: boolean;
 }) => {
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const handleNavigation = () => {
+    const handleNavigation = useCallback(() => {
         const newPath = category.path || "/";
-        const searchParams = new URLSearchParams(location.search);
+        const searchParams = new URLSearchParams(window.location.search);
 
         // Loop through existing query parameters and append them to the new URL
         for (const [key, value] of searchParams.entries()) {
@@ -116,7 +115,7 @@ const Nest = ({
         const newUrl = `${newPath}?${searchParams.toString()}`;
 
         navigate(newUrl);
-    };
+    }, [category.path, navigate]);
 
     return category.type === "file" ? (
         <Row
