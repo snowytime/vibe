@@ -16,7 +16,7 @@ export const Story = ({ children, framed }: { children: React.ReactNode; framed:
             initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0"><div id="frame-root"></div></body></html>`}
             mountTarget='#frame-root'
             className='vibe__frame'
-            sandbox='allow-same-origin'
+            sandbox='allow-scripts allow-same-origin'
             ref={setRef}
         >
             <SynchronizeHead active={framed}>{children}</SynchronizeHead>

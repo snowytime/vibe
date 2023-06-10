@@ -6,6 +6,7 @@ import { TabSection } from "./tabs";
 import { Tab, Tabs } from "../ui/tabs";
 import { Input, InputSize } from "../ui/input";
 import { useSettings } from "../../internals/settings";
+import { useRegistry } from "../../internals/manager";
 
 const ResizeAddon = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => (
     <div
@@ -79,6 +80,7 @@ export const SidebarButton = ({ onClick }: { onClick: () => void }) => (
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
     const { sidebarOpen, toggleSidebar, selectedPanel, updateSelectedPanel } = useSettings();
+    const { toolbars } = useRegistry();
 
     const resizeAddon = useResizeAddon();
     const outlineAddon = useOutlineAddon();
@@ -98,12 +100,17 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 </Tabs>
                 <div className={styles.features}>
                     {!sidebarOpen ? <SidebarButton onClick={toggleSidebar} /> : null}
-                    <ResizeBar toggle={resizeAddon.toggleEnabled} />
+                    {toolbars.map((toolbar) => (
+                        <div className={styles.feature_wrapper} key={toolbar.id}>
+                            {toolbar.toolbar}
+                        </div>
+                    ))}
+                    {/* <ResizeBar toggle={resizeAddon.toggleEnabled} />
                     <OutlineAddon
                         enabled={outlineAddon.enabled}
                         onClick={outlineAddon.toggleEnabled}
                     />
-                    <LayerAddon enabled={layersAddon.enabled} onClick={layersAddon.toggleEnabled} />
+                    <LayerAddon enabled={layersAddon.enabled} onClick={layersAddon.toggleEnabled} /> */}
                 </div>
             </div>
             <div

@@ -7,6 +7,7 @@ interface AddonConfig {
     order?: number;
     panel?: React.ReactNode;
     panelHeader?: React.ReactNode;
+    toolbar?: React.ReactNode;
     context?: (data: { children: React.ReactNode }) => React.ReactNode;
 }
 
@@ -15,6 +16,7 @@ type Props = {
     register: (data: AddonConfig) => void;
     generateId: () => string;
     panels: AddonConfig[];
+    toolbars: AddonConfig[];
 };
 
 export const ManagerContext = createContext<Props>(null);
@@ -56,6 +58,12 @@ export const Manager = ({ children }: { children: React.ReactNode }) => {
             .sort((a, b) => (a.order > b.order ? 1 : -1));
     }, [memoizedRegistry]);
 
+    const toolbars = useMemo(() => {
+        return memoizedRegistry
+            .filter((addon) => addon.toolbar)
+            .sort((a, b) => (a.order > b.order ? 1 : -1));
+    }, [memoizedRegistry]);
+
     const mappedChildren = useMemo(() => {
         const addonContexts = memoizedRegistry
             .filter((addon) => addon.context)
@@ -76,8 +84,9 @@ export const Manager = ({ children }: { children: React.ReactNode }) => {
             register: registerAddon,
             generateId,
             panels,
+            toolbars,
         }),
-        [memoizedRegistry, registerAddon, generateId, panels],
+        [memoizedRegistry, registerAddon, generateId, panels, toolbars],
     );
 
     return <ManagerContext.Provider value={memo}>{mappedChildren}</ManagerContext.Provider>;
