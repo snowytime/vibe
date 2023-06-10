@@ -1,15 +1,12 @@
 import React from "react";
 import Frame from "react-frame-component";
-import { useDomRef } from "@snowytime/react-magic/hooks";
 
 import { SynchronizeHead } from "../head.js";
-// import { useOutlineAddon } from "../../../hooks/useOutlineAddon.js";
-
 import "./styles.scss";
+import { useRegistry } from "../../../../internals/manager";
 
 export const Story = ({ children, framed }: { children: React.ReactNode; framed: boolean }) => {
-    const [ref, setRef] = useDomRef<HTMLIFrameElement>();
-    // useOutlineAddon(ref);
+    const { setFrameRef } = useRegistry();
     if (!framed) return <>{children}</>;
     return (
         <Frame
@@ -17,7 +14,9 @@ export const Story = ({ children, framed }: { children: React.ReactNode; framed:
             mountTarget='#frame-root'
             className='vibe__frame'
             sandbox='allow-scripts allow-same-origin'
-            ref={setRef}
+            ref={setFrameRef}
+            onLoadedData={() => console.log("done")}
+            onLoad={(e) => console.log(e)}
         >
             <SynchronizeHead active={framed}>{children}</SynchronizeHead>
         </Frame>

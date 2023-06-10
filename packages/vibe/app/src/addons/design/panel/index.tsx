@@ -9,7 +9,6 @@ export const Panel = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        console.log(!!story.design);
         if (story.design) {
             setLoading(true);
         } else {

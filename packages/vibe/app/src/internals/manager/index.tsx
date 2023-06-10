@@ -1,4 +1,6 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { useDomRef } from "@snowytime/react-magic/hooks";
+
 import { useObjectiveMemo } from "../../controls";
 
 interface AddonConfig {
@@ -17,12 +19,16 @@ type Props = {
     generateId: () => string;
     panels: AddonConfig[];
     toolbars: AddonConfig[];
+    frameRef: HTMLIFrameElement;
+    setFrameRef: React.Dispatch<HTMLIFrameElement>;
 };
 
 export const ManagerContext = createContext<Props>(null);
 
 export const Manager = ({ children }: { children: React.ReactNode }) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
+
+    const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
 
     const generateId = useCallback(() => {
         const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -85,8 +91,10 @@ export const Manager = ({ children }: { children: React.ReactNode }) => {
             generateId,
             panels,
             toolbars,
+            frameRef,
+            setFrameRef,
         }),
-        [memoizedRegistry, registerAddon, generateId, panels, toolbars],
+        [memoizedRegistry, registerAddon, generateId, panels, toolbars, frameRef, setFrameRef],
     );
 
     return <ManagerContext.Provider value={memo}>{mappedChildren}</ManagerContext.Provider>;

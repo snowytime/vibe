@@ -17,7 +17,6 @@ export const useControls = () => {
     }, [addons.controls.data]);
 
     const update = (what: string, to: Omit<Args, "name">) => {
-        console.log(JSON.stringify(to, null, 2));
         dispatch({
             type: Action.set_addon_controls_update,
             payload: {
