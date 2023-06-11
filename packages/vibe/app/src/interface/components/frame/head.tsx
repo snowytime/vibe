@@ -24,6 +24,10 @@ export const SynchronizeHead = ({
 
         storyWindow.document.documentElement.style.backgroundColor = "transparent";
 
+        const oldHead = storyWindow.document.head;
+        const newHead = storyWindow.document.createElement("head");
+        // storyWindow.document.replaceChild(head, oldHead);
+
         [...(document.head.children as any)].forEach((child) => {
             if (
                 child.tagName === "STYLE" ||
@@ -35,6 +39,7 @@ export const SynchronizeHead = ({
                 const href = child.getAttribute("href");
                 const devId = child.getAttribute("data-vite-dev-id");
 
+                // we loop over all the
                 if (
                     (href && globalRegistry.some((str) => href.includes(str))) ||
                     (devId && globalRegistry.some((str) => devId.includes(str)))
@@ -42,11 +47,12 @@ export const SynchronizeHead = ({
                     // Leave this stylesheet in the main document head
                     return;
                 }
-
-                storyWindow.document.head.appendChild(child.cloneNode(true)) as HTMLStyleElement;
-                mainHead.removeChild(child);
+                newHead.appendChild(child.cloneNode(true)) as HTMLStyleElement;
+                child.disabled = true;
             }
         });
+
+        storyWindow.document.documentElement.replaceChild(newHead, oldHead);
     }, [storyWindow]);
 
     // theme sync effect

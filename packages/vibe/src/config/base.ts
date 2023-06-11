@@ -13,4 +13,5 @@ export const baseConfig: Config = {
     project: "vibe",
     version: "1",
     mode: "development",
+    addons: [],
 };

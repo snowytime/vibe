@@ -31,6 +31,9 @@ const Wait = () => {
 };
 
 const Main = () => {
+    React.useEffect(() => {
+        console.log(config);
+    }, []);
     return (
         <>
             <BrowserRouter>
@@ -62,7 +65,7 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Manager>
+                                            <Manager addons={config.addons}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <ResizeContext>
                                                         <VibeControls>

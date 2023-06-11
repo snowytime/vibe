@@ -13,7 +13,7 @@ export const Vibe = ({ children }: { children: React.ReactNode }) => {
     useRegisterConsoleAddon();
     useRegisterControlsAddon();
     useRegisterDesignAddon();
-    useRegisterOutlineAddon();
+    // useRegisterOutlineAddon();
 
     return (
         <div className='vibe__main'>

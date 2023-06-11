@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
 
 import { useObjectiveMemo } from "../../controls";
@@ -25,22 +25,15 @@ type Props = {
 
 export const ManagerContext = createContext<Props>(null);
 
-export const Manager = ({ children }: { children: React.ReactNode }) => {
+export const Manager = ({
+    children,
+    addons,
+}: {
+    children: React.ReactNode;
+    addons: Record<string, any>;
+}) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
-
     const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
-
-    const generateId = useCallback(() => {
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        let result = "";
-
-        for (let i = 0; i < 6; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            result += characters.charAt(randomIndex);
-        }
-
-        return result;
-    }, []);
 
     const registerAddon = useCallback(({ id, ...rest }: AddonConfig) => {
         setAddonRegistry((prev) => {
@@ -54,6 +47,27 @@ export const Manager = ({ children }: { children: React.ReactNode }) => {
                 a.order > b.order ? 1 : -1,
             );
         });
+    }, []);
+
+    useEffect(() => {
+        // addons.forEach((addon) => {
+        //     if (typeof addon === "string" && Object.keys(builtInAddons).includes(addon)) {
+        //         // built in addon
+        //         registerAddon(builtInAddons[addon]);
+        //     }
+        // });
+    }, [addons, registerAddon]);
+
+    const generateId = useCallback(() => {
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let result = "";
+
+        for (let i = 0; i < 6; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            result += characters.charAt(randomIndex);
+        }
+
+        return result;
     }, []);
 
     const memoizedRegistry = useObjectiveMemo(addonRegistry);

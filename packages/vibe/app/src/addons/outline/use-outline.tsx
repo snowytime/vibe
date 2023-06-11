@@ -1,15 +1,6 @@
-import React, {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useStore } from "../../internals/hooks/use-store";
 import { useRegistry } from "../../internals/manager";
-import { useObjectiveMemo } from "../../internals/hooks";
 
 type OutlineState = {
     enabled: boolean;
@@ -37,35 +28,6 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
         },
     });
 
-    const css = useRef(null);
-
-    const createStylesheet = useCallback(
-        (root: Document, action: boolean) => {
-            if (action) {
-                const outlineClassName = generateId();
-                const paddingClassName = generateId();
-                const newCssStyleSheet = root.createElement("style");
-                newCssStyleSheet.innerHTML = `
-                    .${outlineClassName} { outline: 1px solid red; }
-                    .${paddingClassName} { padding: 1px; }
-                `;
-                root.head.appendChild(newCssStyleSheet);
-
-                // set for later
-                css.current = {
-                    outline: outlineClassName,
-                    padding: paddingClassName,
-                    styleSheet: newCssStyleSheet,
-                };
-            } else {
-                const { styleSheet } = css.current;
-                styleSheet.remove();
-                css.current = null;
-            }
-        },
-        [generateId],
-    );
-
     // we need to log when the frame dom is ready
     useEffect(() => {
         const observer = new MutationObserver((mutationsList) => {
@@ -77,7 +39,7 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
                     const attributeValue =
                         document.documentElement.getAttribute("data-storyloaded");
                     // Attribute has been set, do something with the value
-                    if (attributeValue === "") {
+                    if (attributeValue === "true") {
                         setReady(true);
                     }
                 }
@@ -99,7 +61,7 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
 
             for (let i = 0; i < children.length; i++) {
                 const child = children[i];
-                child.classList.add(css.current.outline);
+                child.style.outline = "1px solid red";
                 apply(child);
             }
         };
@@ -112,7 +74,7 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
 
             for (let i = 0; i < children.length; i++) {
                 const child = children[i];
-                child.classList.remove(css.current.outline);
+                child.style.outline = "0";
                 apply(child);
             }
         };
@@ -123,24 +85,13 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
         if (!ready) return;
         const document = frameRef.contentDocument;
         if (outlineState.enabled) {
-            createStylesheet(document, true);
-            document.body.classList.add(css.current.padding);
+            document.body.style.padding = "1px";
             onEnableEffect(document);
         } else if (!outlineState.enabled) {
-            if (css.current) {
-                document.body.classList.remove(css.current.padding);
-                onDisableEffect(document);
-            }
-            // document.body.style.padding = "0px";
+            document.body.style.padding = "0px";
+            onDisableEffect(document);
         }
-    }, [
-        createStylesheet,
-        frameRef.contentDocument,
-        onDisableEffect,
-        onEnableEffect,
-        outlineState.enabled,
-        ready,
-    ]);
+    }, [frameRef.contentDocument, onDisableEffect, onEnableEffect, outlineState.enabled, ready]);
 
     const toggleEnabled = useCallback(() => {
         const newState = !outlineState.enabled;

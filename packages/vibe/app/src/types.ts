@@ -25,6 +25,7 @@ export type Config = {
     version: string;
     project: string;
     mode: "development" | "production";
+    addons: any[];
 };
 
 export interface Category {

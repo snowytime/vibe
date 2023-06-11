@@ -10,13 +10,11 @@ export const Story = ({ children, framed }: { children: React.ReactNode; framed:
     if (!framed) return <>{children}</>;
     return (
         <Frame
-            initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0"><div id="frame-root"></div></body></html>`}
+            initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0;"><div id="frame-root"></div></body></html>`}
             mountTarget='#frame-root'
             className='vibe__frame'
             sandbox='allow-scripts allow-same-origin'
             ref={setFrameRef}
-            onLoadedData={() => console.log("done")}
-            onLoad={(e) => console.log(e)}
         >
             <SynchronizeHead active={framed}>{children}</SynchronizeHead>
         </Frame>

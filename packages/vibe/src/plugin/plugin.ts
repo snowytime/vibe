@@ -71,7 +71,7 @@ export default function vibePlugin(config: Config) {
                 // make sure the `loaded` attr is set even if the story is loaded through iframe
                 const setLoadedAttr = `typeof window !== 'undefined' &&
 										window.document && window.document.createElement &&
-										document.documentElement.setAttribute("data-storyloaded", "");`;
+										document.documentElement.setAttribute("data-storyloaded", "true");`;
                 return {
                     code: `
 						${code}\n${setLoadedAttr}\n${invalidateHmr}\n${watcherImport}\nif (import.meta.hot) {

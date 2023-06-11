@@ -37,6 +37,7 @@ export async function getBase(settings: Settings, config: Config) {
         ...settings,
         // we might support custom base in config at some point
         base: undefined,
+        cache: false,
         // configFile: false,
         publicDir: join(process.cwd(), "public"),
         root: join(__dirname, "../../app/"),

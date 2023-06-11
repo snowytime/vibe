@@ -1,4 +1,11 @@
 .btn {
+    background: blue;
+    border: 0;
+    border-radius: 200px;
+    color: purple;
+    outline: 0;
+    padding: 4px 8px;
+
     &[data-variant="first"] {
         background: orange;
     }

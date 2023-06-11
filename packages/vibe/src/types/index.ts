@@ -22,6 +22,7 @@ export type Config = {
     version: string;
     project: string;
     mode: "development" | "production";
+    addons: unknown[];
 };
 
 export interface Log {
