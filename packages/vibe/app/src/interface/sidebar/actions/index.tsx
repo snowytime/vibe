@@ -1,26 +1,8 @@
-import React, { useCallback } from "react";
-import { useSettings, Theme } from "../../../internals/settings";
+import React from "react";
+import { useSettings } from "../../../internals/settings";
 
 import styles from "./styles.module.scss";
-
-export const ThemeToggle = () => {
-    const { theme, updateTheme } = useSettings();
-    const themeToggle = useCallback(() => {
-        updateTheme(theme === Theme.light ? Theme.dark : Theme.light);
-    }, [theme, updateTheme]);
-
-    return (
-        <>
-            <div className={styles.toggle} onClick={themeToggle} role='button' tabIndex={0}>
-                <div className={styles.track} data-theme={theme}>
-                    <div>🌜</div>
-                    <div className={styles.thumb} />
-                    <div>🌞</div>
-                </div>
-            </div>
-        </>
-    );
-};
+import { useRegistry } from "../../../internals/manager";
 
 const Addons = ({ onClick, enabled }: { onClick: () => void; enabled: boolean }) => {
     return (
@@ -45,10 +27,11 @@ const Addons = ({ onClick, enabled }: { onClick: () => void; enabled: boolean })
 
 export const Actions = () => {
     const { tabOpen, toggleTab } = useSettings();
+    const { themeWildcard } = useRegistry();
     return (
         <div className={styles.actions}>
             <div className={styles.bar}>
-                <ThemeToggle />
+                {themeWildcard ? themeWildcard.wildcard : null}
                 <Addons enabled={tabOpen} onClick={toggleTab} />
             </div>
         </div>

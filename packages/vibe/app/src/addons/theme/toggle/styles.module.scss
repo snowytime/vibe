@@ -1,0 +1,45 @@
+.toggle {
+    align-items: center;
+    background: hsl(var(--accent-100));
+    border-radius: 200px;
+    cursor: pointer;
+    display: flex;
+    font-size: 18px;
+    height: 30px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    width: 60px;
+}
+
+.track {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    height: 100%;
+    justify-content: space-around;
+    padding: 5px;
+    position: relative;
+    right: 0;
+    transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
+    width: 140%;
+
+    &[data-theme="light"] {
+        right: 25%;
+        transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
+    }
+
+    &[data-theme="dark"] {
+        right: -25%;
+        transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
+    }
+}
+
+.thumb {
+    aspect-ratio: 1/1;
+    background: hsl(var(--accent-200));
+    border-radius: 50%;
+    height: 100%;
+}

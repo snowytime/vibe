@@ -10,14 +10,14 @@ import { useStore } from "../hooks";
 import { Story, Tree } from "../../types";
 import { filterTree } from "../helpers";
 
-export enum Theme {
-    light = "light",
-    dark = "dark",
-}
+// export enum Theme {
+//     light = "light",
+//     dark = "dark",
+// }
 
 type SettingsProps = {
     sidebarOpen: boolean;
-    theme: Theme;
+    // theme: Theme;
     tabOpen: boolean;
     selectedPanel: "sandbox" | "docs";
     selectedTab: string;
@@ -31,7 +31,7 @@ type SettingsProps = {
 
 type Settings = {
     sidebarOpen: boolean;
-    theme: Theme;
+    // theme: Theme;
     tabOpen: boolean;
     selectedPanel: "sandbox" | "docs";
     selectedTab: string;
@@ -45,7 +45,7 @@ type Settings = {
     toggleSidebar: () => void;
     updateSearch: (query: string) => void;
     updateSelectedAddon: (addon: string) => void;
-    updateTheme: (theme: Theme) => void;
+    // updateTheme: (theme: Theme) => void;
     toggleTab: () => void;
     updateSelectedPanel: (panel: "sandbox" | "docs") => void;
     updateTab: (tab: string) => void;
@@ -69,10 +69,10 @@ export const VibeSettings = ({
             value: true,
             cache: true,
         },
-        theme: {
-            value: Theme.light,
-            cache: true,
-        },
+        // theme: {
+        //     value: Theme.light,
+        //     cache: true,
+        // },
         tabOpen: {
             value: true,
             cache: true,
@@ -105,10 +105,10 @@ export const VibeSettings = ({
 
     const [filteredTree, setFilteredTree] = useState(storyTree);
 
-    useLayoutEffect(() => {
-        document.documentElement.setAttribute("data-theme", state.theme);
-        document.documentElement.style.transition = "color 0.2s ease-in-out";
-    }, [state.theme]);
+    // useLayoutEffect(() => {
+    //     document.documentElement.setAttribute("data-theme", state.theme);
+    //     document.documentElement.style.transition = "color 0.2s ease-in-out";
+    // }, [state.theme]);
 
     useLayoutEffect(() => {
         if (state.search) {
@@ -149,12 +149,12 @@ export const VibeSettings = ({
         [update],
     );
 
-    const updateTheme = useCallback(
-        (theme: Theme) => {
-            update({ theme });
-        },
-        [update],
-    );
+    // const updateTheme = useCallback(
+    //     (theme: Theme) => {
+    //         update({ theme });
+    //     },
+    //     [update],
+    // );
 
     const updateSelectedAddon = useCallback(
         (addon: string) => {
@@ -186,7 +186,7 @@ export const VibeSettings = ({
             // methods
             updateSearch,
             toggleSidebar,
-            updateTheme,
+            // updateTheme,
             updateSelectedAddon,
             toggleTab,
             updateSelectedPanel,
@@ -206,7 +206,7 @@ export const VibeSettings = ({
             updateSelectedPanel,
             updateTab,
             updateTabHeight,
-            updateTheme,
+            // updateTheme,
             update,
             updateTabDragging,
         ],

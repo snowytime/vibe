@@ -14,13 +14,18 @@ export const SynchronizeHead = ({
     // theme sync
     const syncTheme = React.useCallback(() => {
         if (!storyWindow) return;
-        const themeAttribute = document.documentElement.getAttribute("data-theme");
-        storyWindow.document.documentElement.setAttribute("data-theme", themeAttribute || "");
+
+        const themeClass = document.documentElement.classList.contains("dark") ? "dark" : "light";
+        const oppositeClass = themeClass === "dark" ? "light" : "dark";
+
+        storyWindow.document.documentElement.setAttribute("data-theme", themeClass);
+        storyWindow.document.documentElement.classList.add(themeClass);
+        storyWindow.document.documentElement.classList.remove(oppositeClass);
     }, [storyWindow]);
+
     // headSync
     const syncHead = React.useCallback(() => {
         if (!storyWindow) return;
-        const mainHead = document.head;
 
         storyWindow.document.documentElement.style.backgroundColor = "transparent";
 

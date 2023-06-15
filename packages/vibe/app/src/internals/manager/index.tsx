@@ -10,6 +10,7 @@ interface AddonConfig {
     panel?: React.ReactNode;
     panelHeader?: React.ReactNode;
     toolbar?: React.ReactNode;
+    wildcard?: React.ReactNode;
     context?: (data: { children: React.ReactNode }) => React.ReactNode;
 }
 
@@ -19,8 +20,11 @@ type Props = {
     generateId: () => string;
     panels: AddonConfig[];
     toolbars: AddonConfig[];
+    themeWildcard: AddonConfig | undefined;
     frameRef: HTMLIFrameElement;
     setFrameRef: React.Dispatch<HTMLIFrameElement>;
+    ready: boolean;
+    updateReady: (state: boolean) => void;
 };
 
 export const ManagerContext = createContext<Props>(null);
@@ -34,6 +38,12 @@ export const Manager = ({
 }) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
     const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
+
+    const [ready, setReady] = useState(false);
+
+    const updateReady = useCallback((state: boolean) => {
+        setReady(state);
+    }, []);
 
     const registerAddon = useCallback(({ id, ...rest }: AddonConfig) => {
         setAddonRegistry((prev) => {
@@ -50,12 +60,9 @@ export const Manager = ({
     }, []);
 
     useEffect(() => {
-        // addons.forEach((addon) => {
-        //     if (typeof addon === "string" && Object.keys(builtInAddons).includes(addon)) {
-        //         // built in addon
-        //         registerAddon(builtInAddons[addon]);
-        //     }
-        // });
+        addons.forEach((addon) => {
+            registerAddon(addon);
+        });
     }, [addons, registerAddon]);
 
     const generateId = useCallback(() => {
@@ -76,6 +83,10 @@ export const Manager = ({
         return memoizedRegistry
             .filter((addon) => addon.panel)
             .sort((a, b) => (a.order > b.order ? 1 : -1));
+    }, [memoizedRegistry]);
+
+    const themeWildcard = useMemo(() => {
+        return memoizedRegistry.find((addon) => addon.wildcard && addon.id === "theme-addon");
     }, [memoizedRegistry]);
 
     const toolbars = useMemo(() => {
@@ -104,11 +115,25 @@ export const Manager = ({
             register: registerAddon,
             generateId,
             panels,
+            themeWildcard,
             toolbars,
             frameRef,
             setFrameRef,
+            ready,
+            updateReady,
         }),
-        [memoizedRegistry, registerAddon, generateId, panels, toolbars, frameRef, setFrameRef],
+        [
+            memoizedRegistry,
+            registerAddon,
+            generateId,
+            panels,
+            toolbars,
+            frameRef,
+            setFrameRef,
+            ready,
+            updateReady,
+            themeWildcard,
+        ],
     );
 
     return <ManagerContext.Provider value={memo}>{mappedChildren}</ManagerContext.Provider>;

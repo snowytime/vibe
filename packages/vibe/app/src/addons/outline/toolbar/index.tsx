@@ -22,13 +22,12 @@ export const OutlineAddon = ({ onClick, enabled }: { onClick: () => void; enable
     </div>
 );
 
-export const Toolbar = ({ msg }: { msg?: string }) => {
+export const Toolbar = () => {
     const { enabled, toggleEnabled } = useOutlineAddon();
 
     return (
         <div className={styles.slot}>
             <OutlineAddon enabled={enabled} onClick={toggleEnabled} />
-            {msg}
         </div>
     );
 };

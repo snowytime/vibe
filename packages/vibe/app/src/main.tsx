@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { stories, storyTree, storyUrls, config, Entry } from "virtual:vibe";
+import { stories, storyTree, storyUrls, config, Entry, addons } from "virtual:vibe";
 
 import { Vibe } from "./interface/index.js";
 
@@ -11,6 +11,7 @@ import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./internals/settings";
 import { ResizeContext, VibeControls } from "./controls/index.js";
 import { Manager } from "./internals/manager/index.js";
+import { HOC } from "./hoc.js";
 
 const Wait = () => {
     return (
@@ -31,9 +32,6 @@ const Wait = () => {
 };
 
 const Main = () => {
-    React.useEffect(() => {
-        console.log(config);
-    }, []);
     return (
         <>
             <BrowserRouter>
@@ -65,7 +63,7 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Manager addons={config.addons}>
+                                            <Manager addons={addons}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <ResizeContext>
                                                         <VibeControls>
@@ -87,9 +85,11 @@ const Main = () => {
                                                                             storyUrls={storyUrls}
                                                                             config={config}
                                                                         >
-                                                                            {React.createElement(
-                                                                                story.component,
-                                                                            )}
+                                                                            <HOC>
+                                                                                {React.createElement(
+                                                                                    story.component,
+                                                                                )}
+                                                                            </HOC>
                                                                         </Entry>
                                                                     </React.Suspense>
                                                                 </Story>

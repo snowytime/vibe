@@ -7,6 +7,7 @@ import { entryModule } from "./entry.js";
 import { mainModule } from "./main.js";
 import { urlModule } from "./urls.js";
 import { treeModule } from "./tree.js";
+import { addonsModule } from "./addons.js";
 
 export const assembleModules = async (config: Config) => {
     const stories = await findStories(config);
@@ -18,6 +19,7 @@ export const assembleModules = async (config: Config) => {
     const mainModuleReturn = mainModule(storyData);
     const urlModuleReturn = urlModule(storyData);
     const treeModuleReturn = treeModule(storyData);
+    const addonsModuleReturn = await addonsModule();
     // assemble
     let str = "";
     // order matters here !!!
@@ -28,6 +30,7 @@ export const assembleModules = async (config: Config) => {
         storyModuleReturn,
         treeModuleReturn,
         urlModuleReturn,
+        addonsModuleReturn,
     ];
     modules.forEach((module) => {
         str += `${module}\n`;

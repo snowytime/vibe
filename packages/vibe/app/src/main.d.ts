@@ -7,5 +7,6 @@ declare module "virtual:vibe" {
     const Entry: React.ElementType;
     const Context: React.Context<VibeContext>;
     const storyUrls: string[];
-    export { stories, storyTree, storyUrls, config, Entry, Context };
+    const addons: any[];
+    export { stories, storyTree, storyUrls, config, Entry, Context, addons };
 }
