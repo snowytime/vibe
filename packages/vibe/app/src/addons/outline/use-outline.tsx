@@ -16,7 +16,7 @@ type OutlineContext = OutlineState & OutlineMethods;
 const Context = createContext<OutlineContext>(null);
 
 export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
-    const { frameRef, ready } = useRegistry();
+    const { frameRef, ready, pathname } = useRegistry();
     const {
         state: outlineState,
         update: updateOutlineState,
@@ -28,51 +28,37 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
         },
     });
 
-    // we need to log when the frame dom is ready
-
-    // useEffect(() => {
-    //     if (!frameRef.contentDocument) return;
-    //     console.log(frameRef.contentDocument.body);
-    // }, [frameRef]);
-
-    const onEnableEffect = useCallback((document: Document) => {
-        const root = document.body.children[0].children[0];
+    const onEnableEffect = useCallback(() => {
+        const root = frameRef.contentDocument.getElementsByClassName(
+            "frame-content",
+        )[0] as HTMLElement;
+        root.style.padding = "1px";
         const apply = (element: Element) => {
             const { children } = element;
             for (let i = 0; i < children.length; i++) {
-                const child = children[i];
-                console.log(child);
+                const child = children[i] as HTMLElement;
                 child.style.outline = "1px solid red";
                 apply(child);
             }
         };
         apply(root);
-    }, []);
+    }, [frameRef]);
 
-    const onDisableEffect = useCallback((document: Document) => {
-        const apply = (element: HTMLElement) => {
-            const children = element.children;
-
+    const onDisableEffect = useCallback(() => {
+        const root = frameRef.contentDocument.getElementsByClassName(
+            "frame-content",
+        )[0] as HTMLElement;
+        root.style.padding = "0";
+        const apply = (element: Element) => {
+            const { children } = element;
             for (let i = 0; i < children.length; i++) {
-                const child = children[i];
+                const child = children[i] as HTMLElement;
                 child.style.outline = "0";
                 apply(child);
             }
         };
-        apply(document.body);
-    }, []);
-
-    // useEffect(() => {
-    //     if (!ready) return;
-    //     const document = frameRef.contentDocument;
-    //     if (outlineState.enabled) {
-    //         document.body.style.padding = "1px";
-    //         onEnableEffect(document);
-    //     } else if (!outlineState.enabled) {
-    //         document.body.style.padding = "0px";
-    //         onDisableEffect(document);
-    //     }
-    // }, [frameRef.contentDocument, onDisableEffect, onEnableEffect, outlineState.enabled, ready]);
+        apply(root);
+    }, [frameRef]);
 
     const toggleEnabled = useCallback(() => {
         const newState = !outlineState.enabled;
@@ -86,22 +72,12 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         if (!ready) return;
-        const document = frameRef.contentDocument;
         if (outlineState.enabled) {
-            document.body.style.padding = "1px";
-            onEnableEffect(document);
+            onEnableEffect();
         } else if (!outlineState.enabled) {
-            document.body.style.padding = "0px";
-            onDisableEffect(document);
+            onDisableEffect();
         }
-    }, [
-        frameRef.contentDocument,
-        frameRef.contentDocument.body,
-        onDisableEffect,
-        onEnableEffect,
-        outlineState.enabled,
-        ready,
-    ]);
+    }, [onDisableEffect, onEnableEffect, outlineState.enabled, ready, pathname]);
 
     const memo = useMemo(
         () => ({

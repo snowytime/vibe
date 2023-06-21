@@ -11,6 +11,7 @@ export const SynchronizeHead = ({
     children: React.ReactNode;
 }) => {
     const { window: storyWindow } = useFrame();
+
     // theme sync
     const syncTheme = React.useCallback(() => {
         if (!storyWindow) return;

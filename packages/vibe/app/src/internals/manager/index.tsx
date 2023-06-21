@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useDomRef } from "@snowytime/react-magic/hooks";
+import { useLocation } from "react-router-dom";
 
 import { useObjectiveMemo } from "../../controls";
 
@@ -18,6 +19,7 @@ type Props = {
     registry: AddonConfig[];
     register: (data: AddonConfig) => void;
     generateId: () => string;
+    pathname: string;
     panels: AddonConfig[];
     toolbars: AddonConfig[];
     themeWildcard: AddonConfig | undefined;
@@ -38,6 +40,11 @@ export const Manager = ({
 }) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
     const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        setReady(false);
+    }, [pathname]);
 
     const [ready, setReady] = useState(false);
 
@@ -121,6 +128,7 @@ export const Manager = ({
             setFrameRef,
             ready,
             updateReady,
+            pathname,
         }),
         [
             memoizedRegistry,
@@ -133,6 +141,7 @@ export const Manager = ({
             ready,
             updateReady,
             themeWildcard,
+            pathname,
         ],
     );
 
