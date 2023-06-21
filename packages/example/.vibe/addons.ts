@@ -1,8 +1,9 @@
-import { outline, theme } from "@snowytime/vibe/client";
+import { outline, theme, controls } from "@snowytime/vibe/client";
 
 export default [
     outline(),
     theme({ directive: "class" }),
+    controls(),
     // resize({
     //     devices: [
     //         {

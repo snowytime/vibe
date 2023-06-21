@@ -12,12 +12,12 @@ export const Argument = ({ children, args, data }) => {
         }));
 
         if (obj.length === 0) {
-            resetControls();
+            resetControls?.();
             return;
         }
 
         for (const entry of obj) {
-            initializeControl(entry);
+            initializeControl?.(entry);
         }
 
         // const defaultArguments = Object.entries(obj).map(([name, value]) => ({ name, ...value }));
@@ -27,6 +27,9 @@ export const Argument = ({ children, args, data }) => {
     // 1. dispatch a call to the addons.controls to add the contents of the args to the vibe state
     const serializeControls = useMemo(() => {
         if (!args) return {};
+        if (!controls) {
+            return {};
+        }
         const obj = Object.entries(controls).map(([name, value]) => ({
             [name]: value.value,
         }));
