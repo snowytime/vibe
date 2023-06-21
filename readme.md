@@ -1,32 +1,8 @@
-<style>
-.badge {
-    padding: 0 8px;
-    border: 2px solid currentColor;
-    border-radius: 200px;
-    font-size: 12px;
-    align-self: flex-start;
-    position: absolute;
-    left: 100%;
-    white-space: nowrap;
-}
-.container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-    position: relative;
-}
-.title {
-    font-size: clamp(30px, 40px, 40px);
-    font-weight: 900;
-}
-</style>
-
 <section style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
     <img src="./vibe.svg" style="width: 60px;">
-    <div class="container">
-        <div class="title">Vibe</div>
-    <div class="badge">alpha</div>
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 6px; position: relative;">
+        <div style="font-size: clamp(30px, 40px, 40px); font-weight: 900;">Vibe</div>
+        <div style="padding: 0 8px; border: 2px solid currentColor; border-radius: 200px; font-size: 12px; align-self: flex-start; position: absolute; left: 100%; white-space: nowrap;">alpha</div>
     </div>
 </section>
 
