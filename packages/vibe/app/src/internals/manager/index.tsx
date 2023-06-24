@@ -1,8 +1,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useDomRef } from "@snowytime/react-magic/hooks";
+import { render, useDomRef } from "@snowytime/react-magic/hooks";
 import { useLocation } from "react-router-dom";
 
 import { useObjectiveMemo } from "../../controls";
+import { Config, Story } from "../../types";
 
 interface AddonConfig {
     name: string;
@@ -12,11 +13,14 @@ interface AddonConfig {
     panelHeader?: React.ReactNode;
     toolbar?: React.ReactNode;
     wildcard?: React.ReactNode;
+    story?: (data: any) => React.ReactNode;
     context?: (data: { children: React.ReactNode }) => React.ReactNode;
 }
 
 type Props = {
     registry: AddonConfig[];
+    config: Config;
+    story: Story;
     register: (data: AddonConfig) => void;
     generateId: () => string;
     pathname: string;
@@ -27,6 +31,8 @@ type Props = {
     setFrameRef: React.Dispatch<HTMLIFrameElement>;
     ready: boolean;
     updateReady: (state: boolean) => void;
+    mappedStoryWrappers: (component: React.ReactNode, args: any) => React.ReactNode;
+    registerStory: (story: Story) => void;
 };
 
 export const ManagerContext = createContext<Props>(null);
@@ -34,13 +40,24 @@ export const ManagerContext = createContext<Props>(null);
 export const Manager = ({
     children,
     addons,
+    config,
 }: {
     children: React.ReactNode;
     addons: Record<string, any>;
+    config: Config;
 }) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
     const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
     const { pathname } = useLocation();
+    const [_story, setStory] = useState(null);
+    const story = useObjectiveMemo<Story | null>(_story);
+
+    const registerStory = useCallback(
+        (story: Story) => {
+            setStory(story);
+        },
+        [setStory],
+    );
 
     useEffect(() => {
         setReady(false);
@@ -96,6 +113,23 @@ export const Manager = ({
         return memoizedRegistry.find((addon) => addon.wildcard && addon.id === "theme-addon");
     }, [memoizedRegistry]);
 
+    const mappedStoryWrappers = useCallback(
+        (component: React.ReactNode, args: any) => {
+            const storyWrappers = memoizedRegistry
+                .filter((addon) => addon.story)
+                .map((addon) => addon.story);
+
+            const renderedComponent = component;
+
+            if (!storyWrappers.length) return renderedComponent;
+
+            return storyWrappers.reduceRight((component, ctx) => {
+                return ctx({ Component: component, ...args });
+            }, renderedComponent);
+        },
+        [memoizedRegistry],
+    );
+
     const toolbars = useMemo(() => {
         return memoizedRegistry
             .filter((addon) => addon.toolbar)
@@ -123,15 +157,20 @@ export const Manager = ({
             generateId,
             panels,
             themeWildcard,
+            mappedStoryWrappers,
             toolbars,
             frameRef,
             setFrameRef,
             ready,
             updateReady,
             pathname,
+            config,
+            story,
+            registerStory,
         }),
         [
             memoizedRegistry,
+            mappedStoryWrappers,
             registerAddon,
             generateId,
             panels,
@@ -139,9 +178,12 @@ export const Manager = ({
             frameRef,
             setFrameRef,
             ready,
+            config,
+            story,
             updateReady,
             themeWildcard,
             pathname,
+            registerStory,
         ],
     );
 

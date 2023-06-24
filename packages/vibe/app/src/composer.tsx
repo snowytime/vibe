@@ -1,5 +1,5 @@
 import React from "react";
-import { Argument } from "./args";
+import { useRegistry } from "./internals/manager";
 
 export const composer = (module: any, storyName: string, data: any) => {
     // some initial things
@@ -8,19 +8,12 @@ export const composer = (module: any, storyName: string, data: any) => {
     const vibe = module[storyName].story ?? {};
     const defaultDecorator = defaultExport.decorator || (({ Component }) => <Component />);
     const storyDecorator = vibe.decorator || (({ Component }) => <Component />);
+
+    const genericDecorator = (Component) => <Component />;
     // bring them together
     const args = { ...defaultExport, ...vibe, ...data };
-    return () =>
-        defaultDecorator({
-            Component: () =>
-                storyDecorator({
-                    Component: () => (
-                        <Argument args={vibe.arguments || {}} data={args}>
-                            {component}
-                        </Argument>
-                    ),
-                    ...args,
-                }),
-            ...args,
-        });
+    return () => {
+        const { mappedStoryWrappers } = useRegistry();
+        return mappedStoryWrappers(component, args);
+    };
 };

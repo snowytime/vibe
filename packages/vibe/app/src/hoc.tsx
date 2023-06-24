@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRegistry } from "./internals/manager";
 
 export const HOC = ({ children }: { children: React.ReactNode }) => {

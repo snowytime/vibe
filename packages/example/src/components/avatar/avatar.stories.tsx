@@ -10,4 +10,5 @@ export const Base = () => {
 };
 Base.story = {
     name: "Base",
+    decorator: ({ Component }) => <Component />,
 };

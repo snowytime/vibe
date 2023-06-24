@@ -63,7 +63,7 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Manager addons={addons}>
+                                            <Manager addons={addons} config={config}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <ResizeContext>
                                                         <VibeControls>

@@ -17,6 +17,12 @@ const Context = createContext<OutlineContext>(null);
 
 export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
     const { frameRef, ready, pathname } = useRegistry();
+
+    // instead of having to manually create and manage a store, we could
+    // rather have a method in the manager that handles that. That way we do
+    // not need to wrap everything in multiple contexts, and just access the state
+    // directly from the manger.
+
     const {
         state: outlineState,
         update: updateOutlineState,
