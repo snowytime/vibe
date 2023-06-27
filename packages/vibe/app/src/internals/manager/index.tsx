@@ -14,6 +14,7 @@ interface AddonConfig {
     toolbar?: React.ReactNode;
     wildcard?: React.ReactNode;
     story?: (data: any) => React.ReactNode;
+    window?: (data: any) => React.ReactNode;
     context?: (data: { children: React.ReactNode }) => React.ReactNode;
 }
 
@@ -32,6 +33,7 @@ type Props = {
     ready: boolean;
     updateReady: (state: boolean) => void;
     mappedStoryWrappers: (component: React.ReactNode, args: any) => React.ReactNode;
+    mappedWindow: (children: React.ReactNode) => React.ReactNode;
     registerStory: (story: Story) => void;
 };
 
@@ -150,6 +152,20 @@ export const Manager = ({
         }, renderedComponent);
     }, [children, memoizedRegistry]);
 
+    const mappedWindow = useCallback((children: React.ReactNode) => {
+        const windows = memoizedRegistry
+            .filter((addon) => addon.window)
+            .map((addon) => addon.window);
+
+        const renderedComponent = children;
+
+        if (!windows.length) return renderedComponent;
+
+        return windows.reduceRight((component, ctx) => {
+            return ctx({ children: component });
+        }, renderedComponent);
+    }, [memoizedRegistry]);
+
     const memo = useMemo(
         () => ({
             registry: memoizedRegistry,
@@ -158,6 +174,7 @@ export const Manager = ({
             panels,
             themeWildcard,
             mappedStoryWrappers,
+            mappedWindow,
             toolbars,
             frameRef,
             setFrameRef,
@@ -177,6 +194,7 @@ export const Manager = ({
             toolbars,
             frameRef,
             setFrameRef,
+            mappedWindow,
             ready,
             config,
             story,

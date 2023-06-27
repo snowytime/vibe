@@ -1,0 +1,54 @@
+.window {
+    align-items: center;
+    background: radial-gradient(circle 1px, hsl(var(--accent-200)) 1px, transparent 1px),
+        radial-gradient(circle 1px, hsl(var(--background)) 1px, transparent 1px);
+    background-size: 16px 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    &[data-resize-enabled="true"] {
+        padding: 30px;
+    }
+}
+
+.canvas {
+    background: hsl(var(--background));
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.dragger {
+    border-radius: 200px;
+    cursor: pointer;
+    overflow: hidden;
+    position: absolute;
+
+    &[data-direction="right"] {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+
+        &:hover {
+            background: hsl(var(--accent-100));
+        }
+
+        > div {
+            background: hsl(var(--accent-500));
+            border-radius: 100px;
+            height: 50px;
+            width: 4px;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.addon {
+    --fill: hsl(var(--accent-500));
+
+    &[data-enabled="true"] {
+        --fill: hsl(var(--sky-500));
+    }
+
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    transition: background-color 100ms ease-in-out;
+    width: 30px;
+
+    &:hover {
+        background-color: hsl(var(--accent-100));
+    }
+
+    > svg {
+        overflow: visible;
+    }
+}
+
+.slot {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}

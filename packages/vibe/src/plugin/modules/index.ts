@@ -11,7 +11,7 @@ import { addonsModule } from "./addons.js";
 
 export const assembleModules = async (config: Config) => {
     const stories = await findStories(config);
-    const storyData = await exportResolve(stories);
+    const storyData = await exportResolve(stories.sort());
     // modules
     const configModuleReturn = configModule(config);
     const storyModuleReturn = storyModule(storyData);

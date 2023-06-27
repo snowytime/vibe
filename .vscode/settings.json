@@ -1,0 +1,28 @@
+{
+    "stylelint.enable": true,
+    "css.validate": false,
+    "scss.validate": false,
+    "stylelint.validate": ["css", "scss"],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[scss]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint",
+        "editor.formatOnSave": false
+    },
+    "[javascript, typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true,
+    "prettier.useTabs": true,
+    "prettier.proseWrap": "never",
+    "prettier.printWidth": 300,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.stylelint": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "code-runner.executorMap": {
+        "typescript": "source ~/.zshrc && ts-node $fullFileName",
+        "javascript": "source ~/.zshrc && node $fullFileName"
+    }
+}

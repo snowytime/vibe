@@ -10,6 +10,18 @@
 
 .window {
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.window_resize {
+    align-items: center;
     background: radial-gradient(circle 1px, hsl(var(--accent-200)) 1px, transparent 1px),
         radial-gradient(circle 1px, hsl(var(--background)) 1px, transparent 1px);
     background-size: 16px 16px;
