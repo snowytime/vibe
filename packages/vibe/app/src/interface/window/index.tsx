@@ -25,8 +25,6 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
     const { sidebarOpen, toggleSidebar, selectedPanel, updateSelectedPanel } = useSettings();
     const { toolbars, mappedWindow } = useRegistry();
 
-    const resizeAddon = useResizeAddon();
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.tabs}>
