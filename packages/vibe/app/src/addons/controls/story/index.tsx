@@ -5,17 +5,15 @@ export const StoryWrapped = ({ Story, args, ...rest }) => {
     const { initializeControl, controls, resetControls } = useControls();
     useEffect(() => {
         // reset the state
-        if (!args) return;
+        if (!args) {
+            resetControls();
+            return;
+        }
         const obj = Object.entries(args).map(([name, value]) => ({
             name,
             original: value.value,
             ...value,
         }));
-
-        if (obj.length === 0) {
-            resetControls?.();
-            return;
-        }
 
         for (const entry of obj) {
             initializeControl?.(entry);

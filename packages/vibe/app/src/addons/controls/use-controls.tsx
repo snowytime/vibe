@@ -62,7 +62,7 @@ export const Context = ({ children }: { children: React.ReactNode }) => {
 
     const [controls, setControls] = useState({});
     const enabled = useMemo(() => Object.keys(controls).length > 0, [controls]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(enabled);
 
     const resetControls = useCallback(() => {
         clearState();
