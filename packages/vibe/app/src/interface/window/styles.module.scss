@@ -164,3 +164,13 @@
         }
     }
 }
+
+.window_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &[data-hidden="true"] {
+        display: none;
+    }
+}
