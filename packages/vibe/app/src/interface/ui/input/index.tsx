@@ -12,14 +12,15 @@ export enum InputSize {
 type Props = Omit<React.ComponentProps<"input">, "size"> & {
     label?: string;
     size?: InputSize;
-    suffix?: string;
+    prefix?: string | Element;
+    suffix?: string | Element;
     width?: string;
     orientation?: string;
     onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
 export const Input = forwardRef<HTMLInputElement, Props>(
-    ({ label, size, suffix, width, orientation, onBlur = () => {}, ...rest }, ref) => {
+    ({ label, size, suffix, width, orientation, onBlur = () => {}, prefix, ...rest }, ref) => {
         const id = useId();
         const [focus, setFocus] = useState(false);
 
@@ -40,6 +41,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
                     data-focused={focus}
                     className={styles.innerContainer}
                 >
+                    {prefix ? <div className={styles.prefix}>{prefix}</div> : null}
                     <input
                         ref={ref}
                         id={id}

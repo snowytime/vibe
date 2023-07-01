@@ -77,42 +77,46 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
     const [windowRef, setWindowRef] = useState<HTMLDivElement>(null);
     const [canvasRef, setCanvasRef] = useState<HTMLDivElement>(null);
 
-    const initExtremes = useCallback(() => {
-        if (resizeState.enabled && canvasRef && windowRef && !resizeState.maxHeight) {
-            const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
-            const { height, width } = canvasRef.getBoundingClientRect();
-            if (!maxHeight || !maxWidth) return;
+    const initExtremes = useCallback(
+        (bypass?: boolean) => {
+            if (resizeState.enabled && canvasRef && windowRef) {
+                if (!bypass && !resizeState.maxHeight) return;
+                const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
+                const { height, width } = canvasRef.getBoundingClientRect();
+                if (!maxHeight || !maxWidth) return;
 
-            const currentHeight = resizeState.height || height;
-            const currentWidth = resizeState.width || width;
+                const currentHeight = resizeState.height || height;
+                const currentWidth = resizeState.width || width;
 
-            const adjustedMaxHeight = maxHeight - 2 * 30;
-            const adjustedMaxWidth = maxWidth - 2 * 30;
+                const adjustedMaxHeight = maxHeight - 2 * 30;
+                const adjustedMaxWidth = maxWidth - 2 * 30;
 
-            updateResizeState({
-                height: currentHeight
-                    ? currentHeight > adjustedMaxHeight
-                        ? adjustedMaxHeight
-                        : currentHeight
-                    : adjustedMaxHeight,
-                width: currentWidth
-                    ? currentWidth > adjustedMaxWidth
-                        ? adjustedMaxWidth
-                        : currentWidth
-                    : adjustedMaxWidth,
-                maxWidth: adjustedMaxWidth,
-                maxHeight: adjustedMaxHeight,
-            });
-        }
-    }, [
-        canvasRef,
-        resizeState.enabled,
-        resizeState.height,
-        resizeState.maxHeight,
-        resizeState.width,
-        updateResizeState,
-        windowRef,
-    ]);
+                updateResizeState({
+                    height: currentHeight
+                        ? currentHeight > adjustedMaxHeight
+                            ? adjustedMaxHeight
+                            : currentHeight
+                        : adjustedMaxHeight,
+                    width: currentWidth
+                        ? currentWidth > adjustedMaxWidth
+                            ? adjustedMaxWidth
+                            : currentWidth
+                        : adjustedMaxWidth,
+                    maxWidth: adjustedMaxWidth,
+                    maxHeight: adjustedMaxHeight,
+                });
+            }
+        },
+        [
+            canvasRef,
+            resizeState.enabled,
+            resizeState.height,
+            resizeState.maxHeight,
+            resizeState.width,
+            updateResizeState,
+            windowRef,
+        ],
+    );
 
     useEffect(() => {
         initExtremes();
@@ -122,11 +126,12 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         (height: number) => {
             if (height > resizeState.maxHeight) {
                 updateResizeState({ height: resizeState.maxHeight });
+                initExtremes(true);
             } else {
                 updateResizeState({ height });
             }
         },
-        [updateResizeState, resizeState.maxHeight],
+        [resizeState.maxHeight, updateResizeState, initExtremes],
     );
 
     const updateWidth = useCallback(

@@ -73,4 +73,10 @@
 
 .suffix {
     color: hsl(var(--accent-400));
+    flex-shrink: 0;
+}
+
+.prefix {
+    color: hsl(var(--accent-400));
+    flex-shrink: 0;
 }
