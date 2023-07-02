@@ -1,15 +1,5 @@
-import React, {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useLayoutEffect,
-    useMemo,
-    useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useLayoutEffect, useMemo } from "react";
 import { useStore } from "../../internals/hooks/use-store";
-import { useRegistry } from "../../internals/manager";
-import { useObjectiveMemo } from "../../internals/hooks";
 
 export enum Theme {
     Light = "light",

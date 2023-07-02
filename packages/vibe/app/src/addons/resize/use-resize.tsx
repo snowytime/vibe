@@ -120,7 +120,7 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         initExtremes();
-    }, [initExtremes, resizeState.enabled]);
+    }, [resizeState.enabled]);
 
     const updateHeight = useCallback(
         (height: number) => {
