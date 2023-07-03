@@ -14,6 +14,7 @@ export type Config = {
     previewPort: number | number[];
     outDir: string;
     stories: string | string[];
+    docs: string | string[];
     defaultStory: string | null;
     entry: string; // if the entry file has any other name than [Ee]ntry.[jt]s[x]
     expose: boolean; // if vibe should expose the preview server to the internet

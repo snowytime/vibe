@@ -34,6 +34,7 @@
         }
     },
     "dependencies": {
+        "@mdx-js/rollup": "^2.3.0",
         "@snowytime/css": "^0.0.45",
         "@snowytime/react-magic": "^0.0.14",
         "@swc/cli": "^0.1.62",

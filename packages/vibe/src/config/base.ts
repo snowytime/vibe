@@ -5,6 +5,7 @@ export const baseConfig: Config = {
     previewPort: [3001, 3002, 3003, 3004, 3005, 3006],
     defaultStory: null,
     stories: "**/*.stories.{ts,tsx,js,jsx,mjs}",
+    docs: "**/*.{doc,docs}.mdx",
     outDir: "vibe-build",
     entry: "[Ee]ntry.{js,ts,tsx,jsx}",
     expose: true,

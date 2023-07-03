@@ -17,5 +17,8 @@
     "license": "ISC",
     "devDependencies": {
         "@snowytime/standards": "^2.0.0"
+    },
+    "volta": {
+        "node": "20.3.0"
     }
 }

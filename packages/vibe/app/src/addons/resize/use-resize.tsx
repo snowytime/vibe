@@ -79,10 +79,11 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
     const initExtremes = useCallback(
         (bypass?: boolean) => {
-            if (resizeState.enabled && canvasRef && windowRef) {
+            if (canvasRef && windowRef) {
                 if (!bypass && !resizeState.maxHeight) return;
                 const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
                 const { height, width } = canvasRef.getBoundingClientRect();
+
                 if (!maxHeight || !maxWidth) return;
 
                 const currentHeight = resizeState.height || height;
@@ -90,6 +91,8 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
 
                 const adjustedMaxHeight = maxHeight - 2 * 30;
                 const adjustedMaxWidth = maxWidth - 2 * 30;
+
+                console.log({ currentHeight, currentWidth });
 
                 updateResizeState({
                     height: currentHeight
@@ -109,7 +112,6 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         },
         [
             canvasRef,
-            resizeState.enabled,
             resizeState.height,
             resizeState.maxHeight,
             resizeState.width,
@@ -118,20 +120,15 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         ],
     );
 
-    useEffect(() => {
-        initExtremes();
-    }, [resizeState.enabled]);
-
     const updateHeight = useCallback(
         (height: number) => {
             if (height > resizeState.maxHeight) {
                 updateResizeState({ height: resizeState.maxHeight });
-                initExtremes(true);
             } else {
                 updateResizeState({ height });
             }
         },
-        [resizeState.maxHeight, updateResizeState, initExtremes],
+        [resizeState.maxHeight, updateResizeState],
     );
 
     const updateWidth = useCallback(
@@ -149,11 +146,12 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
         const newState = !resizeState.enabled;
         if (newState) {
             updateResizeState({ enabled: newState });
+            initExtremes(true);
         } else {
             clearState();
             updateResizeState({ enabled: newState, cache: false, clear: true });
         }
-    }, [resizeState.enabled, updateResizeState, clearState]);
+    }, [resizeState.enabled, updateResizeState, initExtremes, clearState]);
 
     const registerWindowRef = useCallback((ref: HTMLDivElement) => {
         setWindowRef(ref);
