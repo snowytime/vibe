@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFrame } from "react-frame-component";
 
 const globalRegistry = ["/vibe/app/src"];
@@ -77,5 +77,11 @@ export const SynchronizeHead = ({
             headObserver.disconnect();
         };
     }, [active, syncHead, syncTheme]);
+
+    useEffect(() => {
+        syncHead();
+        syncTheme();
+    }, [syncHead, syncTheme]);
+
     return <>{children}</>;
 };

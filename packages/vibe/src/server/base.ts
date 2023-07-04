@@ -1,5 +1,6 @@
 import tsconfigPaths from "vite-tsconfig-paths";
 import reactPlugin from "@vitejs/plugin-react";
+import mdx from "@mdx-js/rollup";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Config } from "#types/index.js";
@@ -62,9 +63,8 @@ export async function getBase(settings: Settings, config: Config) {
             tsconfigPaths({
                 root: process.cwd(),
             }),
+            { enforce: "pre" as any, ...mdx(/* jsxImportSource: …, otherOptions… */) },
             vibePlugin(config),
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             reactPlugin(),
         ],
     };

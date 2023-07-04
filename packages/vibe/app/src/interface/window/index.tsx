@@ -50,7 +50,7 @@ export const Window = ({ children }: { children: React.ReactNode }) => {
                 className={styles.window_wrapper}
                 data-hidden={selectedPanel !== "docs" || !selectedPanel}
             >
-                <>Docs</>
+                {children}
             </div>
             {/* main window */}
             <div className={styles.window_wrapper} data-hidden={selectedPanel !== "sandbox"}>

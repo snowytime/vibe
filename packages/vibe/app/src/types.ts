@@ -2,6 +2,7 @@ import React from "react";
 
 export type Story = {
     component: React.ElementType; // the name of the component
+    doc: string | null;
     url: string; // the url to the story in the ui
     filePath: string; // where the actual source of the file is
     componentName: string; // name of the component in the story file

@@ -9,7 +9,6 @@ import { NoStory } from "./interface/components/frame/no-story/index.js";
 import { Loader } from "./interface/ui/loader";
 import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./internals/settings";
-import { ResizeContext, VibeControls } from "./controls/index.js";
 import { Manager } from "./internals/manager/index.js";
 import { HOC } from "./hoc.js";
 
@@ -65,37 +64,29 @@ const Main = () => {
                                         element={
                                             <Manager addons={addons} config={config}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
-                                                    <ResizeContext>
-                                                        <VibeControls>
-                                                            <Vibe>
-                                                                <Story
-                                                                    framed={
-                                                                        !!story &&
-                                                                        config.mode ===
-                                                                            "development"
-                                                                    }
+                                                    <Vibe>
+                                                        <Story
+                                                            framed={
+                                                                !!story &&
+                                                                config.mode === "development"
+                                                            }
+                                                        >
+                                                            <React.Suspense fallback={<Wait />}>
+                                                                <Entry
+                                                                    story={story}
+                                                                    stories={stories}
+                                                                    storyTree={storyTree}
+                                                                    storyUrls={storyUrls}
+                                                                    config={config}
                                                                 >
-                                                                    <React.Suspense
-                                                                        fallback={<Wait />}
-                                                                    >
-                                                                        <Entry
-                                                                            story={story}
-                                                                            stories={stories}
-                                                                            storyTree={storyTree}
-                                                                            storyUrls={storyUrls}
-                                                                            config={config}
-                                                                        >
-                                                                            <HOC>
-                                                                                {React.createElement(
-                                                                                    story.component,
-                                                                                )}
-                                                                            </HOC>
-                                                                        </Entry>
-                                                                    </React.Suspense>
-                                                                </Story>
-                                                            </Vibe>
-                                                        </VibeControls>
-                                                    </ResizeContext>
+                                                                    <HOC
+                                                                        story={story.component}
+                                                                        doc={story.doc}
+                                                                    />
+                                                                </Entry>
+                                                            </React.Suspense>
+                                                        </Story>
+                                                    </Vibe>
                                                 </VibeSettings>
                                             </Manager>
                                         }
