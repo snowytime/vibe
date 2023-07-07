@@ -21,7 +21,7 @@ import {
 } from "../../../interface/ui";
 
 export const Panel = () => {
-    const { controls, loading } = useControls();
+    const { controls, loading, enabled } = useControls();
     const mappedControls = useMemo(() => {
         const controlValues = Object.values(controls);
         if (!controlValues.length) return null;

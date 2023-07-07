@@ -2,7 +2,7 @@
     background: blue;
     border: 0;
     border-radius: 200px;
-    color: purple;
+    color: white;
     outline: 0;
     padding: 4px 8px;
 
@@ -11,7 +11,7 @@
     }
 
     &[data-variant="second"] {
-        background: green;
+        background: purple;
     }
 
     &[data-variant="third"] {

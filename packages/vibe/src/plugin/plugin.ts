@@ -48,6 +48,7 @@ export default function vibePlugin(config: Config) {
                             }
                         });
                     }
+                    // disable all stylesheets that are not applicable to the ui
                 }
                 return updatedHtml;
             },

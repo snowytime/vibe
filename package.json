@@ -11,7 +11,9 @@
         "vibe:build": "cd packages/vibe && npm run build",
         "example:install": "npm i -w packages/example",
         "example:dev": "cd packages/example && npm run dev",
-        "example:vibe:dev": "cd packages/example && vibe dev"
+        "example:vibe:dev": "cd packages/example && vibe dev",
+        "example:vibe:build": "cd packages/example && vibe build",
+        "example:vibe:preview": "cd packages/example && vibe preview"
     },
     "author": "",
     "license": "ISC",

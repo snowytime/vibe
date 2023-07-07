@@ -11,8 +11,78 @@
         <title>Vibe</title>
     </head>
 
+    <script defer>
+        const headObserver = new MutationObserver(() => {
+            [...document.head.children].forEach((child) => {
+                if (
+                    child.tagName === "STYLE" ||
+                    (child.tagName === "LINK" &&
+                        (child.getAttribute("type") === "text/css" ||
+                            child.getAttribute("rel") === "stylesheet"))
+                ) {
+                    // stylesheet
+                    const href = child.getAttribute("href");
+                    const devId = child.getAttribute("data-vite-dev-id");
+
+                    // get content
+                    const content = child.textContent;
+                    const firstLine = content.split("\n")[0];
+
+                    const vibeOnly = (line) =>
+                        line.includes('"vibe"') || line.includes('"universal"');
+
+                    // we loop over all the
+                    if (vibeOnly(firstLine)) {
+                        // this is a Vibe ui stylesheet, and should not be applied to the story
+                        return;
+                    }
+                    child.disabled = true;
+                }
+            });
+        });
+        headObserver.observe(document.head, {
+            subtree: true,
+            characterData: true,
+            childList: true,
+        });
+    </script>
+
     <body>
         <div id="_vibe"></div>
         <script type="module" src="/src/root.tsx"></script>
     </body>
 </html>
+
+<!--
+const headObserver = new MutationObserver(() => {
+                // handler
+                [...(document.head.children as any)].forEach((child) => {
+            if (
+                child.tagName === "STYLE" ||
+                (child.tagName === "LINK" &&
+                    (child.getAttribute("type") === "text/css" ||
+                        child.getAttribute("rel") === "stylesheet"))
+            ) {
+                // remove it from the vibe main styles if it does not pertain to globals
+                const href = child.getAttribute("href");
+                const devId = child.getAttribute("data-vite-dev-id");
+                const storyId = child.getAttribute("data-story");
+
+                // we loop over all the
+                if (
+                    (href && globalRegistry.some((str) => href.includes(str))) ||
+                    (devId && globalRegistry.some((str) => devId.includes(str)))
+                ) {
+                    // Leave this stylesheet in the main document head
+                    return;
+                }
+                child.disabled = true;
+            }
+        });
+            });
+            headObserver.observe(document.head, {
+                subtree: true,
+                characterData: true,
+                childList: true,
+            });
+ -->

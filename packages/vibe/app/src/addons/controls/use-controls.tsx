@@ -51,6 +51,7 @@ type ControlContext = {
     updateControl: <T>(name: string, value: T) => void;
     initializeControl: (data: Partial<Control>) => void;
     resetControls: () => void;
+    updateLoading: (val: boolean) => void;
     loading: boolean;
     enabled: boolean;
 };
@@ -62,11 +63,14 @@ export const Context = ({ children }: { children: React.ReactNode }) => {
 
     const [controls, setControls] = useState({});
     const enabled = useMemo(() => Object.keys(controls).length > 0, [controls]);
-    const [loading, setLoading] = useState(enabled);
+    const [loading, setLoading] = useState(true);
+
+    const updateLoading = useCallback((val: boolean) => {
+        setLoading(val);
+    }, []);
 
     const resetControls = useCallback(() => {
         clearState();
-        setLoading(false);
         update({ clear: true });
         setControls({});
     }, [clearState, update]);
@@ -88,8 +92,6 @@ export const Context = ({ children }: { children: React.ReactNode }) => {
                 };
                 return newState;
             });
-
-            setLoading(false);
         },
         [state, update],
     );
@@ -120,8 +122,17 @@ export const Context = ({ children }: { children: React.ReactNode }) => {
             resetControls,
             initializeControl,
             updateControl,
+            updateLoading,
         }),
-        [controls, enabled, initializeControl, loading, resetControls, updateControl],
+        [
+            controls,
+            enabled,
+            initializeControl,
+            loading,
+            resetControls,
+            updateControl,
+            updateLoading,
+        ],
     );
 
     return <ControlsContext.Provider value={memoControls}>{children}</ControlsContext.Provider>;

@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { useFrame } from "react-frame-component";
+import { useRegistry } from "../../../internals/manager";
 
 const globalRegistry = ["/vibe/app/src"];
 
@@ -11,6 +12,7 @@ export const SynchronizeHead = ({
     children: React.ReactNode;
 }) => {
     const { window: storyWindow } = useFrame();
+    const { pathname, story } = useRegistry();
 
     // theme sync
     const syncTheme = React.useCallback(() => {
@@ -27,12 +29,12 @@ export const SynchronizeHead = ({
     // headSync
     const syncHead = React.useCallback(() => {
         if (!storyWindow) return;
+        if (!story) return;
 
         storyWindow.document.documentElement.style.backgroundColor = "transparent";
 
         const oldHead = storyWindow.document.head;
         const newHead = storyWindow.document.createElement("head");
-        // storyWindow.document.replaceChild(head, oldHead);
 
         [...(document.head.children as any)].forEach((child) => {
             if (
@@ -41,29 +43,26 @@ export const SynchronizeHead = ({
                     (child.getAttribute("type") === "text/css" ||
                         child.getAttribute("rel") === "stylesheet"))
             ) {
-                // remove it from the vibe main styles if it does not pertain to globals
-                const href = child.getAttribute("href");
-                const devId = child.getAttribute("data-vite-dev-id");
+                // get content
+                const content = child.textContent;
+                const firstLine = content.split("\n")[0];
+
+                const vibeOnly = (line) => line.includes('"vibe"');
 
                 // we loop over all the
-                if (
-                    (href && globalRegistry.some((str) => href.includes(str))) ||
-                    (devId && globalRegistry.some((str) => devId.includes(str)))
-                ) {
-                    // Leave this stylesheet in the main document head
+                if (vibeOnly(firstLine)) {
+                    // this is a Vibe ui stylesheet, and should not be applied to the story
                     return;
                 }
-                newHead.appendChild(child.cloneNode(true)) as HTMLStyleElement;
-                child.disabled = true;
+                const alteredChild = child.cloneNode(true);
+                newHead.appendChild(alteredChild) as HTMLStyleElement;
             }
         });
-
         storyWindow.document.documentElement.replaceChild(newHead, oldHead);
-    }, [storyWindow]);
+    }, [storyWindow, story]);
 
     // theme sync effect
-    React.useEffect(() => {
-        if (!active) return;
+    useLayoutEffect(() => {
         const themeObserver = new MutationObserver(() => syncTheme());
         themeObserver.observe(document.documentElement, { attributes: true });
         const headObserver = new MutationObserver(() => syncHead());
@@ -76,9 +75,9 @@ export const SynchronizeHead = ({
             themeObserver.disconnect();
             headObserver.disconnect();
         };
-    }, [active, syncHead, syncTheme]);
+    }, [syncHead, syncTheme]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         syncHead();
         syncTheme();
     }, [syncHead, syncTheme]);

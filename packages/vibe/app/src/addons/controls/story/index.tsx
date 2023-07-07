@@ -2,11 +2,12 @@ import React, { useEffect, useMemo } from "react";
 import { useControls } from "../use-controls";
 
 export const StoryWrapped = ({ Story, args, ...rest }) => {
-    const { initializeControl, controls, resetControls } = useControls();
+    const { initializeControl, controls, resetControls, updateLoading } = useControls();
     useEffect(() => {
         // reset the state
         if (!args) {
             resetControls();
+            updateLoading(false);
             return;
         }
         const obj = Object.entries(args).map(([name, value]) => ({
@@ -19,9 +20,11 @@ export const StoryWrapped = ({ Story, args, ...rest }) => {
             initializeControl?.(entry);
         }
 
+        updateLoading(false);
+
         // const defaultArguments = Object.entries(obj).map(([name, value]) => ({ name, ...value }));
         // only on mount
-    }, [args, initializeControl, resetControls]);
+    }, [args, initializeControl, resetControls, updateLoading]);
 
     // 1. dispatch a call to the addons.controls to add the contents of the args to the vibe state
     const serializeControls = useMemo(() => {

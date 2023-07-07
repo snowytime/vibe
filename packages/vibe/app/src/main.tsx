@@ -79,10 +79,7 @@ const Main = () => {
                                                                     storyUrls={storyUrls}
                                                                     config={config}
                                                                 >
-                                                                    <HOC
-                                                                        story={story.component}
-                                                                        doc={story.doc}
-                                                                    />
+                                                                    <HOC story={story} />
                                                                 </Entry>
                                                             </React.Suspense>
                                                         </Story>

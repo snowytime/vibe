@@ -1,15 +1,22 @@
 import React from "react";
 import { useRegistry } from "./internals/manager";
 import { useSettings } from "./internals/settings";
+import { Story } from "./types";
 
-export const HOC = ({ story, doc }: { story: any; doc?: any }) => {
-    const { updateReady } = useRegistry();
+export const HOC = ({ story }: { story: Story }) => {
+    const { updateReady, registerStory } = useRegistry();
     const { selectedPanel } = useSettings();
-    return (
-        <div ref={() => updateReady(true)}>
-            {selectedPanel === "sandbox" ? React.createElement(story) : <Docs>{doc}</Docs>}
-        </div>
-    );
+
+    const renderedItem = () => {
+        if (selectedPanel === "sandbox") {
+            registerStory(story);
+            return React.createElement(story.component);
+        }
+        registerStory(story);
+        return <Docs>{story.doc}</Docs>;
+    };
+
+    return <div ref={() => updateReady(true)}>{renderedItem()}</div>;
 };
 
 const NoDoc = () => {
