@@ -1,5 +1,5 @@
-/*! "universal" */
 .link {
+    use: universal;
     align-items: center;
     color: hsl(var(--blue-500));
     cursor: pointer;
@@ -13,10 +13,12 @@
     transition: transform 200ms ease-in-out;
 
     &:hover {
+        use: universal;
         transform: translate3d(0, -1px, 0);
     }
 
     &[data-disabled="true"] {
+        use: universal;
         cursor: not-allowed;
         opacity: 0.5;
     }

@@ -1,5 +1,5 @@
-/*! "universal" */
 .wrapper {
+    use: universal;
     border: 1px solid hsl(var(--accent-200));
     border-radius: 4px;
     color: hsl(var(--foreground));
@@ -11,77 +11,93 @@
     padding: 10px 12px;
 
     &[data-variant="primary"] {
+        use: universal;
         border: 1px solid hsl(var(--accent-200));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
+            use: universal;
             background-color: hsl(var(--foreground));
             color: hsl(var(--background));
         }
 
         &[data-contrast="true"]:not(&[data-filled="true"]) {
+            use: universal;
             background-color: hsla(var(--foreground) / 10%);
             border-color: hsla(var(--foreground));
         }
     }
 
     &[data-variant="secondary"] {
+        use: universal;
         border-color: hsl(var(--accent-600));
         color: hsl(var(--accent-600));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
+            use: universal;
             background-color: hsl(var(--accent-600));
             color: hsl(var(--background));
         }
 
         &[data-contrast="true"]:not(&[data-filled="true"]) {
+            use: universal;
             background-color: hsla(var(--accent-500) / 10%);
         }
     }
 
     &[data-variant="error"] {
+        use: universal;
         border-color: hsl(var(--red-400));
         color: hsl(var(--red-500));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
+            use: universal;
             background-color: hsl(var(--red-400));
             color: hsl(var(--background));
         }
 
         &[data-contrast="true"]:not(&[data-filled="true"]) {
+            use: universal;
             background-color: hsla(var(--red-400) / 10%);
         }
     }
 
     &[data-variant="warning"] {
+        use: universal;
         border-color: hsl(var(--yellow-500));
         color: hsl(var(--yellow-600));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
+            use: universal;
             background-color: hsl(var(--yellow-500));
             color: hsl(var(--background));
         }
 
         &[data-contrast="true"]:not(&[data-filled="true"]) {
+            use: universal;
             background-color: hsla(var(--yellow-400) / 10%);
         }
     }
 
     &[data-variant="success"] {
+        use: universal;
         border-color: hsl(var(--green-500));
         color: hsl(var(--green-600));
 
         &[data-filled="true"]:not(&[data-contrast="true"]) {
+            use: universal;
             background-color: hsl(var(--green-500));
             color: hsl(var(--background));
         }
 
         &[data-contrast="true"]:not(&[data-filled="true"]) {
+            use: universal;
             background-color: hsla(var(--green-400) / 10%);
         }
     }
 }
 
 .label {
+    use: universal;
     font-weight: 600;
     padding-right: 4px;
 }

@@ -43,19 +43,35 @@ export const SynchronizeHead = ({
                     (child.getAttribute("type") === "text/css" ||
                         child.getAttribute("rel") === "stylesheet"))
             ) {
-                // get content
-                const content = child.textContent;
-                const firstLine = content.split("\n")[0];
+                // stylesheet
+                const getIntent = () => {
+                    const isDev = !!child.getAttribute("data-vite-dev-id");
+                    if (isDev) {
+                        return /use:\s*vibe/.test(child.textContent)
+                            ? "vibe"
+                            : /use:\s*universal/.test(child.textContent)
+                            ? "universal"
+                            : "story";
+                    }
+                    return child.getAttribute("data-intent") || "story";
+                };
 
-                const vibeOnly = (line) => line.includes('"vibe"');
+                // console.log({ intent: getIntent() });
 
-                // we loop over all the
-                if (vibeOnly(firstLine)) {
-                    // this is a Vibe ui stylesheet, and should not be applied to the story
-                    return;
+                if (getIntent() === "vibe") return;
+                if (getIntent() === "universal") {
+                    const alteredChild = child.cloneNode(true);
+                    newHead.appendChild(alteredChild) as HTMLStyleElement;
                 }
-                const alteredChild = child.cloneNode(true);
-                newHead.appendChild(alteredChild) as HTMLStyleElement;
+                if (getIntent() === "story") {
+                    const newChild = child.cloneNode(true);
+                    newChild.disabled = false;
+                    if (child.tagName === "LINK") {
+                        newChild.href = new URL(child.href, window.location.href).href;
+                    }
+                    newChild.disabled = false;
+                    newHead.appendChild(newChild) as HTMLStyleElement;
+                }
             }
         });
         storyWindow.document.documentElement.replaceChild(newHead, oldHead);

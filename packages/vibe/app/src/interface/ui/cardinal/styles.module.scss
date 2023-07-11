@@ -1,5 +1,5 @@
-/*! "universal" */
 .container {
+    use: universal;
     align-items: flex-start;
     cursor: default;
     display: flex;
@@ -8,33 +8,41 @@
 }
 
 .count {
+    use: universal;
     font-weight: 500;
 
     &[data-size="small"] {
+        use: universal;
         font-size: 18px;
     }
 
     &[data-size="default"] {
+        use: universal;
         font-size: 22px;
     }
 
     &[data-size="medium"] {
+        use: universal;
         font-size: 26px;
     }
 
     &[data-size="large"] {
+        use: universal;
         font-size: 30px;
     }
 }
 
 .descriptor {
+    use: universal;
     font-size: 14px;
 
     &[data-size="small"] {
+        use: universal;
         font-size: 12px;
     }
 
     &[data-size="large"] {
+        use: universal;
         font-size: 15px;
     }
 }

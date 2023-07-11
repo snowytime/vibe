@@ -5,14 +5,14 @@ import { SynchronizeHead } from "../head.js";
 import "./styles.scss";
 import { useRegistry } from "../../../../internals/manager";
 
-export const Story = ({ children, framed }: { children: React.ReactNode; framed: boolean }) => {
+export const Story = ({ children }: { children: React.ReactNode }) => {
     const { setFrameRef } = useRegistry();
-    if (!framed) return <>{children}</>;
     return (
         <Frame
             initialContent={`<!DOCTYPE html><html><head><base target="_parent" /></head><body style="margin:0;"><div id="frame-root"></div></body></html>`}
             mountTarget='#frame-root'
             className='vibe__frame'
+            id='window-frame'
             sandbox='allow-scripts allow-same-origin'
             ref={setFrameRef}
         >

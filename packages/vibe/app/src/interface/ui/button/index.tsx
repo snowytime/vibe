@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 type Props = React.HTMLProps<HTMLButtonElement> & {
     children: React.ReactNode;
@@ -8,7 +8,7 @@ type Props = React.HTMLProps<HTMLButtonElement> & {
 
 export const Button = ({ children, ...rest }: Props) => {
     return (
-        <button className='vibe__button' {...rest} type='button'>
+        <button className={styles.button} {...rest} type='button'>
             {children}
         </button>
     );

@@ -1,5 +1,5 @@
-/*! "universal" */
 .textarea_container {
+    use: universal;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -8,15 +8,18 @@
 }
 
 .container {
+    use: universal;
     cursor: text;
     width: 100%;
 
     &[data-disabled="true"] {
+        use: universal;
         cursor: not-allowed;
     }
 }
 
 .label {
+    use: universal;
     color: hsl(var(--accent-600));
     cursor: pointer;
     font-size: 12px;
@@ -27,6 +30,7 @@
 }
 
 .inner_container {
+    use: universal;
     align-items: center;
     display: flex;
     font-size: 14px;
@@ -35,6 +39,7 @@
 }
 
 .textarea {
+    use: universal;
     appearance: none;
     background: transparent;
     border: 1px solid hsl(var(--accent-200));
@@ -57,20 +62,24 @@
     width: 100%;
 
     &[data-error="true"] {
+        use: universal;
         border-color: hsl(var(--red-500));
         color: hsl(var(--red-500));
     }
 
     &:disabled {
+        use: universal;
         background-color: hsl(var(--accent-100));
         color: hsl(var(--accent-400));
     }
 
     &::placeholder {
+        use: universal;
         color: hsl(var(--accent-400));
     }
 
     &:focus:not([data-error="true"]) {
+        use: universal;
         border-color: hsl(var(--accent-700));
     }
 }

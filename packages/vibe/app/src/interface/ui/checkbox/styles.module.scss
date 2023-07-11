@@ -1,5 +1,5 @@
-/*! "universal" */
 .checkbox_container {
+    use: universal;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -7,27 +7,32 @@
 }
 
 .wrapper {
+    use: universal;
     align-self: stretch;
     cursor: pointer;
     display: inline-flex;
     flex-direction: column;
 
     &[data-block="true"] {
+        use: universal;
         display: flex;
     }
 
     &[data-disabled="true"] {
+        use: universal;
         color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
 
 .error {
+    use: universal;
     color: hsl(var(--red-500));
     font-size: 14px;
 }
 
 .label {
+    use: universal;
     color: hsl(var(--accent-600));
     font-size: 12px;
     font-weight: 500;
@@ -37,6 +42,7 @@
 }
 
 .labelInner {
+    use: universal;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
@@ -45,6 +51,7 @@
 }
 
 .checkbox {
+    use: universal;
     align-items: center;
     display: flex;
     height: 100%;
@@ -55,20 +62,24 @@
     width: 100%;
 
     &[data-selected="true"] {
+        use: universal;
         background-color: hsl(var(--foreground));
 
         &[data-disabled="true"] {
+            use: universal;
             background-color: hsl(var(--accent-400));
         }
     }
 
     > svg {
+        use: universal;
         height: 100%;
         width: 100%;
     }
 }
 
 .checkboxOuter {
+    use: universal;
     border: 1px solid hsl(var(--accent-200));
     border-radius: 3px;
     flex-shrink: 0;
@@ -78,20 +89,24 @@
     width: 16px;
 
     &[data-selected="true"] {
+        use: universal;
         border-color: hsl(var(--foreground));
 
         &[data-disabled="true"] {
+            use: universal;
             border-color: hsl(var(--accent-400));
         }
     }
 }
 
 .value {
+    use: universal;
     flex-grow: 1;
     font-size: 14px;
 }
 
 .input {
+    use: universal;
     border-width: 0;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -104,25 +119,31 @@
 }
 
 .enter {
+    use: universal;
     transition: opacity 0.2s ease-in-out;
 }
 
 .leave {
+    use: universal;
     transition: opacity 0.2s ease-in-out;
 }
 
 .enterFrom {
+    use: universal;
     opacity: 0;
 }
 
 .enterTo {
+    use: universal;
     opacity: 1;
 }
 
 .leaveFrom {
+    use: universal;
     opacity: 1;
 }
 
 .leaveTo {
+    use: universal;
     opacity: 0;
 }

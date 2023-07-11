@@ -1,5 +1,5 @@
-/*! "vibe" */
 .window {
+    use: vibe;
     align-items: center;
     background: linear-gradient(90deg,hsl(var(--background)) 15px,transparent 1%) 50%,linear-gradient(hsl(var(--background)) 15px,transparent 1%) 50%,hsl(var(--accent-300));
     background-size: 16px 16px;
@@ -13,11 +13,13 @@
     width: 100%;
 
     &[data-resize-enabled="true"] {
+        use: vibe;
         padding: 30px;
     }
 }
 
 .canvas {
+    use: vibe;
     background: hsl(var(--background));
     height: 100%;
     position: relative;
@@ -25,12 +27,14 @@
 }
 
 .dragger {
+    use: vibe;
     border-radius: 200px;
     cursor: pointer;
     overflow: hidden;
     position: absolute;
 
     &[data-direction="right"] {
+        use: vibe;
         align-items: center;
         display: flex;
         height: 100%;
@@ -41,10 +45,12 @@
         width: 12px;
 
         &:hover {
+            use: vibe;
             background: hsl(var(--accent-100));
         }
 
         > div {
+            use: vibe;
             background: hsl(var(--accent-500));
             border-radius: 100px;
             height: 50px;

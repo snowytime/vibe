@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Config } from "#types/index.js";
 import vibePlugin from "#plugin/plugin.js";
+import cssPlugin from "./css.js";
 
 type Settings = {
     mode: string;
@@ -63,9 +64,10 @@ export async function getBase(settings: Settings, config: Config) {
             tsconfigPaths({
                 root: process.cwd(),
             }),
-            { enforce: "pre" as any, ...mdx(/* jsxImportSource: …, otherOptions… */) },
+            { enforce: "pre" as any, ...mdx() },
             vibePlugin(config),
             reactPlugin(),
+            { enforce: "post" as any, ...cssPlugin(config.outDir) },
         ],
     };
 }

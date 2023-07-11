@@ -1,5 +1,5 @@
-/*! "universal" */
 .vibe--color-picker {
+    use: universal;
     border-radius: 20px;
     box-shadow: hsl(var(--accent-100)) 0 7px 29px 0;
     display: flex;
@@ -8,6 +8,7 @@
 }
 
 .vibe--thumb {
+    use: universal;
     aspect-ratio: 1/1;
     background-color: hsl(var(--background));
     border: 2px solid hsl(0deg 0% 100%);
@@ -22,11 +23,13 @@
 }
 
 .vibe--thumb-inner {
+    use: universal;
     height: 100%;
     width: 100%;
 }
 
 .vibe--interactive {
+    use: universal;
     border-radius: inherit;
     bottom: 0;
     left: 0;
@@ -40,6 +43,7 @@
 }
 
 .react-colorful__saturation {
+    use: universal;
     aspect-ratio: 3/2;
     background: hsl(var(--accent-100));
     background-image: linear-gradient(to top, hsl(0deg 0% 0%), rgb(0 0 0 / 0%)),
@@ -54,6 +58,7 @@
 }
 
 .vibe--hue {
+    use: universal;
     background: linear-gradient(
         to right,
         hsl(0deg 100% 50%) 0%,
@@ -71,6 +76,7 @@
 }
 
 .vibe--color-wrapper {
+    use: universal;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -78,6 +84,7 @@
 }
 
 .vibe--alpha {
+    use: universal;
     background: linear-gradient(
             45deg,
             hsl(var(--accent-100)) 25%,
@@ -100,15 +107,18 @@
     position: relative;
 
     > * {
+        use: universal;
         border-radius: 999px;
     }
 }
 
 .vibe--alpha-gradient {
+    use: universal;
     height: 100%;
 }
 
 .vibe--preview {
+    use: universal;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -117,6 +127,7 @@
 }
 
 .vibe--color-preview {
+    use: universal;
     aspect-ratio: 1/1;
     background: linear-gradient(
             45deg,
@@ -140,18 +151,21 @@
     overflow: hidden;
 
     > div {
+        use: universal;
         height: 100%;
         width: 100%;
     }
 }
 
 .vibe--color-summary {
+    use: universal;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
 .vibe--color-summary {
+    use: universal;
     display: flex;
     flex-direction: column;
     font-size: 11px;
@@ -161,6 +175,7 @@
 }
 
 .vibe--color-summary-top {
+    use: universal;
     align-items: center;
     background-color: hsl(var(--accent-100));
     border-radius: 999px;
@@ -174,11 +189,13 @@
     transition: background-color 150ms ease-in-out;
 
     &:hover {
+        use: universal;
         background-color: hsl(var(--accent-200));
     }
 }
 
 .vibe--color-title {
+    use: universal;
     flex-basis: 0;
     flex-grow: 1;
     height: 100%;
@@ -187,6 +204,7 @@
 }
 
 .vibe--color-line {
+    use: universal;
     align-items: center;
     cursor: pointer;
     display: flex;
@@ -198,6 +216,7 @@
 }
 
 .vibe--color-line-input {
+    use: universal;
     background: none;
     border: 0;
     color: inherit;
@@ -211,6 +230,7 @@
     width: 10px;
 
     &:focus {
+        use: universal;
         outline: 1px solid hsl(var(--accent-100));
     }
 }

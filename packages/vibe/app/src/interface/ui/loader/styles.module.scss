@@ -1,5 +1,5 @@
-/*! "universal" */
 .wrapper {
+    use: universal;
     cursor: progress;
     height: 20px;
     position: relative;
@@ -8,28 +8,28 @@
     @for $i from 1 through 12 {
         > :nth-child(#{$i}) {
             $delay: calc(1.2s / 12 * #{$i - 1} - 1.2s);
-
+            use: universal;
             animation-delay: $delay;
             transform: rotate((($i - 1) * 30deg)) translate(150%);
         }
     }
 }
-
-@keyframes spinner {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.15;
-    }
-}
-
 .inner {
+    use: universal;
     --accent-300: 0deg 0% 66%;
 
     [data-theme="dark"] {
         --accent-300: 0deg 0% 22%;
+    }
+
+    @keyframes spinner {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.15;
+        }
     }
 
     animation: spinner 1.2s linear infinite;

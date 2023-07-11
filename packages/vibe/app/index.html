@@ -9,6 +9,10 @@
         <link rel="icon" sizes="16x16" href="/public/16.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Vibe</title>
+        <style type="text/css" data-intent="vibe">
+            @import "@snowytime/css/fonts/visby/all.css";
+            @import "@snowytime/css/presets/visby.css";
+        </style>
     </head>
 
     <script defer>
@@ -21,22 +25,21 @@
                             child.getAttribute("rel") === "stylesheet"))
                 ) {
                     // stylesheet
-                    const href = child.getAttribute("href");
-                    const devId = child.getAttribute("data-vite-dev-id");
+                    const getIntent = () => {
+                        const isDev = !!child.getAttribute("data-vite-dev-id");
+                        if (isDev) {
+                            return /use:\s*vibe/.test(child.textContent)
+                                ? "vibe"
+                                : /use:\s*universal/.test(child.textContent)
+                                ? "universal"
+                                : "story";
+                        }
+                        return child.getAttribute("data-intent") || "story";
+                    };
 
-                    // get content
-                    const content = child.textContent;
-                    const firstLine = content.split("\n")[0];
-
-                    const vibeOnly = (line) =>
-                        line.includes('"vibe"') || line.includes('"universal"');
-
-                    // we loop over all the
-                    if (vibeOnly(firstLine)) {
-                        // this is a Vibe ui stylesheet, and should not be applied to the story
-                        return;
+                    if (getIntent() === "story") {
+                        child.disabled = true;
                     }
-                    child.disabled = true;
                 }
             });
         });

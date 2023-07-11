@@ -1,0 +1,1 @@
+import{j as e}from"./index-11e7ec09.js";const o=({value:t,onChange:n})=>e("input",{type:"text",value:t,onChange:n}),r=t=>e(o,{...t});typeof window<"u"&&window.document&&window.document.createElement&&document.documentElement.setAttribute("data-storyloaded","true");export{r as Base};

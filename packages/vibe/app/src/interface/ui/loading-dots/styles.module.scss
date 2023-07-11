@@ -1,26 +1,28 @@
-/*! "universal" */
 .container {
+    use: universal;
     cursor: progress;
     display: flex;
     flex-direction: row;
     gap: 3px;
 }
 
-@keyframes loading-blink {
-    0% {
-        opacity: 0.2;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.2;
-    }
-}
-
 .dot {
+    use: universal;
+
+    @keyframes loading-blink {
+        0% {
+            opacity: 0.2;
+        }
+
+        20% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.2;
+        }
+    }
+
     animation-duration: 1.4s;
     animation-fill-mode: both;
     animation-iteration-count: infinite;
@@ -31,10 +33,12 @@
     width: 4px;
 
     &:nth-of-type(2) {
+        use: universal;
         animation-delay: 200ms;
     }
 
     &:nth-of-type(3) {
+        use: universal;
         animation-delay: 400ms;
     }
 }

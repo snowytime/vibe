@@ -1,5 +1,5 @@
-/*! "universal" */
 .wrapper {
+    use: universal;
     align-items: center;
     color: hsl(var(--red-500));
     display: flex;
@@ -9,12 +9,14 @@
     justify-content: flex-start;
 
     svg {
+        use: universal;
         flex-shrink: 0;
         height: 16px;
     }
 }
 
 .content {
+    use: universal;
     display: flex;
     flex-direction: row;
     flex-grow: 1;

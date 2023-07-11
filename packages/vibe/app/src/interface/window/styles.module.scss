@@ -1,5 +1,5 @@
-/*! "vibe" */
 .wrapper {
+    use: vibe;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -10,6 +10,7 @@
 }
 
 .window {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -22,6 +23,7 @@
 }
 
 .window_resize {
+    use: vibe;
     align-items: center;
     background: radial-gradient(circle 1px, hsl(var(--accent-200)) 1px, transparent 1px),
         radial-gradient(circle 1px, hsl(var(--background)) 1px, transparent 1px);
@@ -36,11 +38,13 @@
     width: 100%;
 
     &[data-resize-enabled="true"] {
+        use: vibe;
         padding: 30px;
     }
 }
 
 .panel {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-grow: 1;
@@ -49,6 +53,7 @@
 }
 
 .canvas {
+    use: vibe;
     background: hsl(var(--background));
     height: 100%;
     position: relative;
@@ -56,6 +61,7 @@
 }
 
 .tabs {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -65,10 +71,12 @@
 }
 
 .util_tabs {
+    use: vibe;
     width: 100%;
 }
 
 .features {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -81,13 +89,16 @@
 }
 
 .feature_wrapper {
+    use: vibe;
     height: 100%;
 }
 
 .addon {
+    use: vibe;
     --fill: hsl(var(--accent-500));
 
     &[data-enabled="true"] {
+        use: vibe;
         --fill: hsl(var(--sky-500));
     }
 
@@ -101,15 +112,18 @@
     width: 30px;
 
     &:hover {
+        use: vibe;
         background-color: hsl(var(--accent-100));
     }
 
     > svg {
+        use: vibe;
         overflow: visible;
     }
 }
 
 .tab {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -121,6 +135,7 @@
 }
 
 .resize_container {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -129,6 +144,7 @@
 }
 
 .resize_inner {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -138,12 +154,14 @@
 }
 
 .dragger {
+    use: vibe;
     border-radius: 200px;
     cursor: pointer;
     overflow: hidden;
     position: absolute;
 
     &[data-direction="right"] {
+        use: vibe;
         align-items: center;
         display: flex;
         height: 100%;
@@ -154,10 +172,12 @@
         width: 12px;
 
         &:hover {
+            use: vibe;
             background: hsl(var(--accent-100));
         }
 
         > div {
+            use: vibe;
             background: hsl(var(--accent-500));
             border-radius: 100px;
             height: 50px;
@@ -167,11 +187,13 @@
 }
 
 .window_wrapper {
+    use: vibe;
     display: flex;
     flex-direction: column;
     height: 100%;
 
     &[data-hidden="true"] {
+        use: vibe;
         display: none;
     }
 }

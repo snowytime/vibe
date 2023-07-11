@@ -40,11 +40,11 @@ export async function previewServer({ config, startTime }: Props): Promise<Log> 
         const localUrl = `${vite.config.server.https ? "https" : "http"}://localhost:${port}${
             vite.config.base || ""
         }`;
-        const networkUrl = config.expose
-            ? `${vite.config.preview.https ? "https" : "http"}://${
-                  os.networkInterfaces().en0[1].address
-              }:${port}${vite.config.base || ""}`
-            : null;
+        // const networkUrl = config.expose
+        //     ? `${vite.config.preview.https ? "https" : "http"}://${
+        //           os.networkInterfaces().en0[1].address
+        //       }:${port}${vite.config.base || ""}`
+        //     : null;
 
         const stopTime = performance.now();
         const duration = stopTime - startTime;
@@ -52,7 +52,7 @@ export async function previewServer({ config, startTime }: Props): Promise<Log> 
         const stories = await findStories(config);
         return {
             local: localUrl,
-            network: networkUrl,
+            network: "",
             duration,
             stories: stories.length,
         };

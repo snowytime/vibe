@@ -1,10 +1,11 @@
-/*! "universal" */
 .container {
+    use: universal;
     background: hsl(var(--accent-100));
     border-radius: 999px;
     display: flex;
 
     &[data-orientation="horizontal"] {
+        use: universal;
         align-items: center;
         height: 10px;
         justify-content: flex-start;
@@ -12,19 +13,23 @@
         width: 100%;
 
         &[data-size="small"] {
+            use: universal;
             height: 8px;
         }
 
         &[data-size="default"] {
+            use: universal;
             height: 10px;
         }
 
         &[data-size="large"] {
+            use: universal;
             height: 12px;
         }
     }
 
     &[data-orientation="vertical"] {
+        use: universal;
         align-items: flex-end;
         height: 100%;
         height: 300px;
@@ -33,20 +38,24 @@
         width: 10px;
 
         &[data-size="small"] {
+            use: universal;
             width: 8px;
         }
 
         &[data-size="default"] {
+            use: universal;
             width: 10px;
         }
 
         &[data-size="large"] {
+            use: universal;
             width: 12px;
         }
     }
 }
 
 .child {
+    use: universal;
     background-color: hsl(var(--foreground));
     border-radius: 999px;
     transition: all 200ms ease-in-out;

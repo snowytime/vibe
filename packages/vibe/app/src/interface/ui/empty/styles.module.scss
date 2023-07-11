@@ -1,5 +1,5 @@
-/*! "universal" */
 .empty_container {
+    use: universal;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -13,6 +13,7 @@
 }
 
 .empty_title {
+    use: universal;
     color: hsl(var(--accent-600));
     font-size: 16px;
     font-weight: 500;
@@ -21,6 +22,7 @@
 }
 
 .rainbow {
+    use: universal;
     background: linear-gradient(45deg, hsl(89deg 58% 75%), hsl(207deg 87% 67%));
     background-clip: text;
     color: transparent;

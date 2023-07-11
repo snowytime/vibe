@@ -4,14 +4,14 @@
     border-radius: 200px;
     color: white;
     outline: 0;
-    padding: 4px 8px;
+    padding: 4px 20px;
 
     &[data-variant="first"] {
         background: orange;
     }
 
     &[data-variant="second"] {
-        background: purple;
+        background: pink;
     }
 
     &[data-variant="third"] {

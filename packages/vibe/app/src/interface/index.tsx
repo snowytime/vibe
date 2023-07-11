@@ -2,7 +2,7 @@ import React from "react";
 
 import { Sidebar } from "./sidebar";
 
-import "./index.scss";
+import styles from "./styles.module.scss";
 import { Window } from "./window";
 import { useRegisterConsoleAddon } from "../addons/console/registration";
 import { useRegisterDesignAddon } from "../addons/design/registration";
@@ -13,7 +13,7 @@ export const Vibe = ({ children }: { children: React.ReactNode }) => {
     // useRegisterOutlineAddon();
 
     return (
-        <div className='vibe__main'>
+        <div className={styles.main}>
             <Sidebar />
             <Window>{children}</Window>
         </div>

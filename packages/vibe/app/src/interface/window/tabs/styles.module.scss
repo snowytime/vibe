@@ -1,19 +1,20 @@
-/*! "vibe" */
 .utilities {
+    use: vibe;
     border-top: 1px solid hsl(var(--accent-100));
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    // overflow: hidden;
     position: relative;
     width: 100%;
 }
 
 .util_tabs {
+    use: vibe;
     margin: 1px 0 0;
 }
 
 .scroller {
+    use: vibe;
     background: transparent;
     cursor: ns-resize;
     height: 6px;
@@ -23,11 +24,13 @@
     width: 100%;
 
     &:hover {
+        use: vibe;
         background: hsl(var(--accent-100));
     }
 }
 
 .tab {
+    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -40,6 +43,7 @@
 }
 
 .content {
+    use: vibe;
     height: 100%;
     overflow: auto;
     position: relative;
@@ -47,25 +51,30 @@
 }
 
 .open {
+    use: vibe;
     height: 300px;
     opacity: 1;
 }
 
 .close {
+    use: vibe;
     height: 0;
     opacity: 0;
 }
 
 .transition {
+    use: vibe;
     transition: height 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .panel_inner {
+    use: vibe;
     display: none;
     height: 100%;
     width: 100%;
 
     &[data-show="true"] {
+        use: vibe;
         display: block;
     }
 }

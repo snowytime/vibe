@@ -65,12 +65,7 @@ const Main = () => {
                                             <Manager addons={addons} config={config}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <Vibe>
-                                                        <Story
-                                                            framed={
-                                                                !!story &&
-                                                                config.mode === "development"
-                                                            }
-                                                        >
+                                                        <Story>
                                                             <React.Suspense fallback={<Wait />}>
                                                                 <Entry
                                                                     story={story}

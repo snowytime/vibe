@@ -1,8 +1,9 @@
-/*! "vibe" */
 .addon {
+    use: vibe;
     --fill: hsl(var(--accent-500));
 
     &[data-enabled="true"] {
+        use: vibe;
         --fill: hsl(var(--sky-500));
     }
 
@@ -16,16 +17,19 @@
     width: 30px;
 
     &:hover {
+        use: vibe;
         background-color: hsl(var(--accent-100));
     }
 
     > svg {
+        use: vibe;
         overflow: visible;
         -webkit-transform: translate3d(0, 0, 0)
     }
 }
 
 .slot {
+    use: vibe;
     align-items: center;
     display: flex;
     height: 100%;
@@ -34,6 +38,7 @@
 }
 
 .inner {
+    use: vibe;
     height: 100%;
     width: auto;
     display: flex;
@@ -44,12 +49,14 @@
 }
 
 .width_icon {
+    use: vibe;
     height: 10px;
     color: hsl(var(--accent-300));
     flex-shrink: 0;
     cursor: ew-resize;
 
     > svg {
+        use: vibe;
         height: 100%;
         overflow: visible;
         -webkit-transform: translate3d(0, 0, 0);
@@ -58,12 +65,14 @@
 }
 
 .height_icon {
+    use: vibe;
     width: 10px;
     color: hsl(var(--accent-300));
     flex-shrink: 0;
     cursor: ns-resize;
 
     > svg {
+        use: vibe;
         width: 100%;
         overflow: visible;
         -webkit-transform: translate3d(0, 0, 0);
