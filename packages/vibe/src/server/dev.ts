@@ -33,6 +33,7 @@ export async function devServer({ config, startTime }: Props): Promise<Log> {
                     port,
                     hmr: {
                         port: hmrPort,
+                        overlay: false,
                     },
                     fs: {
                         strict: false,

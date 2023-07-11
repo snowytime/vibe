@@ -11,6 +11,6 @@ export const Button = ({ children, disabled, variant }) => {
             type='button'
         >
             {children}
-        </button>
+        </butto>
     );
 };

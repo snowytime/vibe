@@ -74,6 +74,13 @@ export default [
 ];
 ```
 
+#### 🧩 Authoring an addon
+
+Athoring Vibe addons is super easy, and allow you to customize your Vibe experience completely. When it comes to addons there are a few things to keep in mind:
+
+-   Addons must use React
+-   When declaring styles for your addon (if it uses them) you need to add a pseudo-property to every scope: `use: vibe;`, or `use: universal;` for addons that are accessible within the story scope.
+
 #### 🔌 Plugins
 
 As part of the roadmap for `beta v2.0.0` plugins will be supported to customize the vibe internal story parsing and generation.

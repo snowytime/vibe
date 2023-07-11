@@ -14,6 +14,7 @@ type Settings = {
         port: number;
         hmr: {
             port: number;
+            overlay: boolean;
         };
         fs: {
             strict: boolean;

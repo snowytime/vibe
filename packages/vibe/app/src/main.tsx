@@ -11,6 +11,7 @@ import { ContextStore } from "./context/context.js";
 import { VibeSettings } from "./internals/settings";
 import { Manager } from "./internals/manager/index.js";
 import { HOC } from "./hoc.js";
+import { ErrorBoundary } from "./ui/index.js";
 
 const Wait = () => {
     return (
@@ -65,19 +66,21 @@ const Main = () => {
                                             <Manager addons={addons} config={config}>
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <Vibe>
-                                                        <Story>
-                                                            <React.Suspense fallback={<Wait />}>
-                                                                <Entry
-                                                                    story={story}
-                                                                    stories={stories}
-                                                                    storyTree={storyTree}
-                                                                    storyUrls={storyUrls}
-                                                                    config={config}
-                                                                >
-                                                                    <HOC story={story} />
-                                                                </Entry>
-                                                            </React.Suspense>
-                                                        </Story>
+                                                        <ErrorBoundary>
+                                                            <Story>
+                                                                <React.Suspense fallback={<Wait />}>
+                                                                    <Entry
+                                                                        story={story}
+                                                                        stories={stories}
+                                                                        storyTree={storyTree}
+                                                                        storyUrls={storyUrls}
+                                                                        config={config}
+                                                                    >
+                                                                        <HOC story={story} />
+                                                                    </Entry>
+                                                                </React.Suspense>
+                                                            </Story>
+                                                        </ErrorBoundary>
                                                     </Vibe>
                                                 </VibeSettings>
                                             </Manager>
