@@ -35,6 +35,7 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
     });
 
     const onEnableEffect = useCallback(() => {
+        if (!frameRef) return;
         const root = frameRef.contentDocument.getElementsByClassName(
             "frame-content",
         )[0] as HTMLElement;
@@ -51,6 +52,7 @@ export const OutlineContext = ({ children }: { children: React.ReactNode }) => {
     }, [frameRef]);
 
     const onDisableEffect = useCallback(() => {
+        if (!frameRef) return;
         const root = frameRef.contentDocument.getElementsByClassName(
             "frame-content",
         )[0] as HTMLElement;

@@ -1,6 +1,15 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { render, useDomRef } from "@snowytime/react-magic/hooks";
+import React, {
+    ErrorInfo,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
+import { useDomRef } from "@snowytime/react-magic/hooks";
 import { useLocation } from "react-router-dom";
+import { ErrorPayload } from "vite";
 
 import { useObjectiveMemo } from "../../controls";
 import { Config, Story } from "../../types";
@@ -35,7 +44,19 @@ type Props = {
     mappedStoryWrappers: (component: React.ReactNode, args: any) => React.ReactNode;
     mappedWindow: (children: React.ReactNode) => React.ReactNode;
     registerStory: (story: Story) => void;
+    error: VibeError;
+    updateError: (err: VibeError) => void;
 };
+
+export type ViteError = ErrorPayload & {
+    source: "vite";
+};
+
+export type ReactError = ErrorInfo & {
+    source: "react";
+};
+
+export type VibeError = null | ViteError | ReactError;
 
 export const ManagerContext = createContext<Props>(null);
 
@@ -43,10 +64,12 @@ export const Manager = ({
     children,
     addons,
     config,
+    viteError,
 }: {
     children: React.ReactNode;
     addons: Record<string, any>;
     config: Config;
+    viteError: ErrorPayload | null;
 }) => {
     const [addonRegistry, setAddonRegistry] = useState<AddonConfig[]>([]);
     const [frameRef, setFrameRef] = useDomRef<HTMLIFrameElement>();
@@ -59,6 +82,25 @@ export const Manager = ({
             setStory(story);
         },
         [setStory],
+    );
+
+    // errors
+    const [error, setError] = useState<VibeError>(null);
+
+    useEffect(() => {
+        if (!viteError) return;
+        setError({
+            source: "vite",
+            ...viteError,
+        });
+    }, [viteError]);
+
+    const updateError = useCallback(
+        (err: VibeError) => {
+            if (error && err && error.source === "vite") return;
+            setError(err);
+        },
+        [error],
     );
 
     useEffect(() => {
@@ -152,19 +194,22 @@ export const Manager = ({
         }, renderedComponent);
     }, [children, memoizedRegistry]);
 
-    const mappedWindow = useCallback((children: React.ReactNode) => {
-        const windows = memoizedRegistry
-            .filter((addon) => addon.window)
-            .map((addon) => addon.window);
+    const mappedWindow = useCallback(
+        (children: React.ReactNode) => {
+            const windows = memoizedRegistry
+                .filter((addon) => addon.window)
+                .map((addon) => addon.window);
 
-        const renderedComponent = children;
+            const renderedComponent = children;
 
-        if (!windows.length) return renderedComponent;
+            if (!windows.length) return renderedComponent;
 
-        return windows.reduceRight((component, ctx) => {
-            return ctx({ children: component });
-        }, renderedComponent);
-    }, [memoizedRegistry]);
+            return windows.reduceRight((component, ctx) => {
+                return ctx({ children: component });
+            }, renderedComponent);
+        },
+        [memoizedRegistry],
+    );
 
     const memo = useMemo(
         () => ({
@@ -184,6 +229,8 @@ export const Manager = ({
             config,
             story,
             registerStory,
+            error,
+            updateError,
         }),
         [
             memoizedRegistry,
@@ -202,6 +249,8 @@ export const Manager = ({
             themeWildcard,
             pathname,
             registerStory,
+            error,
+            updateError,
         ],
     );
 

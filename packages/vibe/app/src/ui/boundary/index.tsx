@@ -1,52 +1,40 @@
-import React, { ErrorInfo, useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
 import { RootBoundary } from "./boundary";
+import { useRegistry, VibeError, ViteError, ReactError } from "../../internals/manager";
 
-/*
-componentDidMount(): void {
-        const originalLog = console.error;
-        console.error = (...args) => {
-            originalLog.apply(console, args);
-            if (args[0].includes("[vite] Internal Server Error")) {
-                console.log(args);
-                this.setState({ viteError: args[0] });
-            }
-        };
-    }
-*/
+const ViteErrorDisplay = ({ error }: { error: ViteError }) => (
+    <div>
+        <h5>Vite</h5>
+        <p>{error.err.message}</p>
+    </div>
+);
 
-const ErrorState = ({ errorInfo, viteError }: { errorInfo: ErrorInfo; viteError: string }) => {
+const ReactErrorDisplay = ({ error }: { error: ReactError }) => (
+    <div>
+        <h5>React</h5>
+        <p>{error.componentStack}</p>
+    </div>
+);
+
+const ErrorState = ({ error }: { error: VibeError }) => {
     return (
         <div style={{ width: "100%" }}>
             <h1>Error occured</h1>
-            <p>{viteError ?? errorInfo.componentStack}</p>
+            {error.source === "react" && <ReactErrorDisplay error={error} />}
+            {error.source === "vite" && <ViteErrorDisplay error={error} />}
         </div>
     );
 };
 
 export const ErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-    const [viteError, setViteError] = useState("");
-    const initialConsoleLog = useRef(window.console.error);
-
-    const mountAddon = useCallback(() => {
-        window.console.error = <T,>(t: T) => {
-            initialConsoleLog.current(t);
-            if (typeof t === "string" && t.includes("[vite] Internal Server Error")) {
-                setViteError(t);
-            }
-        };
-    }, []);
-
-    const unmountAddon = useCallback(() => {
-        window.console.log = initialConsoleLog.current;
-    }, []);
-
-    useEffect(() => {
-        mountAddon();
-        return () => unmountAddon();
-    }, [mountAddon, unmountAddon]);
+    const { error, updateError } = useRegistry();
 
     return (
-        <RootBoundary fallback={(errorInfo) => ErrorState({ viteError, errorInfo })}>
+        <RootBoundary
+            hmrActivation={!!error}
+            onReactError={(r) => updateError(r)}
+            fallback={<ErrorState error={error} />}
+        >
             {children}
         </RootBoundary>
     );

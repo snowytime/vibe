@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { ErrorPayload } from "vite";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry, addons } from "virtual:vibe";
 
@@ -32,6 +33,16 @@ const Wait = () => {
 };
 
 const Main = () => {
+    const [viteError, setViteError] = useState<ErrorPayload | null>(null);
+    if (import.meta.hot) {
+        import.meta.hot.on("vite:error", (error) => {
+            setViteError(error);
+            import.meta.hot.send("vibe:error");
+        });
+        import.meta.hot.on("vite:afterUpdate", () => {
+            import.meta.hot.send("vibe:refresh");
+        });
+    }
     return (
         <>
             <BrowserRouter>
@@ -63,7 +74,11 @@ const Main = () => {
                                         key={story.id}
                                         path={story.url}
                                         element={
-                                            <Manager addons={addons} config={config}>
+                                            <Manager
+                                                addons={addons}
+                                                config={config}
+                                                viteError={viteError}
+                                            >
                                                 <VibeSettings storyTree={storyTree} story={story}>
                                                     <Vibe>
                                                         <ErrorBoundary>

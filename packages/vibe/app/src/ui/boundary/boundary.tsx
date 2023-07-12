@@ -1,13 +1,15 @@
 import React, { ReactNode, ErrorInfo } from "react";
+import { ReactError } from "../../internals/manager";
 
 interface ErrorBoundaryProps {
     children: ReactNode;
-    fallback: ReactNode | ((errorInfo: ErrorInfo) => ReactNode);
+    onReactError: (err: ReactError) => void;
+    fallback: ReactNode;
+    hmrActivation: boolean;
 }
 
 interface ErrorBoundaryState {
     hasError: boolean;
-    errorInfo: ErrorInfo | null;
 }
 
 export class RootBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -15,20 +17,24 @@ export class RootBoundary extends React.Component<ErrorBoundaryProps, ErrorBound
         super(props);
         this.state = {
             hasError: false,
-            errorInfo: null,
         };
     }
 
     componentDidCatch(_, errorInfo: ErrorInfo) {
-        this.setState({ hasError: true, errorInfo });
+        const { onReactError } = this.props;
+        onReactError({
+            source: "react",
+            ...errorInfo,
+        });
+        this.setState({ hasError: true });
     }
 
     render() {
-        const { hasError, errorInfo } = this.state;
-        const { children, fallback } = this.props;
+        const { hasError } = this.state;
+        const { children, fallback, hmrActivation } = this.props;
 
-        if (hasError) {
-            return typeof fallback === "function" ? fallback(errorInfo) : fallback;
+        if (hasError || hmrActivation) {
+            return fallback;
         }
         return children;
     }

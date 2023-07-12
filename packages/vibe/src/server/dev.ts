@@ -89,6 +89,34 @@ export async function devServer({ config, startTime }: Props): Promise<Log> {
                 return checkSum;
             }
         };
+
+        const hardRefresh = () => {
+            if (ws) {
+                ws.send({
+                    type: "full-reload",
+                    path: "*",
+                });
+            }
+        };
+
+        let errorEncountered = false;
+        if (ws) {
+            ws.on("connection", () => {
+                ws.on("vibe:error", () => {
+                    errorEncountered = true;
+                });
+                ws.on("vibe:refresh", () => {
+                    if (errorEncountered) {
+                        ws.send({
+                            type: "full-reload",
+                            path: "*",
+                        });
+                    }
+                    errorEncountered = false;
+                });
+            });
+        }
+
         checkSum = await getChecksum();
         const invalidate = async () => {
             const newChecksum = await getChecksum();
@@ -98,12 +126,7 @@ export async function devServer({ config, startTime }: Props): Promise<Log> {
             const module = moduleGraph.getModuleById("\0virtual:vibe");
             if (module) {
                 moduleGraph.invalidateModule(module);
-                if (ws) {
-                    ws.send({
-                        type: "full-reload",
-                        path: "*",
-                    });
-                }
+                hardRefresh();
             }
         };
         watcher.on("add", invalidate).on("unlink", invalidate).on("change", invalidate);

@@ -23,7 +23,11 @@ export const SidebarButton = ({ onClick }: { onClick: () => void }) => (
 
 export const Window = ({ children }: { children: React.ReactNode }) => {
     const { sidebarOpen, toggleSidebar, selectedPanel, updateSelectedPanel } = useSettings();
-    const { toolbars, mappedWindow } = useRegistry();
+    const { toolbars, mappedWindow, error } = useRegistry();
+
+    if (error) {
+        return <div className={styles.wrapper}>{children}</div>;
+    }
 
     return (
         <div className={styles.wrapper}>
