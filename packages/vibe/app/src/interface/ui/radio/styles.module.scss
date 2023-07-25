@@ -1,25 +1,21 @@
 .radio_container {
-    use: universal;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 .wrapper {
-    use: universal;
     cursor: pointer;
     display: flex;
     flex-direction: column;
 
     &[data-disabled="true"] {
-        use: universal;
         color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
 
 .label {
-    use: universal;
     color: hsl(var(--accent-600));
     font-size: 12px;
     font-weight: 500;
@@ -29,7 +25,6 @@
 }
 
 .label_inner {
-    use: universal;
     align-items: flex-start;
     display: flex;
     flex-direction: row;
@@ -38,7 +33,6 @@
 }
 
 .radio_outer {
-    use: universal;
     align-items: center;
     border: 1px solid hsl(var(--accent-200));
     border-radius: 50%;
@@ -52,13 +46,11 @@
     width: 16px;
 
     &[data-selected="true"] {
-        use: universal;
         border-color: hsl(var(--foreground));
     }
 }
 
 .radio {
-    use: universal;
     background-color: hsl(var(--foreground));
     border-radius: 50%;
     display: block;
@@ -69,7 +61,6 @@
 }
 
 .input {
-    use: universal;
     border-width: 0;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -82,37 +73,30 @@
 }
 
 .value {
-    use: universal;
     flex-grow: 1;
     font-size: 14px;
 }
 
 .enter {
-    use: universal;
     transition: opacity 0.2s ease-in-out;
 }
 
 .leave {
-    use: universal;
     transition: opacity 0.2s ease-in-out;
 }
 
 .enterFrom {
-    use: universal;
     opacity: 0;
 }
 
 .enterTo {
-    use: universal;
     opacity: 1;
 }
 
 .leaveFrom {
-    use: universal;
     opacity: 1;
 }
 
 .leaveTo {
-    use: universal;
     opacity: 0;
 }

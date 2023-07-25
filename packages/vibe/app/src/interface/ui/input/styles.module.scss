@@ -1,10 +1,8 @@
 .container {
-    use: universal;
     cursor: pointer;
     display: block;
 
     &[data-orientation="row"] {
-        use: universal;
         align-items: center;
         display: flex;
         flex-direction: row;
@@ -13,7 +11,6 @@
 }
 
 .label {
-    use: universal;
     color: hsl(var(--accent-600));
     display: block;
     font-size: 12px;
@@ -23,13 +20,11 @@
     user-select: none;
 
     &[data-orientation="row"] {
-        use: universal;
         margin: 0 6px 0 0;
     }
 }
 
 .innerContainer {
-    use: universal;
     align-items: center;
     border: 1px solid hsl(var(--accent-200));
     border-radius: 5px;
@@ -42,13 +37,11 @@
     transition: border-color 0.15s ease;
 
     &[data-focused="true"] {
-        use: universal;
         border-color: hsl(var(--accent-700));
     }
 }
 
 .input {
-    use: universal;
     appearance: none;
     background: transparent;
     border: 0;
@@ -62,34 +55,28 @@
     width: 100%;
 
     &[data-size="tiny"] {
-        use: universal;
         height: 24px;
     }
 
     &[data-size="small"] {
-        use: universal;
         height: 30px;
     }
 
     &[data-size="large"] {
-        use: universal;
         height: 50px;
     }
 
     &::placeholder {
-        use: universal;
         color: hsl(var(--accent-400));
     }
 }
 
 .suffix {
-    use: universal;
     color: hsl(var(--accent-400));
     flex-shrink: 0;
 }
 
 .prefix {
-    use: universal;
     color: hsl(var(--accent-400));
     flex-shrink: 0;
 }

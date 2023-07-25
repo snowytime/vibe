@@ -1,5 +1,4 @@
 .search {
-    use: vibe;
     align-items: center;
     background: hsl(var(--accent-100));
     border-radius: 200px;
@@ -12,13 +11,11 @@
     padding: 0 14px;
 
     > svg {
-        use: vibe;
         flex-shrink: 0;
     }
 }
 
 .input {
-    use: vibe;
     align-items: center;
     display: flex;
     flex-grow: 1;
@@ -27,7 +24,6 @@
     overflow: hidden;
 
     > input {
-        use: vibe;
         background: transparent;
         border: 0;
         color: inherit;

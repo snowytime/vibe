@@ -1,9 +1,7 @@
 .addon {
-    use: vibe;
     --fill: hsl(var(--accent-500));
 
     &[data-enabled="true"] {
-        use: vibe;
         --fill: hsl(var(--sky-500));
     }
 
@@ -17,19 +15,16 @@
     width: 30px;
 
     &:hover {
-        use: vibe;
         background-color: hsl(var(--accent-100));
     }
 
     > svg {
-        use: vibe;
         overflow: visible;
         -webkit-transform: translate3d(0, 0, 0);
     }
 }
 
 .slot {
-    use: vibe;
     align-items: center;
     display: flex;
     height: 100%;

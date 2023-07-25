@@ -1,6 +1,4 @@
-/*! "vibe" */
 .sidebar {
-    use: vibe;
     border-right: 1px solid hsl(var(--accent-100));
     display: flex;
     flex-direction: column;
@@ -12,16 +10,13 @@
 }
 
 .open {
-    use: vibe;
     width: 300px;
 }
 
 .close {
-    use: vibe;
     width: 0;
 }
 
 .transition {
-    use: vibe;
     transition: width 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }

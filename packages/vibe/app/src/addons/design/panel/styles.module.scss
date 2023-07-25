@@ -1,5 +1,4 @@
 .frame {
-    use: vibe;
     appearance: none;
     display: flex;
     flex-direction: column;
@@ -7,13 +6,11 @@
     width: 100%;
 
     &[data-loaded="false"] {
-        use: vibe;
         appearance: auto;
     }
 }
 
 .loading {
-    use: vibe;
     align-items: center;
     background: hsl(var(--background));
     display: flex;

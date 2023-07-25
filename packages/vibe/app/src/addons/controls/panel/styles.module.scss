@@ -1,5 +1,4 @@
 .container {
-    use: vibe;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -7,24 +6,21 @@
 }
 
 .inner {
-    use: vibe;
+
     padding: 30px;
 }
 
 .control {
-    use: vibe;
     display: flex;
     flex-direction: column;
     gap: 12px;
 
     &:not(:last-child) {
-        use: vibe;
         margin-bottom: 20px;
     }
 }
 
 .description {
-    use: vibe;
     background-color: hsl(var(--accent-100));
     color: hsl(var(--accent-700));
     font-size: 14px;
@@ -32,7 +28,6 @@
 }
 
 .loading {
-    use: vibe;
     align-items: center;
     background: hsl(var(--background));
     display: flex;
@@ -46,7 +41,6 @@
 }
 
 .empty_container {
-    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -60,7 +54,6 @@
 }
 
 .empty_title {
-    use: vibe;
     color: hsl(var(--accent-600));
     font-size: 16px;
     font-weight: 500;

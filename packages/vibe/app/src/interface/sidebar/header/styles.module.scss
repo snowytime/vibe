@@ -1,5 +1,4 @@
 .header {
-    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -8,11 +7,9 @@
 }
 
 .button {
-    use: vibe;
     --fill: hsl(var(--accent-500));
 
     &[data-enabled="true"] {
-        use: vibe;
         --fill: hsl(var(--sky-500));
     }
 
@@ -26,7 +23,6 @@
     width: 30px;
 
     > svg {
-        use: vibe;
         overflow: visible;
     }
 }

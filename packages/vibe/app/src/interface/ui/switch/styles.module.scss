@@ -1,5 +1,4 @@
 .container {
-    use: universal;
     border: 1px solid hsl(var(--accent-100));
     border-radius: 4px;
     display: flex;
@@ -10,7 +9,6 @@
 }
 
 .selected {
-    use: universal;
     background-color: transparent;
     border-radius: 4px;
     color: hsl(var(--accent-500));
@@ -20,42 +18,35 @@
     transition: color 200ms ease-in-out;
 
     &:hover:not(&[data-disabled="true"]) {
-        use: universal;
         color: hsl(var(--foreground));
     }
 
     &[data-selected="true"] {
-        use: universal;
         background-color: hsl(var(--accent-100));
         color: hsl(var(--foreground));
     }
 
     &[data-disabled="true"] {
-        use: universal;
         cursor: not-allowed;
         opacity: 0.6;
     }
 }
 
 .wrapper {
-    use: universal;
     display: flex;
     flex-direction: column;
 
     &[data-block="true"] {
-        use: universal;
         display: flex;
     }
 
     &[data-disabled="true"] {
-        use: universal;
         color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
 
 .label {
-    use: universal;
     color: hsl(var(--accent-600));
     font-size: 12px;
     font-weight: 500;

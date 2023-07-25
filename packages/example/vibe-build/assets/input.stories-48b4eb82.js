@@ -1,0 +1,1 @@
+import{a as e}from"./index-2fa9c86e.js";const o=({value:t,onChange:n})=>e("input",{className:"mod",type:"text",value:t,onChange:n}),r=t=>e(o,{...t});typeof window<"u"&&window.document&&window.document.createElement&&document.documentElement.setAttribute("data-storyloaded","true");export{r as Base};

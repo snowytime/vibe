@@ -1,12 +1,33 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { useFrame } from "react-frame-component";
 import { useRegistry } from "../../../internals/manager";
 
-const globalRegistry = ["/vibe/app/src"];
-
 export const SynchronizeHead = ({ children }: { children: React.ReactNode }) => {
     const { window: storyWindow } = useFrame();
-    const { pathname, story } = useRegistry();
+    const { story, frameRef, ready } = useRegistry();
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        if (!frameRef || !story || !ready) return;
+        const frameClasses = [];
+
+        const parseNode = (node) => {
+            const { classList, children } = node;
+            if (classList.value) {
+                classList.value.split(" ").forEach((v) => frameClasses.push(v));
+            }
+
+            if (children) {
+                for (const child of children) {
+                    parseNode(child);
+                }
+            }
+        };
+
+        parseNode(frameRef.contentDocument.body);
+
+        setList(frameClasses);
+    }, [frameRef, story, ready]);
 
     // theme sync
     const syncTheme = React.useCallback(() => {
@@ -35,9 +56,16 @@ export const SynchronizeHead = ({ children }: { children: React.ReactNode }) => 
                         child.getAttribute("rel") === "stylesheet"))
             ) {
                 // stylesheet
-                const intent = child.getAttribute("data-intent") || "story";
-                if (intent === "vibe") return;
-                if (intent === "story") {
+                const intent = () => {
+                    if (import.meta.env.MODE === "development") {
+                        if (list.some((e) => child.textContent.includes(e))) {
+                            return "story";
+                        }
+                    }
+                    return child.getAttribute("data-intent") || "story";
+                };
+                if (intent() === "vibe") return;
+                if (intent() === "story") {
                     const newChild = child.cloneNode(true);
                     newChild.disabled = false;
                     if (child.tagName === "LINK") {
@@ -49,7 +77,7 @@ export const SynchronizeHead = ({ children }: { children: React.ReactNode }) => 
             }
         });
         storyWindow.document.documentElement.replaceChild(newHead, oldHead);
-    }, [storyWindow, story]);
+    }, [storyWindow, story, list]);
 
     // theme sync effect
     useLayoutEffect(() => {

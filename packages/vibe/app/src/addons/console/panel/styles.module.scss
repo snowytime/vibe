@@ -1,37 +1,30 @@
 .boolean {
-    use: vibe;
     color: hsl(var(--green-600));
 }
 
 .number {
-    use: vibe;
     color: hsl(var(--green-600));
 }
 
 .string {
-    use: vibe;
     color: hsl(var(--accent-800));
 }
 
 .null {
-    use: vibe;
     color: hsl(var(--accent-600));
 }
 
 .undefined {
-    use: vibe;
     color: hsl(var(--accent-600));
 }
 
 .array {
-    use: vibe;
     color: hsl(var(--accent-800));
     display: flex;
     flex-direction: row;
 }
 
 .entry {
-    use: vibe;
     border-bottom: 1px solid hsl(var(--accent-100));
     display: flex;
     flex-direction: row;
@@ -42,32 +35,27 @@
 }
 
 .array_header {
-    use: vibe;
     cursor: pointer;
     display: flex;
     flex-direction: row;
 }
 
 .array_description {
-    use: vibe;
     color: hsl(var(--accent-600));
 }
 
 .array_internal {
-    use: vibe;
     display: flex;
     flex-direction: row;
     gap: 6px;
     padding: 0 4px;
 
     > p {
-        use: vibe;
         display: inline;
     }
 }
 
 .arrow {
-    use: vibe;
     color: hsl(var(--accent-600));
     margin-right: 4px;
     padding: 5px 2px 2px;
@@ -76,36 +64,30 @@
     width: 10px;
 
     &[data-expanded="true"] {
-        use: vibe;
         transform: rotate(90deg);
     }
 }
 
 .expanded {
-    use: vibe;
     padding: 2px 8px;
 }
 
 .array_row {
-    use: vibe;
     display: flex;
     flex-direction: row;
     gap: 10px;
 
     > :first-child {
-        use: vibe;
         color: hsl(var(--accent-600));
         font-weight: 500;
     }
 }
 
 .tnum {
-    use: vibe;
     font-feature-settings: "tnum";
 }
 
 .empty_container {
-    use: vibe;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -119,7 +101,6 @@
 }
 
 .empty_title {
-    use: vibe;
     color: hsl(var(--accent-600));
     font-size: 16px;
     font-weight: 500;

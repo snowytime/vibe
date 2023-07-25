@@ -1,11 +1,9 @@
 .container {
-    use: universal;
     height: 40px;
     width: 40px;
 }
 
 .svg {
-    use: universal;
     height: 100%;
     overflow: hidden;
     transform: rotate(-90deg);

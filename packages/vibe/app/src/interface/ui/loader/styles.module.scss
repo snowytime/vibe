@@ -1,5 +1,4 @@
 .wrapper {
-    use: universal;
     cursor: progress;
     height: 20px;
     position: relative;
@@ -8,14 +7,12 @@
     @for $i from 1 through 12 {
         > :nth-child(#{$i}) {
             $delay: calc(1.2s / 12 * #{$i - 1} - 1.2s);
-            use: universal;
             animation-delay: $delay;
             transform: rotate((($i - 1) * 30deg)) translate(150%);
         }
     }
 }
 .inner {
-    use: universal;
     --accent-300: 0deg 0% 66%;
 
     [data-theme="dark"] {

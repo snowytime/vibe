@@ -1,5 +1,4 @@
 .wrapper {
-    use: universal;
     align-items: flex-start;
     display: flex;
     flex-direction: column;
@@ -7,25 +6,21 @@
 }
 
 .container {
-    use: universal;
     cursor: pointer;
     display: inline-flex;
     flex-direction: column;
 
     &[data-block="true"] {
-        use: universal;
         display: flex;
     }
 
     &[data-disabled="true"] {
-        use: universal;
         color: hsl(var(--accent-400));
         cursor: not-allowed;
     }
 }
 
 .switch {
-    use: universal;
     background: hsl(var(--accent-100));
     border-radius: 999px;
     cursor: pointer;
@@ -37,19 +32,16 @@
     width: 40px;
 
     &[data-toggled="true"] {
-        use: universal;
         background-color: hsl(var(--green-400));
     }
 
     &[data-disabled="true"] {
-        use: universal;
         cursor: not-allowed;
         opacity: 0.6;
     }
 }
 
 .thumb {
-    use: universal;
     aspect-ratio: 1/1;
     background: hsl(var(--background));
     border-radius: 999px;
@@ -61,13 +53,11 @@
     transition: all 200ms ease-in-out;
 
     &[data-toggled="true"] {
-        use: universal;
         left: calc(100% - 16px);
     }
 }
 
 .input {
-    use: universal;
     border-width: 0;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -80,7 +70,6 @@
 }
 
 .label {
-    use: universal;
     color: hsl(var(--accent-600));
     font-size: 12px;
     font-weight: 500;

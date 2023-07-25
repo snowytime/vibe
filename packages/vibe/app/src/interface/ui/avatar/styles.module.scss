@@ -1,5 +1,4 @@
 .container {
-    use: universal;
     align-items: center;
     aspect-ratio: 1/1;
     background: hsl(var(--accent-100));
@@ -16,22 +15,18 @@
     justify-content: center;
 
     &[data-grouped="true"] {
-        use: universal;
         border: 2px solid hsl(var(--background));
     }
 
     &[data-size="small"] {
-        use: universal;
         height: 20px;
     }
 
     &[data-size="large"] {
-        use: universal;
         height: 40px;
     }
 
     > svg {
-        use: universal;
         height: 50%;
     }
 }

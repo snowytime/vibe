@@ -1,5 +1,4 @@
 .row {
-    use: vibe;
     align-items: center;
     border-radius: 12px;
     cursor: pointer;
@@ -14,18 +13,15 @@
     width: 100%;
 
     &[data-active="true"] {
-        use: vibe;
         background: hsl(var(--accent-100));
     }
 
     &:hover {
-        use: vibe;
         background: hsl(var(--accent-100));
     }
 }
 
 .icon {
-    use: vibe;
     align-items: center;
     display: flex;
     flex-shrink: 0;
@@ -35,7 +31,6 @@
 }
 
 .title {
-    use: vibe;
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -43,7 +38,6 @@
 }
 
 .panel {
-    use: vibe;
     flex-grow: 1;
     margin: 0 20px;
     overflow: auto;

@@ -45,11 +45,9 @@
                 return;
             }
 
-            // zoom through
             stylesheets.forEach((sheet) => {
                 const intent = sheet.getAttribute("data-intent") || "story";
                 if (intent !== "vibe") {
-                    // disable
                     sheet.disabled = true;
                 }
             });
