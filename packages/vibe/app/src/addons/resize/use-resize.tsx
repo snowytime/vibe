@@ -77,12 +77,19 @@ export const ResizeContext = ({ children }: { children: React.ReactNode }) => {
     const [windowRef, setWindowRef] = useState<HTMLDivElement>(null);
     const [canvasRef, setCanvasRef] = useState<HTMLDivElement>(null);
 
+    useEffect(() => {
+        initExtremes(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.pathname]);
+
     const initExtremes = useCallback(
         (bypass?: boolean) => {
             if (canvasRef && windowRef) {
                 if (!bypass && !resizeState.maxHeight) return;
                 const { height: maxHeight, width: maxWidth } = windowRef.getBoundingClientRect();
                 const { height, width } = canvasRef.getBoundingClientRect();
+
+                console.log({ maxHeight, maxWidth });
 
                 if (!maxHeight || !maxWidth) return;
 

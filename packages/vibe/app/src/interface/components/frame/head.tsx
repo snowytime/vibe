@@ -4,13 +4,7 @@ import { useRegistry } from "../../../internals/manager";
 
 const globalRegistry = ["/vibe/app/src"];
 
-export const SynchronizeHead = ({
-    active,
-    children,
-}: {
-    active: boolean;
-    children: React.ReactNode;
-}) => {
+export const SynchronizeHead = ({ children }: { children: React.ReactNode }) => {
     const { window: storyWindow } = useFrame();
     const { pathname, story } = useRegistry();
 
@@ -30,13 +24,10 @@ export const SynchronizeHead = ({
     const syncHead = React.useCallback(() => {
         if (!storyWindow) return;
         if (!story) return;
-
         storyWindow.document.documentElement.style.backgroundColor = "transparent";
-
         const oldHead = storyWindow.document.head;
         const newHead = storyWindow.document.createElement("head");
-
-        [...(document.head.children as any)].forEach((child) => {
+        [...(document.head.children as any)].forEach(async (child) => {
             if (
                 child.tagName === "STYLE" ||
                 (child.tagName === "LINK" &&
@@ -44,26 +35,9 @@ export const SynchronizeHead = ({
                         child.getAttribute("rel") === "stylesheet"))
             ) {
                 // stylesheet
-                const getIntent = () => {
-                    const isDev = !!child.getAttribute("data-vite-dev-id");
-                    if (isDev) {
-                        return /use:\s*vibe/.test(child.textContent)
-                            ? "vibe"
-                            : /use:\s*universal/.test(child.textContent)
-                            ? "universal"
-                            : "story";
-                    }
-                    return child.getAttribute("data-intent") || "story";
-                };
-
-                // console.log({ intent: getIntent() });
-
-                if (getIntent() === "vibe") return;
-                if (getIntent() === "universal") {
-                    const alteredChild = child.cloneNode(true);
-                    newHead.appendChild(alteredChild) as HTMLStyleElement;
-                }
-                if (getIntent() === "story") {
+                const intent = child.getAttribute("data-intent") || "story";
+                if (intent === "vibe") return;
+                if (intent === "story") {
                     const newChild = child.cloneNode(true);
                     newChild.disabled = false;
                     if (child.tagName === "LINK") {

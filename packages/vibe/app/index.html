@@ -16,76 +16,51 @@
     </head>
 
     <script defer>
-        const headObserver = new MutationObserver(() => {
-            [...document.head.children].forEach((child) => {
-                if (
-                    child.tagName === "STYLE" ||
-                    (child.tagName === "LINK" &&
-                        (child.getAttribute("type") === "text/css" ||
-                            child.getAttribute("rel") === "stylesheet"))
-                ) {
-                    // stylesheet
-                    const getIntent = () => {
-                        const isDev = !!child.getAttribute("data-vite-dev-id");
-                        if (isDev) {
-                            return /use:\s*vibe/.test(child.textContent)
-                                ? "vibe"
-                                : /use:\s*universal/.test(child.textContent)
-                                ? "universal"
-                                : "story";
-                        }
-                        return child.getAttribute("data-intent") || "story";
-                    };
+        const mode = "--DEV--";
+        const isDevMode = mode === "--DEV--";
 
-                    if (getIntent() === "story") {
-                        child.disabled = true;
-                    }
+        const isInlineStyle = (node) => node.tagName === "STYLE";
+        const isStyleLink = (node) =>
+            node.tagName === "LINK" &&
+            (node.getAttribute("type") === "text/css" || node.getAttribute("rel") === "stylesheet");
+
+        const isTargetSheet = (node) => {
+            if (isDevMode) {
+                return isInlineStyle(node);
+            } else {
+                return isInlineStyle(node) || isStyleLink(node);
+            }
+        };
+
+        let initialized = false;
+        const observer = new MutationObserver((mutationsList, observer) => {
+            // Log the first mutation
+            const stylesheets = [...document.head.children].filter((child) => isTargetSheet(child));
+
+            if (isDevMode && !initialized) {
+                initialized = true;
+                stylesheets.forEach((sheet) => {
+                    sheet.setAttribute("data-intent", "vibe");
+                });
+                return;
+            }
+
+            // zoom through
+            stylesheets.forEach((sheet) => {
+                const intent = sheet.getAttribute("data-intent") || "story";
+                if (intent !== "vibe") {
+                    // disable
+                    sheet.disabled = true;
                 }
             });
         });
-        headObserver.observe(document.head, {
-            subtree: true,
-            characterData: true,
-            childList: true,
-        });
+
+        // Start observing the document head with configuration
+        observer.observe(document.head, { childList: true });
     </script>
 
     <body>
-        <div id="_vibe"></div>
+        <div id="_vibe" class="meep"></div>
         <script type="module" src="/src/root.tsx"></script>
     </body>
 </html>
-
-<!--
-const headObserver = new MutationObserver(() => {
-                // handler
-                [...(document.head.children as any)].forEach((child) => {
-            if (
-                child.tagName === "STYLE" ||
-                (child.tagName === "LINK" &&
-                    (child.getAttribute("type") === "text/css" ||
-                        child.getAttribute("rel") === "stylesheet"))
-            ) {
-                // remove it from the vibe main styles if it does not pertain to globals
-                const href = child.getAttribute("href");
-                const devId = child.getAttribute("data-vite-dev-id");
-                const storyId = child.getAttribute("data-story");
-
-                // we loop over all the
-                if (
-                    (href && globalRegistry.some((str) => href.includes(str))) ||
-                    (devId && globalRegistry.some((str) => devId.includes(str)))
-                ) {
-                    // Leave this stylesheet in the main document head
-                    return;
-                }
-                child.disabled = true;
-            }
-        });
-            });
-            headObserver.observe(document.head, {
-                subtree: true,
-                characterData: true,
-                childList: true,
-            });
- -->

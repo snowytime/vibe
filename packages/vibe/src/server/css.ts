@@ -22,22 +22,45 @@ const extractRules = (cssContent: string) => {
 };
 
 // css handler plugin to inject css into the main head as needed
-export default function cssPlugin(buildPath: string) {
+export default function cssPlugin(buildPath: string, mode: string) {
     return {
         name: "vibe-css-plugin",
-        async writeBundle() {
-            const buildLocation = join(process.cwd(), buildPath);
-            const htmlPath = join(buildLocation, "index.html");
-            // intent declarations
-            const vibeIntent = new VibeIntent({ buildLocation, htmlPath });
-            const universalIntent = new UniversalIntent({ buildLocation, htmlPath });
-            // intent parsers
-            await vibeIntent.parse();
-            await universalIntent.parse();
-            // intent closers
-            await vibeIntent.close();
-            await universalIntent.close();
+        transformIndexHtml(html) {
+            if (mode === "production") {
+                return html.replace("--DEV--", `--BUILD--`);
+            }
+            return html;
         },
+        async writeBundle() {
+            await parse(buildPath);
+            // 1. get stylesheets in index.html -> these are the vibe stylesheets
+            // 2. for each one add data-indent="vibe"
+            // 3. If stories are using vibe components, they will be included in the stories css imports in build
+            // const buildLocation = join(process.cwd(), buildPath);
+            // const htmlPath = join(buildLocation, "index.html");
+            // // intent declarations
+            // const vibeIntent = new VibeIntent({ buildLocation, htmlPath });
+            // const universalIntent = new UniversalIntent({ buildLocation, htmlPath });
+            // // intent parsers
+            // await vibeIntent.parse();
+            // await universalIntent.parse();
+            // // intent closers
+            // await vibeIntent.close();
+            // await universalIntent.close();
+        },
+        // load(id: string) {
+        //     if (id.includes(".css") || id.includes("scss")) {
+        //         // add to the transform log
+        //         stylesheets.push(id);
+        //     }
+        // },
+        // transform(code: string, id: string) {
+        //     if (stylesheets.includes(id)) {
+        //         return {
+        //             code: ``
+        //         }
+        //     }
+        // },
     };
 }
 
@@ -189,3 +212,23 @@ class UniversalIntent {
         }
     }
 }
+
+const parse = async (location: string) => {
+    const buildLocation = join(process.cwd(), location);
+    const htmlPath = join(buildLocation, "index.html");
+    const getHtml = async () => {
+        return fs.readFile(htmlPath, "utf-8");
+    };
+
+    const updatedHtml = async () => {
+        const html = await getHtml();
+        const updatedLinkTags = html.replace(
+            /<link rel="stylesheet"/g,
+            '<link rel="stylesheet" data-intent="vibe"',
+        );
+
+        return updatedLinkTags;
+    };
+
+    await fs.writeFile(htmlPath, await updatedHtml(), "utf-8");
+};

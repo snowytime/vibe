@@ -1,5 +1,10 @@
 import React from "react";
+import "../shared.scss";
 
 export const Link = ({ href }: { href: string }) => {
-    return <a href={href}>Link</a>;
+    return (
+        <a className='mod' href={href}>
+            Link
+        </a>
+    );
 };

@@ -14,5 +14,5 @@ import "./example.css";
 
 export default function Entry({ children, stories }: EntryProps) {
     // const { storyUrls } = useVibe();
-    return <>Entry: {children}</>;
+    return <>Snaer{children}</>;
 }

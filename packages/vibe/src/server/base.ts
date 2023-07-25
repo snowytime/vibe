@@ -68,7 +68,7 @@ export async function getBase(settings: Settings, config: Config) {
             { enforce: "pre" as any, ...mdx() },
             vibePlugin(config),
             reactPlugin(),
-            { enforce: "post" as any, ...cssPlugin(config.outDir) },
+            { enforce: "pre" as any, ...cssPlugin(config.outDir, settings.mode) },
         ],
     };
 }

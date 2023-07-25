@@ -16,7 +16,7 @@ export const Story = ({ children }: { children: React.ReactNode }) => {
             sandbox='allow-scripts allow-same-origin'
             ref={setFrameRef}
         >
-            <SynchronizeHead active={true}>{children}</SynchronizeHead>
+            <SynchronizeHead>{children}</SynchronizeHead>
         </Frame>
     );
 };
