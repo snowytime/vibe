@@ -51,15 +51,15 @@ export async function getBase(settings: Settings, config: Config) {
         resolve: {},
         optimizeDeps: {
             include: [
-                "react",
-                "react-dom",
-                "react-dom/client",
-                "react-frame-component",
-                "@snowytime/react-magic",
-                "sass",
-                "react-router-dom",
+                // "react",
+                // "react-dom",
+                // "react-dom/client",
+                // "react-frame-component",
+                // "@snowytime/react-magic",
+                // "sass",
+                // "react-router-dom",
             ],
-            exclude: ["@swc/wasm", "@swc/core", "fsevents", "virtual:vibe"],
+            exclude: [],
         },
         plugins: [
             tsconfigPaths({

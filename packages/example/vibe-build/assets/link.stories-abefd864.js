@@ -1,0 +1,1 @@
+import{a as e}from"./index-56a3c13f.js";const d=()=>e("div",{style:{height:"2000px",padding:"200px 30px"},children:e("div",{className:"my-link"})});typeof window<"u"&&window.document&&window.document.createElement&&document.documentElement.setAttribute("data-storyloaded","true");export{d as Base};

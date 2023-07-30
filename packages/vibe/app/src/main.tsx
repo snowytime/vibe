@@ -3,6 +3,8 @@ import { ErrorPayload } from "vite";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { stories, storyTree, storyUrls, config, Entry, addons } from "virtual:vibe";
 
+// import { Book } from '@visbyjs/ui';
+
 import { Vibe } from "./interface/index.js";
 
 import { Story } from "./interface/components/frame/story/index.js";
